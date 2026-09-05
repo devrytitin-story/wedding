@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const srcPath = 'C:/Users/User 2/undangan-kage/kage.original.html';
-const distPath = 'C:/Users/User 2/undangan-kage/index.html';
+const srcPath = 'C:/Project Web/undangan-kage/kage.original.html';
+const distPath = 'C:/Project Web/undangan-kage/index.html';
 
 let content = fs.readFileSync(srcPath, 'utf8');
 
@@ -406,8 +406,9 @@ const weddingCSS = `
 
 content = content.replace('</style>', weddingCSS + '</style>');
 
-// 3. Update Preloader Text
+// 3. Update Preloader Text & Kanji -> Wedding Branding
 content = content.replace('Raising the mountain temple', 'Mempersiapkan Undangan Pernikahan');
+content = content.replace('<div class="pre-jp jp">影の道</div>', '<div class="pre-jp font-cinzel" style="font-size:12px; letter-spacing:4px; color:var(--gold-light);">THE WEDDING · 2026</div>');
 
 // 4. Build Replacement Body Content between <header class="nav" id="nav"> and <div class="rail" id="rail"></div>
 const navStartIndex = content.indexOf('<header class="nav" id="nav">');
@@ -436,11 +437,11 @@ const weddingBody = `
     <span class="brand-tx"><b>TITIN &amp; DEVRY</b><i>THE WEDDING &amp; SYUKURAN</i></span>
   </a>
   <nav class="nav-links" id="navlinks">
-    <a class="nav-link" href="#gate" data-cursor><span>Ayat Suci</span><span class="alt">聖句</span></a>
-    <a class="nav-link" href="#pathways" data-cursor><span>Mempelai</span><span class="alt">新郎新婦</span></a>
-    <a class="nav-link" href="#lessons" data-cursor><span>Acara</span><span class="alt">祝典</span></a>
-    <a class="nav-link" href="#eternity" data-cursor><span>Lokasi &amp; Galeri</span><span class="alt">会場</span></a>
-    <a class="nav-link" href="#rsvp" data-cursor><span>Doa &amp; RSVP</span><span class="alt">祝福</span></a>
+    <a class="nav-link" href="#gate" data-cursor><span>Ayat Suci</span><span class="alt">QUR'AN</span></a>
+    <a class="nav-link" href="#pathways" data-cursor><span>Mempelai</span><span class="alt">COUPLE</span></a>
+    <a class="nav-link" href="#lessons" data-cursor><span>Acara</span><span class="alt">EVENT</span></a>
+    <a class="nav-link" href="#eternity" data-cursor><span>Lokasi &amp; Galeri</span><span class="alt">VENUE</span></a>
+    <a class="nav-link" href="#rsvp" data-cursor><span>Doa &amp; RSVP</span><span class="alt">RSVP</span></a>
   </nav>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
 </header>
@@ -493,15 +494,15 @@ const weddingBody = `
     </div>
   </div>
 
-  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Lihat Taman Janji Suci">
+  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Lihat Gerbang Janji Suci">
     <span class="peek-fr" data-frame></span>
     <span class="peek-play"><svg viewBox="0 0 22 22" fill="none"><path d="M8 5.6 16.4 11 8 16.4z" fill="#dfe7e0"/></svg></span>
-    <span class="peek-cap"><b class="jp">山門</b><i>Gerbang Janji Suci</i></span>
+    <span class="peek-cap"><b class="font-cinzel" style="font-size:16px; color:var(--gold-light); letter-spacing:2px;">2026</b><i>Gerbang Janji Suci</i></span>
   </a>
 
-  <div class="word-fb font-cormorant" aria-hidden="true">DEVRY &amp; TITIN</div>
+  <div class="word-fb font-cormorant" aria-hidden="true">TITIN &amp; DEVRY</div>
   <div class="hero-side" data-rv="up">
-    <span class="v jp">永遠の契り</span>
+    <span class="v font-cinzel" style="letter-spacing:4px; font-size:11px; color:var(--gold-pale);">27 · 09 · 2026</span>
   </div>
 </section>
 
@@ -519,7 +520,7 @@ const weddingBody = `
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>01</b> — Ayat Suci</span><span class="rule"></span><span class="k jp">聖句</span>
+    <span class="k"><b>01</b> — Ayat Suci</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">AR-RUM 21</span>
   </div>
   <div class="gate-grid">
     <h2 class="display h-sec font-cormorant" data-rv="up">Dan di antara tanda-tanda kekuasaan-Nya...</h2>
@@ -562,7 +563,7 @@ const weddingBody = `
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>02</b> — Dua Jiwa, Satu Takdir</span><span class="rule"></span><span class="k jp">新郎新婦</span>
+    <span class="k"><b>02</b> — Dua Jiwa, Satu Takdir</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">COUPLE</span>
   </div>
   <div style="text-align: center; margin-bottom: 24px;">
     <h2 class="display h-sec font-cormorant" data-rv="up">Dua Jiwa, Satu Takdir</h2>
@@ -598,14 +599,14 @@ const weddingBody = `
   </div>
 
   <div style="margin-top: 50px;" class="sec-head" data-rv="fade">
-    <span class="k"><b>Taman Doa</b> — Sudut Ketenangan</span><span class="rule"></span><span class="k jp">静寂</span>
+    <span class="k"><b>Taman Doa</b> — Sudut Ketenangan</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">PRAYERS</span>
   </div>
   <div class="cards" id="cards">
     <article class="card" data-rv="up" data-view="0" data-cursor>
       <div class="card-fr" data-frame>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <i class="glow" style="--gx:34.2%; --gy:71.4%; --gr:18%; --gt:6.2s; --gt2:8.9s; --gc1:rgba(255,108,74,.58); --gc2:rgba(196,44,28,.22)"></i>
-        <div class="card-lab"><b>Janji Suci</b><span class="jp">誓い</span></div>
+        <div class="card-lab"><b>Janji Suci</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">AKAD</span></div>
       </div>
       <div class="card-meta"><span>Langkah Awal</span><span>01 / 03</span></div>
     </article>
@@ -613,7 +614,7 @@ const weddingBody = `
       <div class="card-fr" data-frame>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <i class="glow glow--flame" style="--gx:70.5%; --gy:47.2%; --gr:14%; --gt:3.7s; --gt2:5.3s; --gc1:rgba(255,198,124,.62); --gc2:rgba(226,118,40,.30)"></i>
-        <div class="card-lab"><b>Lentera Berkah</b><span class="jp">灯火</span></div>
+        <div class="card-lab"><b>Lentera Berkah</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">DOA</span></div>
       </div>
       <div class="card-meta"><span>Cahaya Doa</span><span>02 / 03</span></div>
     </article>
@@ -621,7 +622,7 @@ const weddingBody = `
       <div class="card-fr" data-frame>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <i class="glow" style="--gx:48.0%; --gy:16.8%; --gr:20%; --gt:7.3s; --gt2:11.2s; --gc1:rgba(255,138,104,.52); --gc2:rgba(208,54,36,.24)"></i>
-        <div class="card-lab"><b>Sakinah</b><span class="jp">平穏</span></div>
+        <div class="card-lab"><b>Sakinah</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">CINTA</span></div>
       </div>
       <div class="card-meta"><span>Kedamaian Hati</span><span>03 / 03</span></div>
     </article>
@@ -634,15 +635,11 @@ const weddingBody = `
     <span class="fg-el fg-wall fg-el--flip" data-fg-in="right">
       <img src="secret-pathways-assets/foreground/png/temple-wall.webp" alt="" width="1536" height="884" loading="lazy" decoding="async">
     </span>
-    <span class="fg-el fg-stones" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
+    <span class="fg-el fg-stones" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async"></span>
+    <span class="fg-el fg-grass" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async"></span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>03</b> — Rangkaian Acara</span><span class="rule"></span><span class="k jp">祝典</span>
+    <span class="k"><b>03</b> — Rangkaian Acara</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">SCHEDULE</span>
   </div>
   <div class="cur-head">
     <h2 class="display h-sec font-cormorant" data-rv="up">Ijab, Qabul &amp; Walimatul 'Ursy</h2>
@@ -715,15 +712,9 @@ const weddingBody = `
     <span class="fg-el fg-hill" data-fg-in="up">
       <img src="secret-pathways-assets/foreground/png/hill.webp" alt="" width="1774" height="887" loading="lazy" decoding="async">
     </span>
-    <span class="fg-el fg-ruins" data-fg-in="left">
-      <img src="secret-pathways-assets/foreground/png/shrine-ruins.webp" alt="" width="1536" height="1001" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-sakura" data-fg-in="left">
-      <img src="secret-pathways-assets/foreground/png/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-    </span>
+    <span class="fg-el fg-ruins" data-fg-in="left"><img src="secret-pathways-assets/foreground/png/shrine-ruins.webp" alt="" width="1536" height="1001" loading="lazy" decoding="async"></span>
+    <span class="fg-el fg-grass" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async"></span>
+    <span class="fg-el fg-sakura" data-fg-in="left"><img src="secret-pathways-assets/foreground/png/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async"></span>
   </div>
   <div class="eyebrow" data-rv="fade">Lokasi Acara &amp; Kenangan</div>
   <h2 class="display font-cormorant" data-rv="up">Rumah Mempelai Wanita</h2>
@@ -739,7 +730,7 @@ const weddingBody = `
   <!-- Gallery Section -->
   <div style="margin-top: 70px;">
     <div class="sec-head" data-rv="fade">
-      <span class="k"><b>Galeri Foto</b> — Kenangan Kami</span><span class="rule"></span><span class="k jp">想い出</span>
+      <span class="k"><b>Galeri Foto</b> — Kenangan Kami</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">GALLERY</span>
     </div>
     <div class="gallery-grid" data-rv="up">
       <div class="gallery-item" onclick="openLightbox('galeri-1.jpg')"><img src="galeri-1.jpg" alt="Kenangan 1" loading="lazy"></div>
@@ -758,16 +749,12 @@ const weddingBody = `
     <span class="fg-el fg-bush" data-fg-in="up">
       <img src="secret-pathways-assets/foreground/png/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async">
     </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-stones" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
-    </span>
+    <span class="fg-el fg-grass" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async"></span>
+    <span class="fg-el fg-stones" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async"></span>
   </div>
 
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>05</b> — Konfirmasi Kehadiran</span><span class="rule"></span><span class="k jp">祝福</span>
+    <span class="k"><b>05</b> — Konfirmasi Kehadiran</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">WISHES</span>
   </div>
 
   <div style="text-align: center; margin-bottom: 32px;" data-rv="up">
@@ -891,7 +878,14 @@ const weddingBody = `
 
 content = content.substring(0, navStartIndex) + weddingBody + content.substring(railStartIndex);
 
-// 5. Add Custom Wedding Interactivity JS before </script>
+// 5. Transform 3D background floating wordmark from 'KAGE' to 'TITIN & DEVRY'
+content = content.replace("const word = 'KAGE', gl = [];", "const word = 'TITIN & DEVRY', gl = [];");
+content = content.replace("const SZ = 320, TRACK = .40, PAD = 26;", "const SZ = 220, TRACK = .18, PAD = 26;");
+
+// Replace footer console log credit
+content = content.replace("KAGE — a live Kyoto mountain temple, after dark.", "The Wedding of Titin & Devry — 27 September 2026.");
+
+// 6. Add Custom Wedding Interactivity JS before </script>
 const weddingJS = `
 /* ═══════════════════════════════════════════════════════════════
    WEDDING INVITATION SCRIPTS (MUSIC, COUNTDOWN, GUEST, RSVP)
@@ -957,7 +951,6 @@ if (btnOpen) {
 
 // C. Countdown Timer to 27 September 2026 08:00:00 WIB (UTC+7)
 (function initCountdown() {
-  // Target: 2026-09-27 08:00:00 GMT+7 => 2026-09-27T01:00:00Z
   const targetDate = new Date('2026-09-27T08:00:00+07:00').getTime();
 
   function update() {
@@ -1064,4 +1057,4 @@ const lastScriptIndex = content.lastIndexOf('</script>');
 content = content.substring(0, lastScriptIndex) + weddingJS + content.substring(lastScriptIndex);
 
 fs.writeFileSync(distPath, content, 'utf8');
-console.log('SUCCESS: index.html has been generated with all wedding content and ThreeUI Kage world!');
+console.log('SUCCESS: index.html fully rebuilt with 100% wedding theme!');
