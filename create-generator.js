@@ -1,0 +1,625 @@
+const fs = require('fs');
+
+const generatorHTML = `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generator Link Undangan — Titin & Devry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Onest:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0807;
+      --card-bg: rgba(22, 17, 15, 0.85);
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-pale: #F5E9C8;
+      --border: rgba(201, 168, 76, 0.3);
+      --text: #F0E8D5;
+      --text-dim: rgba(240, 232, 213, 0.7);
+      --whatsapp: #25D366;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Onest', sans-serif;
+      min-height: 100vh;
+      padding: 30px 20px 60px;
+      background-image: radial-gradient(circle at 50% 0%, rgba(201, 168, 76, 0.12), transparent 60%);
+    }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 44px);
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 13px;
+      color: var(--gold-light);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+    }
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      padding: 10px 24px;
+      border-radius: 999px;
+      background: rgba(30, 24, 21, 0.8);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--gold);
+      color: #080605;
+      border-color: var(--gold);
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(201, 168, 76, 0.3);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+    }
+    .card h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      color: var(--gold-light);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--gold-pale);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(10, 8, 7, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #C9A84C, #9E7D2E);
+      color: #080605;
+      box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(201, 168, 76, 0.5);
+    }
+    .btn-wa {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #fff;
+    }
+    .btn-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      background: rgba(201, 168, 76, 0.15);
+      border-color: var(--gold);
+    }
+    .result-box {
+      margin-top: 20px;
+      background: rgba(10, 8, 7, 0.9);
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .result-url {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--gold-light);
+      word-break: break-all;
+      background: rgba(0,0,0,0.4);
+      padding: 10px;
+      border-radius: 6px;
+      margin: 10px 0 14px;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+    th {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--gold-pale);
+      background: rgba(20, 16, 14, 0.9);
+    }
+    tr:hover td {
+      background: rgba(201, 168, 76, 0.05);
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      border: 1px solid var(--border);
+      background: rgba(201, 168, 76, 0.15);
+      color: var(--gold-light);
+    }
+    .actions-cell {
+      display: flex;
+      gap: 6px;
+    }
+    .btn-mini {
+      padding: 6px 12px;
+      font-size: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Generator Link Undangan Pernikahan</h1>
+    <p>Titin Rahma Lestari & Devry Rizkie H</p>
+    <div style="margin-top: 14px;">
+      <a href="index.html" target="_blank" class="btn btn-outline btn-mini">👁️ Buka Web Undangan Utama</a>
+    </div>
+  </header>
+
+  <!-- URL Setting Bar -->
+  <div class="card" style="margin-bottom: 24px; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;">
+    <div style="flex: 1; min-width: 280px;">
+      <label for="base-url">Domain / URL Dasar Undangan:</label>
+      <input type="text" id="base-url" value="http://localhost:3000">
+    </div>
+    <div style="align-self: flex-end;">
+      <button class="btn btn-outline" onclick="setGithubUrl()">Gunakan URL GitHub Pages</button>
+    </div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('single', event)">1. Input Satuan</button>
+    <button class="tab-btn" onclick="switchTab('bulk', event)">2. Input Massal (Banyak Nama)</button>
+    <button class="tab-btn" onclick="switchTab('template', event)">3. Template Pesan WhatsApp</button>
+  </div>
+
+  <!-- TAB 1: SINGLE GUEST -->
+  <div id="tab-single">
+    <div class="grid">
+      <div class="card">
+        <h2>💌 Tambah Tamu Undangan</h2>
+        <form onsubmit="generateSingleLink(event)">
+          <div class="form-group">
+            <label for="guest-name">Nama Tamu / Gelar:</label>
+            <input type="text" id="guest-name" placeholder="Contoh: Bapak Joko & Keluarga" required>
+          </div>
+          <div class="form-group">
+            <label for="guest-phone">Nomor WhatsApp (Opsional):</label>
+            <input type="text" id="guest-phone" placeholder="Contoh: 081234567890 (atau kosongkan)">
+          </div>
+          <div class="form-group">
+            <label for="guest-category">Kategori Tamu:</label>
+            <select id="guest-category">
+              <option value="Keluarga">Keluarga</option>
+              <option value="Sahabat">Sahabat</option>
+              <option value="Rekan Kerja">Rekan Kerja</option>
+              <option value="VIP">VIP / Tokoh</option>
+              <option value="Umum">Umum</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-gold" style="width: 100%;">⚡ Generate Link Undangan</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>✨ Hasil Link & Pesan</h2>
+        <div id="single-result-placeholder" style="color: var(--text-dim); text-align: center; padding: 40px 0;">
+          Isi formulir di sebelah kiri dan klik <b>Generate Link</b> untuk melihat link & tombol kirim.
+        </div>
+        <div id="single-result-box" class="result-box" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <b id="res-name" style="font-size: 16px; color: #fff;"></b>
+            <span id="res-cat" class="badge"></span>
+          </div>
+          <div class="result-url" id="res-url"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px;">
+            <button class="btn btn-gold btn-mini" onclick="copySingleLink()">📋 Salin Link</button>
+            <button id="btn-send-wa-single" class="btn btn-wa btn-mini" onclick="sendWaSingle()">💬 Kirim via WhatsApp</button>
+            <button class="btn btn-outline btn-mini" onclick="saveSingleToTable()">💾 Simpan ke Daftar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: BULK GUESTS -->
+  <div id="tab-bulk" style="display: none;">
+    <div class="card" style="margin-bottom: 24px;">
+      <h2>📋 Input Massal Daftar Tamu</h2>
+      <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 14px;">
+        Ketik atau paste daftar nama tamu (1 baris untuk 1 tamu, atau format: <code>Nama, Nomor WA, Kategori</code>):
+      </p>
+      <textarea id="bulk-names" rows="6" placeholder="Contoh:&#10;Bapak Budi & Istri, 081234567890, Keluarga&#10;Andi Pratama, 085712345678, Sahabat&#10;Dr. Hendra, , VIP&#10;Keluarga Besar Alm. Bpk Jajang, , Keluarga"></textarea>
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px;">
+        <button class="btn btn-gold" onclick="processBulkNames()">⚡ Generate Semua Daftar Tamu</button>
+        <button class="btn btn-outline" onclick="clearAllGuests()">🗑️ Bersihkan Daftar</button>
+        <button class="btn btn-outline" onclick="exportToCSV()">📥 Export ke Excel (CSV)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: TEMPLATE WHATSAPP -->
+  <div id="tab-template" style="display: none;">
+    <div class="grid">
+      <div class="card">
+        <h2>✏️ Edit Format Pesan WhatsApp</h2>
+        <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 12px;">
+          Gunakan variabel <code>{nama}</code> untuk nama tamu dan <code>{link}</code> untuk link undangan.
+        </p>
+        <textarea id="wa-template" rows="12"></textarea>
+        <div style="margin-top: 12px;">
+          <button class="btn btn-gold" onclick="saveTemplate()">💾 Simpan Template</button>
+          <button class="btn btn-outline" onclick="resetTemplate()">🔄 Reset ke Default</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>👁️ Preview Pesan WhatsApp</h2>
+        <div id="wa-preview" style="background: rgba(10,8,7,0.9); border: 1px solid var(--border); border-radius: 10px; padding: 18px; font-size: 13px; line-height: 1.6; white-space: pre-wrap; color: var(--gold-pale);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUEST LIST TABLE -->
+  <div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+      <h2>👥 Daftar Tamu Tersimpan (<span id="guest-count">0</span>)</h2>
+      <input type="text" id="search-guest" placeholder="🔍 Cari nama tamu..." style="width: auto; min-width: 220px;" oninput="renderTable()">
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Tamu</th>
+            <th>Kategori</th>
+            <th>WhatsApp</th>
+            <th>Link Undangan</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="guest-table-body">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_TEMPLATE = \`Kepada Yth.
+Bapak/Ibu/Saudara/i *{nama}*,
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami:
+
+💍 *Titin Rahma Lestari & Devry Rizkie H*
+🗓 *Minggu, 27 September 2026*
+📍 *Bekasi, Jawa Barat*
+
+Buka undangan digital melalui tautan berikut:
+🔗 {link}
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.
+
+Terima kasih.
+_Wassalamu'alaikum Warahmatullahi Wabarakatuh_
+*Titin & Devry*\`;
+
+let guests = JSON.parse(localStorage.getItem('wedding_guests') || '[]');
+let currentSingle = null;
+
+function init() {
+  const savedTpl = localStorage.getItem('wedding_wa_template') || DEFAULT_TEMPLATE;
+  document.getElementById('wa-template').value = savedTpl;
+  updatePreview();
+  renderTable();
+}
+
+function setGithubUrl() {
+  document.getElementById('base-url').value = 'https://drizkieh.github.io/undangan';
+  if (currentSingle) generateSingleLink();
+  renderTable();
+}
+
+function switchTab(tab, e) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-single').style.display = tab === 'single' ? 'block' : 'none';
+  document.getElementById('tab-bulk').style.display = tab === 'bulk' ? 'block' : 'none';
+  document.getElementById('tab-template').style.display = tab === 'template' ? 'block' : 'none';
+  if (e && e.target) e.target.classList.add('active');
+}
+
+function getLinkForName(name) {
+  const base = document.getElementById('base-url').value.replace(/\\/+$/, '');
+  const encoded = encodeURIComponent(name);
+  return \`\${base}/?to=\${encoded}\`;
+}
+
+function generateSingleLink(e) {
+  if (e) e.preventDefault();
+  const name = document.getElementById('guest-name').value.trim();
+  const phone = document.getElementById('guest-phone').value.trim();
+  const cat = document.getElementById('guest-category').value;
+  if (!name) return;
+
+  const url = getLinkForName(name);
+  currentSingle = { name, phone, cat, url };
+
+  document.getElementById('single-result-placeholder').style.display = 'none';
+  const box = document.getElementById('single-result-box');
+  box.style.display = 'block';
+  document.getElementById('res-name').textContent = name;
+  document.getElementById('res-cat').textContent = cat;
+  document.getElementById('res-url').textContent = url;
+}
+
+function copySingleLink() {
+  if (!currentSingle) return;
+  navigator.clipboard.writeText(currentSingle.url).then(() => {
+    alert('Link undangan berhasil disalin: ' + currentSingle.url);
+  });
+}
+
+function formatPhone(p) {
+  if (!p) return '';
+  let clean = p.replace(/\\D/g, '');
+  if (clean.startsWith('0')) clean = '62' + clean.slice(1);
+  return clean;
+}
+
+function getWaMessage(name, link) {
+  const tpl = document.getElementById('wa-template').value;
+  return tpl.replace(/{nama}/g, name).replace(/{link}/g, link);
+}
+
+function sendWaSingle() {
+  if (!currentSingle) return;
+  const msg = getWaMessage(currentSingle.name, currentSingle.url);
+  const phone = formatPhone(currentSingle.phone);
+  const waUrl = phone 
+    ? \`https://api.whatsapp.com/send?phone=\${phone}&text=\${encodeURIComponent(msg)}\`
+    : \`https://api.whatsapp.com/send?text=\${encodeURIComponent(msg)}\`;
+  window.open(waUrl, '_blank');
+}
+
+function saveSingleToTable() {
+  if (!currentSingle) return;
+  guests.unshift({
+    name: currentSingle.name,
+    phone: currentSingle.phone,
+    cat: currentSingle.cat,
+    url: currentSingle.url
+  });
+  localStorage.setItem('wedding_guests', JSON.stringify(guests));
+  renderTable();
+  alert('Tamu ' + currentSingle.name + ' berhasil disimpan ke daftar!');
+}
+
+function processBulkNames() {
+  const text = document.getElementById('bulk-names').value.trim();
+  if (!text) return alert('Silakan masukkan daftar nama!');
+
+  const lines = text.split('\\n');
+  let added = 0;
+  lines.forEach(line => {
+    const parts = line.split(',');
+    const name = parts[0]?.trim();
+    if (!name) return;
+    const phone = parts[1]?.trim() || '';
+    const cat = parts[2]?.trim() || 'Umum';
+    const url = getLinkForName(name);
+
+    guests.push({ name, phone, cat, url });
+    added++;
+  });
+
+  localStorage.setItem('wedding_guests', JSON.stringify(guests));
+  document.getElementById('bulk-names').value = '';
+  renderTable();
+  alert(\`Berhasil menambahkan \${added} tamu ke daftar!\`);
+}
+
+function renderTable() {
+  const tbody = document.getElementById('guest-table-body');
+  const search = (document.getElementById('search-guest')?.value || '').toLowerCase();
+  tbody.innerHTML = '';
+
+  const filtered = guests.filter(g => g.name.toLowerCase().includes(search) || g.cat.toLowerCase().includes(search));
+  document.getElementById('guest-count').textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-dim); padding: 24px;">Belum ada data tamu. Tambahkan lewat formulir di atas.</td></tr>';
+    return;
+  }
+
+  filtered.forEach((g, idx) => {
+    const url = getLinkForName(g.name);
+    const tr = document.createElement('tr');
+    tr.innerHTML = \`
+      <td>\${idx + 1}</td>
+      <td><b style="color: #fff;">\${g.name}</b></td>
+      <td><span class="badge">\${g.cat || 'Umum'}</span></td>
+      <td>\${g.phone || '-'}</td>
+      <td style="font-family: monospace; font-size: 11px; color: var(--gold-light); max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">\${url}</td>
+      <td class="actions-cell">
+        <button class="btn btn-gold btn-mini" onclick="copyLink('\${encodeURIComponent(url)}')">📋 Salin</button>
+        <button class="btn btn-wa btn-mini" onclick="sendWaDirect('\${encodeURIComponent(g.name)}', '\${encodeURIComponent(url)}', '\${g.phone || ''}')">💬 Kirim WA</button>
+        <button class="btn btn-outline btn-mini" style="color: #ff6b6b; border-color: rgba(255,107,107,0.4);" onclick="deleteGuest(\${idx})">✕</button>
+      </td>
+    \`;
+    tbody.appendChild(tr);
+  });
+}
+
+function copyLink(encUrl) {
+  const url = decodeURIComponent(encUrl);
+  navigator.clipboard.writeText(url).then(() => alert('Link disalin: ' + url));
+}
+
+function sendWaDirect(encName, encUrl, phone) {
+  const name = decodeURIComponent(encName);
+  const url = decodeURIComponent(encUrl);
+  const msg = getWaMessage(name, url);
+  const cleanPhone = formatPhone(phone);
+  const waUrl = cleanPhone
+    ? \`https://api.whatsapp.com/send?phone=\${cleanPhone}&text=\${encodeURIComponent(msg)}\`
+    : \`https://api.whatsapp.com/send?text=\${encodeURIComponent(msg)}\`;
+  window.open(waUrl, '_blank');
+}
+
+function deleteGuest(idx) {
+  if (confirm('Hapus tamu ' + guests[idx].name + '?')) {
+    guests.splice(idx, 1);
+    localStorage.setItem('wedding_guests', JSON.stringify(guests));
+    renderTable();
+  }
+}
+
+function clearAllGuests() {
+  if (confirm('Yakin ingin menghapus SEMUA daftar tamu?')) {
+    guests = [];
+    localStorage.setItem('wedding_guests', '[]');
+    renderTable();
+  }
+}
+
+function exportToCSV() {
+  if (guests.length === 0) return alert('Tidak ada data tamu untuk diekspor!');
+  let csv = 'Nama Tamu,Kategori,Nomor WhatsApp,Link Undangan\\n';
+  guests.forEach(g => {
+    const url = getLinkForName(g.name);
+    csv += \`"\${g.name.replace(/"/g, '""')}","\${g.cat}","\${g.phone}","\${url}"\\n\`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'Daftar_Tamu_Undangan_Titin_Devry.csv';
+  link.click();
+}
+
+function updatePreview() {
+  const preview = getWaMessage('Bapak Budi & Keluarga', getLinkForName('Bapak Budi & Keluarga'));
+  document.getElementById('wa-preview').textContent = preview;
+}
+
+document.getElementById('wa-template').addEventListener('input', updatePreview);
+
+function saveTemplate() {
+  const tpl = document.getElementById('wa-template').value;
+  localStorage.setItem('wedding_wa_template', tpl);
+  alert('Template WhatsApp berhasil disimpan!');
+}
+
+function resetTemplate() {
+  if (confirm('Reset template ke format awal?')) {
+    document.getElementById('wa-template').value = DEFAULT_TEMPLATE;
+    localStorage.setItem('wedding_wa_template', DEFAULT_TEMPLATE);
+    updatePreview();
+  }
+}
+
+init();
+</script>
+</body>
+</html>`;
+
+fs.writeFileSync('C:/Project Web/undangan-kage/generator.html', generatorHTML, 'utf8');
+console.log('SUCCESS: generator.html written.');
