@@ -104,11 +104,24 @@ body.is-locked .hero-spacer {
 .card:nth-child(1) .card-fr {
   background:
     linear-gradient(180deg, rgba(3,6,9,.08) 25%, rgba(3,6,9,.75) 100%),
-    url('love.png') center / cover no-repeat !important;
+    url('love.png') center center / contain no-repeat !important;
+  background-color: #0d0a08 !important;
+}
+.card:nth-child(2) .card-fr {
+  background:
+    linear-gradient(180deg, rgba(3,6,9,.08) 25%, rgba(3,6,9,.75) 100%),
+    url('Love2.png') center top / cover no-repeat !important;
+  background-color: #0d0a08 !important;
+}
+.card:nth-child(3) .card-fr {
+  background:
+    linear-gradient(180deg, rgba(3,6,9,.08) 25%, rgba(3,6,9,.75) 100%),
+    url('love3.png') center top / cover no-repeat !important;
+  background-color: #0d0a08 !important;
 }
 .peek-fr {
   background: linear-gradient(180deg, rgba(3,6,9,.04) 24%, rgba(3,6,9,.48) 100%),
-    url('love.png') center / cover no-repeat !important;
+    url('Love2.png') center top / cover no-repeat !important;
 }
 
 /* Floating Music Button */
@@ -595,6 +608,14 @@ body.is-locked .hero-spacer {
     margin-top: 20px;
   }
   
+  /* Story Cards on mobile */
+  .card:nth-child(1) .card-fr {
+    aspect-ratio: 16 / 11 !important;
+  }
+  .card:nth-child(2) .card-fr, .card:nth-child(3) .card-fr {
+    aspect-ratio: 4 / 5 !important;
+  }
+  
   /* RSVP Form */
   .rsvp-container {
     padding: 24px 16px;
@@ -779,7 +800,7 @@ const weddingBody = `
       <span class="k"><b>Momen Bahagia</b> — Jejak Kebersamaan</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">MEMORIES</span>
     </div>
     <div class="cards" id="cards">
-      <article class="card" data-rv="up" data-view="0" data-cursor>
+      <article class="card" data-rv="up" data-view="0" data-cursor onclick="openLightbox('love.png')">
         <div class="card-fr" data-frame>
           <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
           <i class="glow" style="--gx:34.2%; --gy:71.4%; --gr:18%; --gt:6.2s; --gt2:8.9s; --gc1:rgba(255,198,124,.62); --gc2:rgba(201,168,76,.30)"></i>
@@ -787,21 +808,21 @@ const weddingBody = `
         </div>
         <div class="card-meta"><span>Awal Cerita</span><span>01 / 03</span></div>
       </article>
-      <article class="card" data-rv="up" data-view="1" data-cursor>
+      <article class="card" data-rv="up" data-view="1" data-cursor onclick="openLightbox('Love2.png')">
         <div class="card-fr" data-frame>
           <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
           <i class="glow glow--flame" style="--gx:70.5%; --gy:47.2%; --gr:14%; --gt:3.7s; --gt2:5.3s; --gc1:rgba(255,198,124,.62); --gc2:rgba(226,118,40,.30)"></i>
-          <div class="card-lab"><b>Momen Indah</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">JOURNEY</span></div>
+          <div class="card-lab"><b>Tawa &amp; Bahagia</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">JOY</span></div>
         </div>
-        <div class="card-meta"><span>Perjalanan Kami</span><span>02 / 03</span></div>
+        <div class="card-meta"><span>Senyum Bersama</span><span>02 / 03</span></div>
       </article>
-      <article class="card" data-rv="up" data-view="2" data-cursor>
+      <article class="card" data-rv="up" data-view="2" data-cursor onclick="openLightbox('love3.png')">
         <div class="card-fr" data-frame>
           <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
           <i class="glow" style="--gx:48.0%; --gy:16.8%; --gr:20%; --gt:7.3s; --gt2:11.2s; --gc1:rgba(255,198,124,.52); --gc2:rgba(201,168,76,.24)"></i>
-          <div class="card-lab"><b>Menuju Halal</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">DESTINY</span></div>
+          <div class="card-lab"><b>Janji Abadi</b><span class="font-cinzel" style="font-size:11px; color:var(--gold-pale);">ETERNAL</span></div>
         </div>
-        <div class="card-meta"><span>Ikatan Abadi</span><span>03 / 03</span></div>
+        <div class="card-meta"><span>Menuju Halal</span><span>03 / 03</span></div>
       </article>
     </div>
   </div>
@@ -1067,6 +1088,51 @@ content = content.replace("texGlow('rgba(255,120,60,.9)', 'rgba(255,60,24,.28)')
 
 // F. Lock scroll on cover until Buka Undangan is clicked (replace all occurrences)
 content = content.replace(/document\.body\.classList\.remove\('is-locked'\);/g, "/* scroll locked until Buka Undangan */");
+
+// G. Smart aspect-ratio handler for clothPlate so wide landscape images (love.png) are not cropped
+const oldClothPlate = `function clothPlate(img, w, h) {
+  const c = cvs(Math.max(1, w | 0), Math.max(1, h | 0)), x = c.getContext('2d');
+  const s = Math.max(c.width / img.width, c.height / img.height);
+  const dw = img.width * s, dh = img.height * s;
+  x.drawImage(img, (c.width - dw) / 2, (c.height - dh) / 2, dw, dh);
+  let g = x.createLinearGradient(0, 0, 0, c.height);
+  g.addColorStop(.36, 'rgba(3,6,9,.05)'); g.addColorStop(1, 'rgba(3,6,9,.73)');
+  x.fillStyle = g; x.fillRect(0, 0, c.width, c.height);
+  g = x.createLinearGradient(0, 0, 0, c.height);
+  g.addColorStop(.46, 'rgba(4,6,9,0)'); g.addColorStop(1, 'rgba(4,6,9,.80)');
+  x.fillStyle = g; x.fillRect(0, 0, c.width, c.height);
+  return c;
+}`;
+
+const newClothPlate = `function clothPlate(img, w, h) {
+  const c = cvs(Math.max(1, w | 0), Math.max(1, h | 0)), x = c.getContext('2d');
+  x.fillStyle = '#0a0807';
+  x.fillRect(0, 0, c.width, c.height);
+  const imgAspect = img.width / img.height;
+  let s, dw, dh, dx, dy;
+  if (imgAspect > 1.15) {
+    s = c.width / img.width;
+    dw = c.width;
+    dh = img.height * s;
+    dx = 0;
+    dy = (c.height - dh) / 2;
+  } else {
+    s = Math.max(c.width / img.width, c.height / img.height);
+    dw = img.width * s;
+    dh = img.height * s;
+    dx = (c.width - dw) / 2;
+    dy = Math.max(0, (c.height - dh) * 0.15);
+  }
+  x.drawImage(img, dx, dy, dw, dh);
+  let g = x.createLinearGradient(0, 0, 0, c.height);
+  g.addColorStop(.36, 'rgba(3,6,9,.05)'); g.addColorStop(1, 'rgba(3,6,9,.73)');
+  x.fillStyle = g; x.fillRect(0, 0, c.width, c.height);
+  g = x.createLinearGradient(0, 0, 0, c.height);
+  g.addColorStop(.46, 'rgba(4,6,9,0)'); g.addColorStop(1, 'rgba(4,6,9,.80)');
+  x.fillStyle = g; x.fillRect(0, 0, c.width, c.height);
+  return c;
+}`;
+content = content.replace(oldClothPlate, newClothPlate);
 
 // Replace footer console log credit
 content = content.replace("KAGE — a live Kyoto mountain temple, after dark.", "The Wedding of Titin & Devry — 27 September 2026.");
