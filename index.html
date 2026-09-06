@@ -1257,6 +1257,170 @@ body.is-locked .hero-spacer {
   transform: scale(1.08);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   TANDA KASIH (WEDDING GIFT & AMPLOP DIGITAL) STYLES
+   ═══════════════════════════════════════════════════════════════ */
+.gift-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 28px;
+}
+@media (max-width: 860px) {
+  .gift-grid { grid-template-columns: 1fr; }
+}
+.gift-card {
+  background: rgba(20, 16, 14, 0.78);
+  border: 1px solid rgba(201, 168, 76, 0.32);
+  border-radius: 18px;
+  padding: 24px 20px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.gift-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201, 168, 76, 0.2);
+}
+.gift-bank-badge {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold-pale);
+  background: rgba(201, 168, 76, 0.15);
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  margin: 0 auto 12px;
+}
+.gift-bank-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+.gift-holder {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 16px;
+}
+.gift-number-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10, 8, 7, 0.8);
+  border: 1px dashed rgba(201, 168, 76, 0.4);
+  border-radius: 10px;
+  padding: 8px 14px;
+  gap: 10px;
+}
+.gift-number {
+  font-family: monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--gold-light);
+  letter-spacing: 1.5px;
+}
+.gift-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.85), rgba(160, 110, 40, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.gift-copy-btn:hover {
+  transform: scale(1.05);
+  background: var(--gold);
+}
+.btn-qris-modal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(201, 168, 76, 0.18);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-qris-modal:hover {
+  background: var(--gold);
+  color: #080605;
+}
+.gift-address-box {
+  margin-top: 28px;
+  background: rgba(20, 16, 14, 0.72);
+  border: 1px solid rgba(201, 168, 76, 0.28);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+.qris-box {
+  background: rgba(18, 14, 12, 0.96);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.8);
+}
+.qris-img-wrap {
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  display: inline-block;
+}
+.qris-img-wrap img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  display: block;
+}
+.gift-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(24, 20, 18, 0.95);
+  border: 1px solid var(--gold-light);
+  color: var(--gold-pale);
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.gift-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
 /* Lightbox Modal */
 .lightbox-overlay {
   display: none;
@@ -1544,6 +1708,7 @@ body.is-locked .hero-spacer {
     <a class="nav-link" href="#pathways" data-cursor><span>Mempelai</span><span class="alt">COUPLE</span></a>
     <a class="nav-link" href="#lessons" data-cursor><span>Acara</span><span class="alt">EVENT</span></a>
     <a class="nav-link" href="#eternity" data-cursor><span>Lokasi &amp; Galeri</span><span class="alt">VENUE</span></a>
+    <a class="nav-link" href="#gift" data-cursor><span>Tanda Kasih</span><span class="alt">GIFT</span></a>
     <a class="nav-link" href="#rsvp" data-cursor><span>Doa &amp; RSVP</span><span class="alt">RSVP</span></a>
   </nav>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
@@ -1634,7 +1799,7 @@ body.is-locked .hero-spacer {
     <div class="gate-stats" data-rv="up">
       <div><b>27</b><span>September</span></div>
       <div><b>2026</b><span>Tahun Masehi</span></div>
-      <div><b>08:00</b><span>Waktu Mulai</span></div>
+      <div><b>13.00</b><span>Waktu Mulai</span></div>
       <div><b>∞</b><span>Doa &amp; Berkah</span></div>
     </div>
   </div>
@@ -1784,7 +1949,7 @@ body.is-locked .hero-spacer {
 </section>
 
 <!-- ============================================================ chapter IV (Lokasi & Galeri) -->
-<section class="sec fin" id="eternity" data-cam="4">
+<section class="sec" id="eternity" data-cam="4">
   <div class="sec-glass-card" style="text-align: center;">
     <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Pelataran &amp; Lokasi Acara</div>
     <h2 class="display font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Rumah Mempelai Wanita</h2>
@@ -1814,18 +1979,86 @@ body.is-locked .hero-spacer {
   </div>
 </section>
 
+<!-- ============================================================ chapter V (Tanda Kasih / Wedding Gift) -->
+<section class="sec" id="gift" data-cam="4">
+  <div class="sec-glass-card" style="text-align: center;">
+    <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Ungkapan Kasih &amp; Hadiah</div>
+    <h2 class="display font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Tanda Kasih</h2>
+    <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 28px; font-style: italic;">
+      "Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan kasih Anda, kami menyediakan amplop digital di bawah ini untuk memudahkan Anda:"
+    </p>
+
+    <div class="gift-grid" data-rv="up">
+      <!-- Rekening Mempelai Pria (Devry) -->
+      <div class="gift-card">
+        <div>
+          <span class="gift-bank-badge">BANK TRANSFER</span>
+          <div class="gift-bank-name font-cinzel">BCA</div>
+          <p class="gift-holder">a.n. <b>Devry Rizkie H</b></p>
+        </div>
+        <div class="gift-number-box">
+          <span class="gift-number" id="acc-devry">8415123456</span>
+          <button class="gift-copy-btn" onclick="copyGiftText('acc-devry', 'Nomor rekening BCA')" title="Salin No. Rekening">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Salin</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Rekening Mempelai Wanita (Titin) -->
+      <div class="gift-card">
+        <div>
+          <span class="gift-bank-badge">BANK TRANSFER</span>
+          <div class="gift-bank-name font-cinzel">MANDIRI / BSI</div>
+          <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
+        </div>
+        <div class="gift-number-box">
+          <span class="gift-number" id="acc-titin">1230009876543</span>
+          <button class="gift-copy-btn" onclick="copyGiftText('acc-titin', 'Nomor rekening')" title="Salin No. Rekening">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Salin</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- QRIS / E-Wallet -->
+      <div class="gift-card">
+        <div>
+          <span class="gift-bank-badge" style="background: rgba(232, 201, 122, 0.2); color: var(--gold-light);">ALL PAYMENT / EWALLET</span>
+          <div class="gift-bank-name font-cinzel">QRIS CODE</div>
+          <p class="gift-holder" style="font-size: 12px; margin-bottom: 12px;">Scan via BCA Mobile, GoPay, OVO, ShopeePay, Dana, dll.</p>
+        </div>
+        <div style="margin: 6px auto;">
+          <button class="btn-qris-modal" onclick="openQrisModal()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Buka QR Code QRIS</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kirim Kado Fisik -->
+    <div class="gift-address-box" data-rv="up">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--gold-light)" stroke-width="2"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        <h4 class="font-cinzel" style="font-size: 14px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase;">Kirim Kado Fisik</h4>
+      </div>
+      <p style="font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; max-width: 600px; margin: 0 auto 12px;" id="gift-address-text">
+        <b>Penerima: Titin Rahma Lestari / Devry Rizkie H</b><br>
+        Jl. Abah Rimun No 133 Rt 008, RW 006, Jatiwarna, Pondok Melati, Bekasi.
+      </p>
+      <button class="gift-copy-btn" style="margin: 0 auto; display: inline-flex;" onclick="copyGiftText('gift-address-text', 'Alamat pengiriman kado')">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Salin Alamat Lengkap</span>
+      </button>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================ footer (RSVP & Doa) -->
 <footer class="foot" id="rsvp" data-cam="5">
-  <div class="fg" data-fg="foot" aria-hidden="true">
-    <span class="fg-el fg-bush" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async"></span>
-    <span class="fg-el fg-stones" data-fg-in="up"><img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async"></span>
-  </div>
-
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>05</b> — Konfirmasi Kehadiran</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">WISHES</span>
+    <span class="k"><b>06</b> — Konfirmasi Kehadiran</span><span class="rule"></span><span class="k font-cinzel" style="font-size:11px; letter-spacing:2px; color:var(--gold-pale);">WISHES</span>
   </div>
 
   <div style="text-align: center; margin-bottom: 32px;" data-rv="up">
@@ -1859,6 +2092,8 @@ body.is-locked .hero-spacer {
           <select id="rsvp-count" class="form-select">
             <option value="1 Orang">1 Orang</option>
             <option value="2 Orang">2 Orang</option>
+            <option value="3 Orang">3 Orang</option>
+            <option value="4 Orang">4 Orang</option>
           </select>
         </div>
       </div>
@@ -1877,27 +2112,10 @@ body.is-locked .hero-spacer {
     <!-- Wishes List -->
     <div id="wishes-box" style="margin-top: 32px; border-top: 1px solid rgba(201,168,76,0.2); padding-top: 24px;">
       <h4 class="font-cinzel" style="font-size: 13px; letter-spacing: 3px; color: var(--gold-light); margin-bottom: 16px; text-transform: uppercase;">
-        Doa &amp; Ucapan Terkirim (<span id="wishes-count">2</span>)
+        Doa &amp; Ucapan Terkirim (<span id="wishes-count">3</span>)
       </h4>
-      <div id="wishes-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 240px; overflow-y: auto; text-align: left;">
-        <div style="background: rgba(10,8,7,0.6); padding: 14px 18px; border-radius: 10px; border-left: 3px solid var(--gold);">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <b style="color: #fff; font-size: 14px;">Keluarga Besar</b>
-            <span style="font-size: 11px; color: var(--gold-pale);">Hadir</span>
-          </div>
-          <p style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5;">
-            Selamat menempuh hidup baru untuk Titin &amp; Devry. Semoga menjadi keluarga yang sakinah, mawaddah, dan warahmah. Aamiin!
-          </p>
-        </div>
-        <div style="background: rgba(10,8,7,0.6); padding: 14px 18px; border-radius: 10px; border-left: 3px solid var(--gold);">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <b style="color: #fff; font-size: 14px;">Sahabat &amp; Rekan</b>
-            <span style="font-size: 11px; color: var(--gold-pale);">Hadir</span>
-          </div>
-          <p style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.5;">
-            Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fii khair. Bahagia selalu dan dilancarkan seluruh acaranya!
-          </p>
-        </div>
+      <div id="wishes-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 280px; overflow-y: auto; text-align: left;">
+        <!-- Dynamically populated by loadWishes() -->
       </div>
     </div>
   </div>
@@ -1924,6 +2142,7 @@ body.is-locked .hero-spacer {
         <li><a href="#pathways" data-cursor>Mempelai</a></li>
         <li><a href="#lessons" data-cursor>Rangkaian Acara</a></li>
         <li><a href="#eternity" data-cursor>Lokasi &amp; Galeri</a></li>
+        <li><a href="#gift" data-cursor>Tanda Kasih</a></li>
         <li><a href="#rsvp" data-cursor>Konfirmasi Kehadiran</a></li>
       </ul>
     </div>
@@ -1945,6 +2164,22 @@ body.is-locked .hero-spacer {
   <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
   <img id="lightbox-img" class="lightbox-img" src="" alt="Enlarged photo">
 </div>
+
+<!-- QRIS Modal -->
+<div id="qris-modal" class="lightbox-overlay" onclick="closeQrisModal(event)">
+  <div class="qris-box" onclick="event.stopPropagation()">
+    <span class="lightbox-close" onclick="closeQrisModal(event)">&times;</span>
+    <h3 class="font-cinzel" style="color: var(--gold-light); font-size: 16px; letter-spacing: 2px; margin-bottom: 6px;">QRIS TANDA KASIH</h3>
+    <p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 16px;">Titin Rahma Lestari &amp; Devry Rizkie H</p>
+    <div class="qris-img-wrap">
+      <img id="qris-img" src="qris.png" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=Titin%20%26%20Devry%20Wedding%20Gift'" alt="QRIS Code">
+    </div>
+    <p style="font-size: 11px; color: var(--gold-pale); margin-top: 14px;">Dapat di-scan dengan seluruh aplikasi Mobile Banking &amp; E-Wallet</p>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="gift-toast" class="gift-toast">Teks berhasil disalin!</div>
 <div class="rail" id="rail"></div>
 
 <script src="secret-pathways-assets/three.min.js"></script>
@@ -5509,7 +5744,7 @@ else addEventListener('DOMContentLoaded', boot);
 })();
 
 /* ═══════════════════════════════════════════════════════════════
-   WEDDING INVITATION SCRIPTS (MUSIC, COUNTDOWN, GUEST, RSVP)
+   WEDDING INVITATION SCRIPTS (MUSIC, COUNTDOWN, GUEST, RSVP, GIFT)
    ═══════════════════════════════════════════════════════════════ */
 
 // Guard to strictly prevent scrolling on desktop and mobile while locked
@@ -5591,9 +5826,9 @@ if (btnOpen) {
   });
 }
 
-// C. Countdown Timer to 27 September 2026 08:00:00 WIB (UTC+7)
+// C. Countdown Timer to 27 September 2026 13:00:00 WIB (UTC+7)
 (function initCountdown() {
-  const targetDate = new Date('2026-09-27T08:00:00+07:00').getTime();
+  const targetDate = new Date('2026-09-27T13:00:00+07:00').getTime();
 
   function update() {
     const now = new Date().getTime();
@@ -5646,7 +5881,98 @@ window.closeLightbox = function(e) {
   }
 };
 
-// E. RSVP Form Submit to WhatsApp & Live List
+// E. Copy Gift Text to Clipboard & Toast
+window.copyGiftText = function(elementId, label) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const text = el.innerText || el.textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text.trim()).then(() => {
+      showGiftToast((label || 'Teks') + ' berhasil disalin!');
+    }).catch(() => fallbackCopy(text.trim(), label));
+  } else {
+    fallbackCopy(text.trim(), label);
+  }
+};
+
+function fallbackCopy(text, label) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  showGiftToast((label || 'Teks') + ' berhasil disalin!');
+}
+
+function showGiftToast(msg) {
+  const toast = document.getElementById('gift-toast');
+  if (!toast) return;
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2600);
+}
+
+// QRIS Modal
+window.openQrisModal = function() {
+  const modal = document.getElementById('qris-modal');
+  if (modal) modal.classList.add('active');
+};
+
+window.closeQrisModal = function(e) {
+  if (e.target.id === 'qris-modal' || e.target.classList.contains('lightbox-close')) {
+    const modal = document.getElementById('qris-modal');
+    if (modal) modal.classList.remove('active');
+  }
+};
+
+// F. Dynamic Wishes & RSVP System with LocalStorage Sync
+const DEFAULT_WISHES = [
+  { id: '1', name: 'Keluarga Besar Alm. Bapak Jajang', status: 'Hadir', count: '2 Orang', msg: 'Selamat menempuh hidup baru untuk Titin & Devry. Semoga menjadi keluarga yang sakinah, mawaddah, dan warahmah. Aamiin ya Rabbal Alamin!', time: '2026-09-01' },
+  { id: '2', name: 'Keluarga Besar Bapak Maman Darmana', status: 'Hadir', count: '2 Orang', msg: "Barakallahu lakuma wa baraka 'alaika wa jama'a bainakuma fii khair. Bahagia selalu dan dilancarkan seluruh acaranya.", time: '2026-09-02' },
+  { id: '3', name: 'Sahabat & Rekan', status: 'Hadir', count: '1 Orang', msg: 'Happy wedding Devry & Titin! Semoga cinta kalian selalu bersemi dan penuh keberkahan hingga akhir hayat.', time: '2026-09-03' }
+];
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, function(m) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+  });
+}
+
+function loadWishes() {
+  let stored = [];
+  try {
+    const raw = localStorage.getItem('wedding_wishes');
+    if (raw) stored = JSON.parse(raw);
+  } catch(e) {}
+
+  const all = [...stored, ...DEFAULT_WISHES];
+  const listEl = document.getElementById('wishes-list');
+  const cntEl = document.getElementById('wishes-count');
+  if (cntEl) cntEl.textContent = all.length;
+
+  if (listEl) {
+    listEl.innerHTML = all.map(w => `
+      <div style="background: rgba(10,8,7,0.65); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #C9A84C; animation: fade-in-up 0.4s ease;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <b style="color: #fff; font-size: 14px;">${escapeHtml(w.name)}</b>
+          <span style="font-size: 11px; color: #F5E9C8;">${escapeHtml(w.status)} (${escapeHtml(w.count)})</span>
+        </div>
+        <p style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5;">${escapeHtml(w.msg)}</p>
+      </div>
+    `).join('');
+  }
+}
+
+// Initial Wishes Render
+loadWishes();
+
+// RSVP Form Submit to WhatsApp & LocalStorage
 window.handleRsvpSubmit = function(e) {
   e.preventDefault();
   const name = document.getElementById('rsvp-name').value.trim();
@@ -5654,28 +5980,31 @@ window.handleRsvpSubmit = function(e) {
   const count = document.getElementById('rsvp-count').value;
   const msg = document.getElementById('rsvp-msg').value.trim();
 
-  // Add to live list
-  const list = document.getElementById('wishes-list');
-  if (list) {
-    const item = document.createElement('div');
-    item.style.cssText = 'background: rgba(10,8,7,0.7); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #E8C97A; animation: fade-in-up 0.5s ease;';
-    item.innerHTML = `
-      <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-        <b style="color: #fff; font-size: 14px;">${name}</b>
-        <span style="font-size: 11px; color: #F5E9C8;">${status} (${count})</span>
-      </div>
-      <p style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5;">${msg}</p>
-    `;
-    list.prepend(item);
-    const cnt = document.getElementById('wishes-count');
-    if (cnt) cnt.textContent = parseInt(cnt.textContent || '0') + 1;
+  if (!name || !msg) return;
+
+  const newWish = {
+    id: Date.now().toString(),
+    name,
+    status,
+    count,
+    msg,
+    time: new Date().toISOString()
+  };
+
+  try {
+    let stored = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
+    stored.unshift(newWish);
+    localStorage.setItem('wedding_wishes', JSON.stringify(stored));
+  } catch(err) {
+    console.error(err);
   }
+
+  loadWishes();
 
   // Construct WhatsApp link
   const text = `Halo Devry & Titin, saya *\x24{name}* ingin mengonfirmasi:\n\nStatus: *\x24{status}* (\x24{count})\nDoa & Ucapan: "\x24{msg}"\n\nTerima kasih atas undangannya!`;
   const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
 
-  // Open WhatsApp in new tab
   window.open(waUrl, '_blank');
 
   alert('Terima kasih atas doa dan konfirmasi kehadiran Anda!');
@@ -5685,7 +6014,7 @@ window.handleRsvpSubmit = function(e) {
 // Update rail names to Indonesian
 setTimeout(() => {
   const railBtns = document.querySelectorAll('#rail button');
-  const indonesianNames = ['Beranda', 'Ayat Suci', 'Mempelai', 'Rangkaian Acara', 'Lokasi & Galeri', 'Konfirmasi & Doa'];
+  const indonesianNames = ['Beranda', 'Ayat Suci', 'Mempelai', 'Rangkaian Acara', 'Lokasi & Galeri', 'Tanda Kasih', 'Konfirmasi & Doa'];
   railBtns.forEach((b, i) => {
     if (indonesianNames[i]) {
       b.title = indonesianNames[i];
