@@ -328,6 +328,46 @@ const generatorHTML = `<!DOCTYPE html>
       font-size: 24px;
       cursor: pointer;
     }
+  
+    /* Aesthetic In-App Toast */
+    .app-toast {
+      position: fixed;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-60px) scale(0.92);
+      background: rgba(18, 14, 12, 0.94);
+      border: 1px solid rgba(201, 168, 76, 0.55);
+      color: #fff;
+      padding: 13px 26px;
+      border-radius: 999px;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 24px rgba(201, 168, 76, 0.25);
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+      max-width: 90vw;
+    }
+    .app-toast.show {
+      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+    }
+    .app-toast-warn {
+      border-color: rgba(224, 35, 28, 0.6) !important;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 24px rgba(224, 35, 28, 0.25) !important;
+    }
+    .app-toast-success {
+      border-color: rgba(37, 211, 102, 0.6) !important;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8), 0 0 24px rgba(37, 211, 102, 0.25) !important;
+    }
   </style>
 </head>
 <body>
@@ -602,7 +642,38 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
   </div>
 </div>
 
+
+<!-- Aesthetic App Toast -->
+<div id="app-toast" class="app-toast"></div>
+
 <script>
+let appToastTimer = null;
+function showToast(msg, type = 'gold') {
+  const toast = document.getElementById('app-toast');
+  if (!toast) return;
+
+  let icon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#C9A84C" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+  if (type === 'success') {
+    icon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#25D366" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+    toast.classList.add('app-toast-success');
+    toast.classList.remove('app-toast-warn');
+  } else if (type === 'warn') {
+    icon = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#e0231c" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+    toast.classList.add('app-toast-warn');
+    toast.classList.remove('app-toast-success');
+  } else {
+    toast.classList.remove('app-toast-warn', 'app-toast-success');
+  }
+
+  toast.innerHTML = icon + '<span>' + msg + '</span>';
+  toast.classList.add('show');
+
+  if (appToastTimer) clearTimeout(appToastTimer);
+  appToastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3200);
+}
+
 // Default Template
 const DEFAULT_TEMPLATE = \`Kepada Yth.
 Bapak/Ibu/Saudara/i: *{NAMA_TAMU}*
@@ -704,18 +775,18 @@ function generateSingleLink(e) {
 
 function copySingleLink() {
   const text = document.getElementById('single-link-display').textContent;
-  navigator.clipboard.writeText(text).then(() => alert('Link undangan berhasil disalin!'));
+  navigator.clipboard.writeText(text).then(() => showToast('Link undangan berhasil disalin!', 'success'));
 }
 
 function copySingleMessage() {
   const text = document.getElementById('single-msg-display').value;
-  navigator.clipboard.writeText(text).then(() => alert('Pesan WhatsApp lengkap berhasil disalin!'));
+  navigator.clipboard.writeText(text).then(() => showToast('Pesan WhatsApp lengkap berhasil disalin!', 'success'));
 }
 
 // Bulk Processing
 function processBulkList() {
   const raw = document.getElementById('bulk-input').value.trim();
-  if (!raw) return alert('Silakan masukkan minimal 1 nama tamu.');
+  if (!raw) return showToast('Silakan masukkan minimal 1 nama tamu.', 'warn');
 
   const lines = raw.split('\\n');
   bulkGuests = [];
@@ -784,7 +855,7 @@ function clearBulkTable() {
 }
 
 function exportBulkToCSV() {
-  if (!bulkGuests.length) return alert('Tidak ada data tamu untuk diexport.');
+  if (!bulkGuests.length) return showToast('Tidak ada data tamu untuk diexport.', 'warn');
   let csv = 'No,Nama Tamu,Kategori,Nomor WA,Link Undangan\\n';
   bulkGuests.forEach((g, i) => {
     csv += \`"\${i+1}","\${g.name.replace(/"/g, '""')}","\${g.category}","\${g.phone}","\${g.url}"\\n\`;
@@ -795,7 +866,7 @@ function exportBulkToCSV() {
 function saveTemplate() {
   currentTemplate = document.getElementById('template-text').value;
   localStorage.setItem('wedding_template', currentTemplate);
-  alert('Template pesan WhatsApp berhasil disimpan!');
+  showToast('Template pesan WhatsApp berhasil disimpan!', 'success');
 }
 
 function resetTemplate() {
@@ -929,7 +1000,7 @@ function handleSaveWishModal(e) {
   saveStoredWishes(wishes);
   closeWishModal();
   renderWishesTable();
-  alert('Data doa & ucapan berhasil disimpan!');
+  showToast('Data doa & ucapan berhasil disimpan!', 'success');
 }
 
 function deleteWish(id) {
@@ -943,7 +1014,7 @@ function deleteWish(id) {
 
 function exportWishesCSV() {
   const wishes = getStoredWishes();
-  if (!wishes.length) return alert('Belum ada ucapan untuk diexport.');
+  if (!wishes.length) return showToast('Belum ada ucapan untuk diexport.', 'warn');
   let csv = 'No,Nama Tamu,Status Kehadiran,Jumlah Tamu,Pesan Doa Restu\\n';
   wishes.forEach((w, i) => {
     csv += \`"\${i+1}","\${(w.name||'').replace(/"/g, '""')}","\${w.status}","\${w.count||'1'}","\${(w.msg||'').replace(/"/g, '""')}"\\n\`;
@@ -966,12 +1037,12 @@ function importWishesJSON(e) {
       if (Array.isArray(data)) {
         saveStoredWishes(data);
         renderWishesTable();
-        alert('Data ucapan berhasil diimport!');
+        showToast('Data ucapan berhasil diimport!', 'success');
       } else {
-        alert('Format file JSON tidak valid.');
+        showToast('Format file JSON tidak valid.', 'warn');
       }
     } catch(err) {
-      alert('Gagal membaca file JSON.');
+      showToast('Gagal membaca file JSON.', 'warn');
     }
   };
   reader.readAsText(file);
@@ -979,7 +1050,7 @@ function importWishesJSON(e) {
 
 // Helpers
 function copyText(str, label) {
-  navigator.clipboard.writeText(str).then(() => alert(label + ' berhasil disalin!'));
+  navigator.clipboard.writeText(str).then(() => showToast(label + ' berhasil disalin!', 'success'));
 }
 
 function downloadFile(content, fileName, mimeType) {
