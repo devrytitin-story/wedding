@@ -338,7 +338,7 @@ const generatorHTML = `<!DOCTYPE html>
     <p>Titin Rahma Lestari &amp; Devry Rizkie H</p>
     <div style="margin-top: 14px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
       <a href="index.html" target="_blank" class="btn btn-outline btn-mini">👁️ Buka Web Undangan Utama</a>
-      <a href="index.html#gift" target="_blank" class="btn btn-outline btn-mini">🎁 Cek Tanda Kasih &amp; QRIS</a>
+      <a href="index.html#gift" target="_blank" class="btn btn-outline btn-mini">🎁 Cek Tanda Kasih</a>
     </div>
   </header>
 
