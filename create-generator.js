@@ -539,23 +539,21 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
       </div>
     </div>
 
-    <!-- Cloud Sync / Google Sheets Guide Card -->
-    <div class="card">
-      <h2>☁️ Catatan &amp; Perekaman Data Realtime Cloud</h2>
-      <div style="font-size: 13px; color: var(--text-dim); line-height: 1.7;">
-        <p style="margin-bottom: 10px;">
-          ✨ <b>Sistem Rekam Saat Ini:</b>
-          Setiap tamu yang mengisi form RSVP di web undangan akan langsung:
+    <!-- Cloud Sync / Google Sheets Info Card (Aktif & Terhubung) -->
+    <div class="card" style="border: 1px solid rgba(37, 211, 102, 0.4); background: rgba(14, 28, 18, 0.65);">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+        <h2 style="color: #8bf0b2; margin: 0; font-size: 16px;">☁️ Integrasi Google Sheets Aktif &amp; Terhubung</h2>
+        <span class="badge badge-hadir" style="font-size: 11px;">● Terhubung Paten</span>
+      </div>
+      <div style="font-size: 13px; color: var(--text); line-height: 1.7;">
+        <p style="margin-bottom: 8px;">
+          Setiap tamu yang menekan tombol <b>"1. Simpan di Web Saja"</b> maupun <b>"2. Simpan &amp; Kirim WA"</b> akan otomatis langsung terkirim dan tercatat ke Google Spreadsheet Anda secara realtime melalui endpoint Google Apps Script:
         </p>
-        <ol style="margin-left: 20px; margin-bottom: 14px;">
-          <li>Tersimpan secara lokal di browser &amp; langsung tampil di papan ucapan website.</li>
-          <li>Otomatis membuka WhatsApp untuk mengirim konfirmasi langsung ke nomor Anda.</li>
-        </ol>
-        <p style="margin-bottom: 6px;">
-          💡 <b>Ingin Seluruh Data Tamu Otomatis Masuk ke Google Spreadsheet Bersama?</b>
-        </p>
-        <p>
-          Anda dapat menggunakan integrasi gratis <b>Google Forms Webhook</b> atau <b>Supabase</b> (tanpa biaya / gratis). Jika Anda ingin dibuatkan tautan Google Spreadsheet, Anda tinggal membuat 1 Google Form baru dan kirimkan link form-nya ke kami!
+        <div class="result-url" style="background: rgba(0,0,0,0.55); color: #8bf0b2; word-break: break-all; font-size: 12px;">
+          https://script.google.com/macros/s/AKfycbxtGVFOY2ug_OyWfzfnA_vNjVrjoM6cb0l1gJxkIz8fatn7LSKQNc04fHUu277caHPfbw/exec
+        </div>
+        <p style="margin-top: 10px; font-size: 12px; color: var(--gold-pale);">
+          💡 <i>Semua data kehadiran, estimasi jumlah tamu, dan pesan doa restu aman tersimpan di Google Sheets Anda tanpa biaya server.</i>
         </p>
       </div>
     </div>

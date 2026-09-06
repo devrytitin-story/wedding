@@ -5940,7 +5940,9 @@ function showGiftToast(msg) {
   }, 2600);
 }
 
-// F. Dynamic Wishes & RSVP System with LocalStorage Sync
+// F. Dynamic Wishes & RSVP System with LocalStorage & Google Sheets Sync
+const GSHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxtGVFOY2ug_OyWfzfnA_vNjVrjoM6cb0l1gJxkIz8fatn7LSKQNc04fHUu277caHPfbw/exec';
+window.GSHEET_WEBAPP_URL = GSHEET_WEBAPP_URL;
 const DEFAULT_WISHES = [
   { id: '1', name: 'Keluarga Besar Alm. Bapak Jajang', status: 'Hadir', count: '2 Orang', msg: 'Selamat menempuh hidup baru untuk Titin & Devry. Semoga menjadi keluarga yang sakinah, mawaddah, dan warahmah. Aamiin ya Rabbal Alamin!', time: '2026-09-01' },
   { id: '2', name: 'Keluarga Besar Bapak Maman Darmana', status: 'Hadir', count: '2 Orang', msg: "Barakallahu lakuma wa baraka 'alaika wa jama'a bainakuma fii khair. Bahagia selalu dan dilancarkan seluruh acaranya.", time: '2026-09-02' },
@@ -6002,17 +6004,16 @@ function saveWishData(name, status, count, msg) {
   }
   loadWishes();
 
-  // Kirim background request jika URL Google Sheets App Script dikonfigurasi di window.GSHEET_WEBAPP_URL
-  if (window.GSHEET_WEBAPP_URL) {
-    try {
-      fetch(window.GSHEET_WEBAPP_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newWish)
-      }).catch(e => console.warn('GSheet sync failed', e));
-    } catch(e) {}
-  }
+  // Kirim background request otomatis ke Google Sheets (Paten)
+  const targetSheetUrl = window.GSHEET_WEBAPP_URL || 'https://script.google.com/macros/s/AKfycbxtGVFOY2ug_OyWfzfnA_vNjVrjoM6cb0l1gJxkIz8fatn7LSKQNc04fHUu277caHPfbw/exec';
+  try {
+    fetch(targetSheetUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newWish)
+    }).catch(e => console.warn('GSheet sync error:', e));
+  } catch(e) {}
 
   return newWish;
 }
