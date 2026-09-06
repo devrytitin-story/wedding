@@ -673,26 +673,41 @@ body.is-locked .hero-spacer {
 }
 .btn-submit-rsvp {
   width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, #25D366, #128C7E);
-  border: none;
+  padding: 14px 10px;
   border-radius: 10px;
-  color: #fff;
   font-family: 'Cinzel', serif;
-  font-size: 13px;
-  letter-spacing: 2px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.25);
+  border: none;
+  color: #fff;
 }
-.btn-submit-rsvp:hover {
+.btn-save-only {
+  background: linear-gradient(135deg, #C9A84C, #8C6A28);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.25);
+}
+.btn-save-only:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45);
+  box-shadow: 0 8px 25px rgba(201, 168, 76, 0.45);
+}
+.btn-save-wa {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25);
+}
+.btn-save-wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
+}
+@media (max-width: 600px) {
+  .rsvp-container form > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -829,6 +844,7 @@ body.is-locked .hero-spacer {
 content = content.replace('</style>', weddingCSS + '</style>');
 
 // 3. Update Preloader Text & Branding
+content = content.replace(/<div class="pre-mark">[\s\S]*?<\/div>/, '<div class="pre-mark" style="display:none;"><\/div>');
 content = content.replace('Raising the mountain temple', 'Mempersiapkan Undangan Pernikahan');
 content = content.replace('<div class="pre-jp jp">影の道</div>', '<div class="pre-jp font-cinzel" style="font-size:12px; letter-spacing:4px; color:var(--gold-light);">THE WEDDING · 2026</div>');
 
@@ -851,11 +867,6 @@ const weddingBody = `
 <!-- ============================================================ nav -->
 <header class="nav" id="nav">
   <a class="brand" href="#top" data-cursor>
-    <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-      <circle cx="22" cy="25" r="8.6" fill="#C9A84C" fill-opacity=".9"/>
-      <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
-      <path d="M14 35.5h16" stroke="#dfe7e0" stroke-width="1.2" stroke-opacity=".6"/>
-    </svg>
     <span class="brand-tx"><b>TITIN &amp; DEVRY</b><i>THE WEDDING &amp; SYUKURAN</i></span>
   </a>
   <nav class="nav-links" id="navlinks">
@@ -1243,10 +1254,16 @@ const weddingBody = `
         <textarea id="rsvp-msg" class="form-textarea" rows="3" placeholder="Tuliskan doa atau ucapan selamat..." required></textarea>
       </div>
 
-      <button type="submit" class="btn-submit-rsvp" data-cursor>
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/></svg>
-        <span>Kirim Konfirmasi via WhatsApp</span>
-      </button>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
+        <button type="button" onclick="handleSaveWishOnly()" class="btn-submit-rsvp btn-save-only" data-cursor>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>1. Simpan di Web Saja</span>
+        </button>
+        <button type="submit" class="btn-submit-rsvp btn-save-wa" data-cursor>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/></svg>
+          <span>2. Simpan &amp; Kirim WA</span>
+        </button>
+      </div>
     </form>
 
     <!-- Wishes List -->
@@ -1603,15 +1620,8 @@ function loadWishes() {
 loadWishes();
 
 // RSVP Form Submit to WhatsApp & LocalStorage
-window.handleRsvpSubmit = function(e) {
-  e.preventDefault();
-  const name = document.getElementById('rsvp-name').value.trim();
-  const status = document.getElementById('rsvp-status').value;
-  const count = document.getElementById('rsvp-count').value;
-  const msg = document.getElementById('rsvp-msg').value.trim();
-
-  if (!name || !msg) return;
-
+// Helper Simpan Wish ke LocalStorage & (Opsional) Google Sheet
+function saveWishData(name, status, count, msg) {
   const newWish = {
     id: Date.now().toString(),
     name,
@@ -1620,7 +1630,6 @@ window.handleRsvpSubmit = function(e) {
     msg,
     time: new Date().toISOString()
   };
-
   try {
     let stored = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
     stored.unshift(newWish);
@@ -1628,16 +1637,64 @@ window.handleRsvpSubmit = function(e) {
   } catch(err) {
     console.error(err);
   }
-
   loadWishes();
 
-  // Construct WhatsApp link
-  const text = \`Halo Devry & Titin, saya *\\x24{name}* ingin mengonfirmasi:\\n\\nStatus: *\\x24{status}* (\\x24{count})\\nDoa & Ucapan: "\\x24{msg}"\\n\\nTerima kasih atas undangannya!\`;
-  const waUrl = \`https://api.whatsapp.com/send?text=\${encodeURIComponent(text)}\`;
+  // Kirim background request jika URL Google Sheets App Script dikonfigurasi di window.GSHEET_WEBAPP_URL
+  if (window.GSHEET_WEBAPP_URL) {
+    try {
+      fetch(window.GSHEET_WEBAPP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newWish)
+      }).catch(e => console.warn('GSheet sync failed', e));
+    } catch(e) {}
+  }
+
+  return newWish;
+}
+
+// Metode 1: Simpan Saja di Web
+window.handleSaveWishOnly = function() {
+  const name = document.getElementById('rsvp-name').value.trim();
+  const status = document.getElementById('rsvp-status').value;
+  const count = document.getElementById('rsvp-count').value;
+  const msg = document.getElementById('rsvp-msg').value.trim();
+
+  if (!name) {
+    alert('Silakan masukkan nama Anda terlebih dahulu.');
+    document.getElementById('rsvp-name').focus();
+    return;
+  }
+  if (!msg) {
+    alert('Silakan tuliskan doa & ucapan selamat.');
+    document.getElementById('rsvp-msg').focus();
+    return;
+  }
+
+  saveWishData(name, status, count, msg);
+  alert('Terima kasih! Doa dan konfirmasi kehadiran Anda telah berhasil disimpan di website.');
+  document.getElementById('rsvp-msg').value = '';
+};
+
+// Metode 2: Simpan & Kirim Konfirmasi ke WhatsApp (+62 895-4022-48811)
+window.handleRsvpSubmit = function(e) {
+  if (e) e.preventDefault();
+  const name = document.getElementById('rsvp-name').value.trim();
+  const status = document.getElementById('rsvp-status').value;
+  const count = document.getElementById('rsvp-count').value;
+  const msg = document.getElementById('rsvp-msg').value.trim();
+
+  if (!name || !msg) return;
+
+  saveWishData(name, status, count, msg);
+
+  // Kirim WhatsApp ke nomor tujuan +62 895-4022-48811
+  const text = \`Halo Devry & Titin, saya *\${name}* ingin mengonfirmasi:\\n\\nStatus: *\${status}* (\${count})\\nDoa & Ucapan: "\${msg}"\\n\\nTerima kasih atas undangannya!\`;
+  const waUrl = \`https://api.whatsapp.com/send?phone=62895402248811&text=\${encodeURIComponent(text)}\`;
 
   window.open(waUrl, '_blank');
-
-  alert('Terima kasih atas doa dan konfirmasi kehadiran Anda!');
+  alert('Terima kasih! Doa telah tersimpan dan Anda diarahkan ke WhatsApp.');
   document.getElementById('rsvp-msg').value = '';
 };
 
