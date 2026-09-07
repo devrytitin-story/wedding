@@ -1270,11 +1270,11 @@ const weddingBody = `
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px;">
-        <button type="button" onclick="handleSaveWishOnly()" class="btn-submit-rsvp btn-save-only" data-cursor>
+        <button type="button" id="btn-save-web" onclick="handleSaveWishOnly()" class="btn-submit-rsvp btn-save-only" data-cursor>
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
           <span>1. Simpan di Web Saja</span>
         </button>
-        <button type="submit" class="btn-submit-rsvp btn-save-wa" data-cursor>
+        <button type="submit" id="btn-save-wa" class="btn-submit-rsvp btn-save-wa" data-cursor>
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.072.043.419-.101.824z"/></svg>
           <span>2. Simpan &amp; Kirim WA</span>
         </button>
@@ -1738,8 +1738,50 @@ function saveWishData(name, status, count, msg) {
   return newWish;
 }
 
+let isSubmittingRsvp = false;
+
+function setRsvpButtonsBusy(busy, targetBtnId) {
+  const btnWeb = document.getElementById('btn-save-web');
+  const btnWa = document.getElementById('btn-save-wa');
+  const buttons = [btnWeb, btnWa].filter(Boolean);
+
+  buttons.forEach(btn => {
+    if (busy) {
+      btn.disabled = true;
+      btn.style.opacity = '0.65';
+      btn.style.cursor = 'not-allowed';
+      btn.style.pointerEvents = 'none';
+    } else {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      btn.style.pointerEvents = 'auto';
+    }
+  });
+
+  if (busy && targetBtnId) {
+    const activeBtn = document.getElementById(targetBtnId);
+    if (activeBtn) {
+      activeBtn.dataset.origHtml = activeBtn.innerHTML;
+      activeBtn.innerHTML = '<span>⏳ Memproses...</span>';
+    }
+  } else if (!busy) {
+    buttons.forEach(btn => {
+      if (btn.dataset.origHtml) {
+        btn.innerHTML = btn.dataset.origHtml;
+        delete btn.dataset.origHtml;
+      }
+    });
+  }
+}
+
 // Metode 1: Simpan Saja di Web
 window.handleSaveWishOnly = function() {
+  if (isSubmittingRsvp) {
+    showGiftToast('Sedang menyimpan doa, mohon tunggu sebentar...', 'warn');
+    return;
+  }
+
   const name = document.getElementById('rsvp-name').value.trim();
   const status = document.getElementById('rsvp-status').value;
   const count = document.getElementById('rsvp-count').value;
@@ -1756,9 +1798,61 @@ window.handleSaveWishOnly = function() {
     return;
   }
 
+  isSubmittingRsvp = true;
+  setRsvpButtonsBusy(true, 'btn-save-web');
+  showGiftToast('Menyimpan doa & konfirmasi kehadiran...', 'gold');
+
   saveWishData(name, status, count, msg);
-  showGiftToast('Terima kasih! Doa & konfirmasi kehadiran Anda telah tersimpan', 'success');
   document.getElementById('rsvp-msg').value = '';
+
+  setTimeout(() => {
+    showGiftToast('Terima kasih! Doa & kehadiran Anda berhasil tersimpan', 'success');
+    isSubmittingRsvp = false;
+    setRsvpButtonsBusy(false);
+  }, 500);
+};
+
+// Metode 2: Simpan & Kirim Konfirmasi ke WhatsApp (+62 895-4022-48811)
+window.handleRsvpSubmit = function(e) {
+  if (e) e.preventDefault();
+  if (isSubmittingRsvp) {
+    showGiftToast('Sedang memproses konfirmasi WhatsApp...', 'warn');
+    return;
+  }
+
+  const name = document.getElementById('rsvp-name').value.trim();
+  const status = document.getElementById('rsvp-status').value;
+  const count = document.getElementById('rsvp-count').value;
+  const msg = document.getElementById('rsvp-msg').value.trim();
+
+  if (!name) {
+    showGiftToast('Silakan isi nama Anda terlebih dahulu', 'warn');
+    document.getElementById('rsvp-name').focus();
+    return;
+  }
+  if (!msg) {
+    showGiftToast('Silakan tuliskan pesan & doa restu', 'warn');
+    document.getElementById('rsvp-msg').focus();
+    return;
+  }
+
+  isSubmittingRsvp = true;
+  setRsvpButtonsBusy(true, 'btn-save-wa');
+  showGiftToast('Menyimpan doa & menyiapkan WhatsApp...', 'gold');
+
+  saveWishData(name, status, count, msg);
+  document.getElementById('rsvp-msg').value = '';
+
+  // Kirim WhatsApp ke nomor tujuan +62 895-4022-48811
+  const text = \`Halo Devry & Titin, saya *\${name}* ingin mengonfirmasi:\\n\\nStatus: *\${status}* (\${count})\\nDoa & Ucapan: "\${msg}"\\n\\nTerima kasih atas undangannya!\`;
+  const waUrl = \`https://api.whatsapp.com/send?phone=62895402248811&text=\${encodeURIComponent(text)}\`;
+
+  setTimeout(() => {
+    showGiftToast('Doa tersimpan! Membuka WhatsApp...', 'success');
+    window.open(waUrl, '_blank');
+    isSubmittingRsvp = false;
+    setRsvpButtonsBusy(false);
+  }, 500);
 };
 
 // Metode 2: Simpan & Kirim Konfirmasi ke WhatsApp (+62 895-4022-48811)

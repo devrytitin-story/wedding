@@ -552,7 +552,7 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <h2>👑 Papan Doa, Ucapan &amp; Kehadiran</h2>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <button class="btn btn-gold btn-mini" onclick="syncGSheetWishes(); showToast('Memperbarui data dari Google Sheets...', 'success');">🔄 Sinkron Google Sheets</button>
+          <button id="btn-sync-gsheet" class="btn btn-gold btn-mini" onclick="triggerGSheetSync()">🔄 Sinkron Google Sheets</button>
           <button class="btn btn-gold btn-mini" onclick="openAddWishModal()">➕ Tambah Ucapan Baru</button>
           <button class="btn btn-outline btn-mini" onclick="exportWishesCSV()">📥 Download CSV / Excel</button>
           <button class="btn btn-outline btn-mini" onclick="exportWishesJSON()">💾 Backup Data</button>
@@ -892,8 +892,32 @@ function getStoredWishes() {
   return [...DEFAULT_WISHES];
 }
 
-function syncGSheetWishes() {
-  if (!GSHEET_ADMIN_URL) return;
+let isSyncingGSheet = false;
+
+function triggerGSheetSync() {
+  if (isSyncingGSheet) {
+    showToast('Sedang menyinkronkan data, mohon tunggu sebentar...', 'warn');
+    return;
+  }
+  syncGSheetWishes(true);
+}
+
+function syncGSheetWishes(isManual = false) {
+  if (!GSHEET_ADMIN_URL || isSyncingGSheet) return;
+  isSyncingGSheet = true;
+
+  const syncBtn = document.getElementById('btn-sync-gsheet');
+  if (syncBtn) {
+    syncBtn.disabled = true;
+    syncBtn.style.opacity = '0.65';
+    syncBtn.style.cursor = 'not-allowed';
+    syncBtn.innerHTML = '⏳ Menyinkronkan...';
+  }
+
+  if (isManual) {
+    showToast('Menghubungkan ke Google Sheets...', 'gold');
+  }
+
   fetch(GSHEET_ADMIN_URL)
     .then(res => res.json())
     .then(res => {
@@ -938,9 +962,26 @@ function syncGSheetWishes() {
 
         saveStoredWishes(merged);
         renderWishesTable();
+        if (isManual) {
+          showToast('Data berhasil disinkronkan dengan Google Sheets!', 'success');
+        }
+      } else {
+        if (isManual) showToast('GSheet tersambung (data terbaru sudah tampil).', 'gold');
       }
     })
-    .catch(err => console.warn('Admin GSheet fetch error:', err));
+    .catch(err => {
+      console.warn('Admin GSheet fetch error:', err);
+      if (isManual) showToast('Gagal terhubung ke Google Sheets, periksa koneksi internet.', 'warn');
+    })
+    .finally(() => {
+      isSyncingGSheet = false;
+      if (syncBtn) {
+        syncBtn.disabled = false;
+        syncBtn.style.opacity = '1';
+        syncBtn.style.cursor = 'pointer';
+        syncBtn.innerHTML = '🔄 Sinkron Google Sheets';
+      }
+    });
 }
 
 function saveStoredWishes(list) {
