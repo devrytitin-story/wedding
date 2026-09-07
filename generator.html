@@ -396,6 +396,7 @@
     <button class="tab-btn" onclick="switchTab('bulk', event)">2. 📋 Input Massal</button>
     <button class="tab-btn" onclick="switchTab('template', event)">3. 💬 Template WhatsApp</button>
     <button class="tab-btn" onclick="switchTab('admin-rsvp', event)">4. 👑 Kelola RSVP &amp; Doa Restu</button>
+    <button class="tab-btn" onclick="switchTab('print-design', event)">5. 🖨️ Desain Undangan Cetak &amp; Digital</button>
   </div>
 
   <!-- TAB 1: SINGLE GUEST -->
@@ -438,6 +439,7 @@
             <div style="display: flex; gap: 10px; margin-bottom: 16px;">
               <button class="btn btn-gold btn-mini" onclick="copySingleLink()">📋 Salin Link Saja</button>
               <a id="btn-preview-link" href="#" target="_blank" class="btn btn-outline btn-mini">👁️ Uji Buka Link</a>
+              <button type="button" class="btn btn-outline btn-mini" onclick="openPrintForSingleGuest()">🖨️ Desain Undangan</button>
             </div>
 
             <label>Preview Pesan WhatsApp:</label>
@@ -599,6 +601,79 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
   </div>
 </div>
 
+
+  <!-- TAB 5: PRINT & DIGITAL INVITATION DESIGN -->
+  <div id="tab-print-design" style="display: none;">
+    <!-- Control Toolbar Card -->
+    <div class="card" style="margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+        <div>
+          <h2>🖨️ Desain Undangan Cetak &amp; Digital (B5 / A5 / A4)</h2>
+          <p style="font-size: 13px; color: var(--text-dim); margin-top: 4px;">
+            Desain tata letak kubah emas &amp; ornamen floral klasik sesuai dokumen pernikahan Titin &amp; Devry.
+          </p>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-gold" onclick="printEmbeddedInvitation()">🖨️ Cetak / Simpan PDF</button>
+          <a id="btn-standalone-tab" href="undangan.html" target="_blank" class="btn btn-outline">↗️ Buka di Tab Penuh</a>
+        </div>
+      </div>
+
+      <!-- Settings Bar -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; background: rgba(10, 8, 7, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+        <!-- Paper Size -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-size">📏 Ukuran Kertas:</label>
+          <select id="gen-print-size" onchange="syncPrintSize(this.value)">
+            <option value="b5" selected>B5 Landscape (250 × 176 mm) — Standar</option>
+            <option value="a5">A5 Landscape (210 × 148 mm) — Compact</option>
+            <option value="a4">A4 Landscape (297 × 210 mm) — Besar</option>
+            <option value="jis-b5">JIS B5 Landscape (257 × 182 mm)</option>
+          </select>
+        </div>
+
+        <!-- Format Mode -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-mode">📑 Format Lembar:</label>
+          <select id="gen-print-mode" onchange="syncPrintMode(this.value)">
+            <option value="2-sheets" selected>✨ Opsi 2 Lembar (Padat Duplex — 1 Kertas)</option>
+            <option value="4-sheets">📋 Opsi 4 Lembar (Lengkap + Flap + Sisipan)</option>
+          </select>
+        </div>
+
+        <!-- Guest Name Input -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-guest">👤 Nama Tamu di Cover:</label>
+          <input type="text" id="gen-print-guest" placeholder="Ketik nama tamu..." oninput="syncPrintGuest(this.value)">
+        </div>
+
+        <!-- Guest Quick Select -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-guest-select">🎯 Pilih dari Tamu Diinput:</label>
+          <select id="gen-print-guest-select" onchange="selectGuestFromList(this.value)">
+            <option value="">-- Pilih Tamu Tersimpan --</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px; font-size: 11px; color: var(--gold-pale); display: flex; align-items: center; gap: 8px;">
+        <span>💡 <strong>Tips Percetakan:</strong> Gunakan kertas <em>Jasmine Paper (210–250 gsm)</em> bergliter mutiara atau <em>Art Carton 260 gsm Doff</em>. Pada dialog cetak, pilih <strong>Margins: None</strong> dan centang <strong>Background graphics</strong>.</span>
+      </div>
+    </div>
+
+    <!-- Live Preview Frame Container -->
+    <div class="card" style="padding: 12px; background: #181310; border-color: var(--gold);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 4px 8px;">
+        <span style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase;">
+          👁️ Pratinjau Desain Undangan Langsung (Live Preview)
+        </span>
+        <button type="button" class="btn btn-outline btn-mini" onclick="reloadPreviewFrame()">↻ Refresh Preview</button>
+      </div>
+
+      <iframe id="invitation-preview-frame" src="undangan.html" style="width: 100%; height: 780px; border: 1px solid var(--border); border-radius: 10px; background: #2D2722;"></iframe>
+    </div>
+  </div>
+
 <!-- Modal Tambah / Edit Ucapan -->
 <div id="wish-modal" class="modal-overlay" onclick="closeWishModal(event)">
   <div class="modal-card" onclick="event.stopPropagation()">
@@ -720,6 +795,11 @@ function switchTab(tab, e) {
   document.getElementById('tab-bulk').style.display = tab === 'bulk' ? 'block' : 'none';
   document.getElementById('tab-template').style.display = tab === 'template' ? 'block' : 'none';
   document.getElementById('tab-admin-rsvp').style.display = tab === 'admin-rsvp' ? 'block' : 'none';
+  const tabPrint = document.getElementById('tab-print-design');
+  if (tabPrint) tabPrint.style.display = tab === 'print-design' ? 'block' : 'none';
+  if (tab === 'print-design') {
+    populateGuestDropdown();
+  }
 
   if (tab === 'admin-rsvp') {
     renderWishesTable();
@@ -830,6 +910,7 @@ function renderBulkTable() {
         <button class="btn btn-gold btn-mini" onclick="copyText('${escapeHtml(g.url)}', 'Link')">📋 Link</button>
         <button class="btn btn-outline btn-mini" onclick="copyText('${escapeHtml(g.msg)}', 'Pesan')">📋 Pesan</button>
         <a href="${waUrl}" target="_blank" class="btn btn-wa btn-mini">💬 WA</a>
+        <button type="button" class="btn btn-outline btn-mini" onclick="openPrintTabForGuest('${escapeHtml(g.name)}')">🖨️ Cetak</button>
       </td>
     `;
     tbody.appendChild(tr);
