@@ -1638,10 +1638,10 @@ function renderWishesDOM(wishesList) {
     listEl.innerHTML = wishesList.map(w => \`
       <div style="background: rgba(10,8,7,0.65); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #C9A84C; animation: fade-in-up 0.4s ease;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 4px;">
-          <b style="color: #fff; font-size: 14px;">\\\${escapeHtml(w.name)}</b>
-          <span style="font-size: 11px; color: #F5E9C8;">\\\${escapeHtml(w.status)} (\\\${escapeHtml(w.count)})</span>
+          <b style="color: #fff; font-size: 14px;">\${escapeHtml(w.name)}</b>
+          <span style="font-size: 11px; color: #F5E9C8;">\${escapeHtml(w.status)} (\${escapeHtml(w.count)})</span>
         </div>
-        <p style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5; margin: 0;">\\\${escapeHtml(w.msg)}</p>
+        <p style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5; margin: 0;">\${escapeHtml(w.msg)}</p>
       </div>
     \`).join('');
   }
