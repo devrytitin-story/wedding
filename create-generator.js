@@ -552,6 +552,7 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <h2>👑 Papan Doa, Ucapan &amp; Kehadiran</h2>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn btn-gold btn-mini" onclick="syncGSheetWishes(); showToast('Memperbarui data dari Google Sheets...', 'success');">🔄 Sinkron Google Sheets</button>
           <button class="btn btn-gold btn-mini" onclick="openAddWishModal()">➕ Tambah Ucapan Baru</button>
           <button class="btn btn-outline btn-mini" onclick="exportWishesCSV()">📥 Download CSV / Excel</button>
           <button class="btn btn-outline btn-mini" onclick="exportWishesJSON()">💾 Backup Data</button>
@@ -724,6 +725,7 @@ function switchTab(tab, e) {
 
   if (tab === 'admin-rsvp') {
     renderWishesTable();
+    syncGSheetWishes();
   }
 }
 
@@ -880,12 +882,65 @@ function resetTemplate() {
 // ═══════════════════════════════════════════════════════════════
 // WISHES & RSVP ADMIN FUNCTIONS
 // ═══════════════════════════════════════════════════════════════
+const GSHEET_ADMIN_URL = 'https://script.google.com/macros/s/AKfycbxtGVFOY2ug_OyWfzfnA_vNjVrjoM6cb0l1gJxkIz8fatn7LSKQNc04fHUu277caHPfbw/exec';
+
 function getStoredWishes() {
   try {
     const raw = localStorage.getItem('wedding_wishes');
     if (raw) return JSON.parse(raw);
   } catch(e) {}
   return [...DEFAULT_WISHES];
+}
+
+function syncGSheetWishes() {
+  if (!GSHEET_ADMIN_URL) return;
+  fetch(GSHEET_ADMIN_URL)
+    .then(res => res.json())
+    .then(res => {
+      if (res && res.status === 'success' && Array.isArray(res.data)) {
+        let localWishes = [];
+        try {
+          const raw = localStorage.getItem('wedding_wishes');
+          if (raw) localWishes = JSON.parse(raw);
+        } catch(e) {}
+
+        const seen = new Set();
+        const merged = [];
+
+        // 1. Data lokal terlebih dahulu
+        localWishes.forEach(w => {
+          const key = (w.name + '|' + w.msg).trim().toLowerCase();
+          if (!seen.has(key)) {
+            seen.add(key);
+            merged.push(w);
+          }
+        });
+
+        // 2. Data dari Google Spreadsheet
+        res.data.forEach(w => {
+          const key = (w.name + '|' + w.msg).trim().toLowerCase();
+          if (!seen.has(key)) {
+            seen.add(key);
+            merged.push(w);
+          }
+        });
+
+        // 3. Default sample wishes jika kosong
+        if (!merged.length) {
+          DEFAULT_WISHES.forEach(w => {
+            const key = (w.name + '|' + w.msg).trim().toLowerCase();
+            if (!seen.has(key)) {
+              seen.add(key);
+              merged.push(w);
+            }
+          });
+        }
+
+        saveStoredWishes(merged);
+        renderWishesTable();
+      }
+    })
+    .catch(err => console.warn('Admin GSheet fetch error:', err));
 }
 
 function saveStoredWishes(list) {

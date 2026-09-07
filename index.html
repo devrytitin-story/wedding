@@ -5988,6 +5988,28 @@ function escapeHtml(str) {
   });
 }
 
+function renderWishesDOM(wishesList) {
+  const listEl = document.getElementById('wishes-list');
+  const cntEl = document.getElementById('wishes-count');
+  if (cntEl) cntEl.textContent = wishesList.length;
+
+  if (listEl) {
+    if (!wishesList.length) {
+      listEl.innerHTML = '<div style="color: rgba(255,255,255,0.5); font-size: 12px; text-align: center; padding: 20px;">Belum ada doa. Jadilah yang pertama memberikan doa restu!</div>';
+      return;
+    }
+    listEl.innerHTML = wishesList.map(w => `
+      <div style="background: rgba(10,8,7,0.65); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #C9A84C; animation: fade-in-up 0.4s ease;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 4px;">
+          <b style="color: #fff; font-size: 14px;">\${escapeHtml(w.name)}</b>
+          <span style="font-size: 11px; color: #F5E9C8;">\${escapeHtml(w.status)} (\${escapeHtml(w.count)})</span>
+        </div>
+        <p style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5; margin: 0;">\${escapeHtml(w.msg)}</p>
+      </div>
+    `).join('');
+  }
+}
+
 function loadWishes() {
   let stored = [];
   try {
@@ -5995,24 +6017,53 @@ function loadWishes() {
     if (raw) stored = JSON.parse(raw);
   } catch(e) {}
 
-  const all = [...stored, ...DEFAULT_WISHES];
-  const listEl = document.getElementById('wishes-list');
-  const cntEl = document.getElementById('wishes-count');
-  if (cntEl) cntEl.textContent = all.length;
+  // Tampilkan data lokal/default secara instan terlebih dahulu
+  let allWishes = [...stored, ...DEFAULT_WISHES];
+  renderWishesDOM(allWishes);
 
-  if (listEl) {
-    listEl.innerHTML = all.map(w => `
-      <div style="background: rgba(10,8,7,0.65); padding: 14px 18px; border-radius: 10px; border-left: 3px solid #C9A84C; animation: fade-in-up 0.4s ease;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <b style="color: #fff; font-size: 14px;">${escapeHtml(w.name)}</b>
-          <span style="font-size: 11px; color: #F5E9C8;">${escapeHtml(w.status)} (${escapeHtml(w.count)})</span>
-        </div>
-        <p style="font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.5;">${escapeHtml(w.msg)}</p>
-      </div>
-    `).join('');
+  // Ambil data realtime dari Google Spreadsheet (doGet)
+  const targetSheetUrl = window.GSHEET_WEBAPP_URL || 'https://script.google.com/macros/s/AKfycbxtGVFOY2ug_OyWfzfnA_vNjVrjoM6cb0l1gJxkIz8fatn7LSKQNc04fHUu277caHPfbw/exec';
+  if (targetSheetUrl) {
+    fetch(targetSheetUrl)
+      .then(res => res.json())
+      .then(res => {
+        if (res && res.status === 'success' && Array.isArray(res.data) && res.data.length > 0) {
+          const seen = new Set();
+          const merged = [];
+
+          // Prioritaskan data lokal terbaru
+          stored.forEach(item => {
+            const key = (item.name + '|' + item.msg).trim().toLowerCase();
+            if (!seen.has(key)) {
+              seen.add(key);
+              merged.push(item);
+            }
+          });
+
+          // Masukkan data dari Google Spreadsheet
+          res.data.forEach(item => {
+            const key = (item.name + '|' + item.msg).trim().toLowerCase();
+            if (!seen.has(key)) {
+              seen.add(key);
+              merged.push(item);
+            }
+          });
+
+          // Masukkan default wishes sebagai pelengkap
+          DEFAULT_WISHES.forEach(item => {
+            const key = (item.name + '|' + item.msg).trim().toLowerCase();
+            if (!seen.has(key)) {
+              seen.add(key);
+              merged.push(item);
+            }
+          });
+
+          renderWishesDOM(merged);
+        }
+      })
+      .catch(err => console.warn('Sync GSheet wishes error:', err));
   }
 }
-
 // Initial Wishes Render
 loadWishes();
 
