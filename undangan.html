@@ -54,7 +54,7 @@
       --arch-inset-x: 7.5mm;
       --arch-radius: 38mm;
       --names-main-size: 21px;
-      --cover-names-size: 21px;
+      --cover-names-size: 19px;
       --date-num-size: 24px;
       --quote-font-size: 11px;
       --qr-render-size: 15.5mm;
@@ -74,7 +74,7 @@
       --arch-inset-x: 6mm;
       --arch-radius: 32mm;
       --names-main-size: 17.5px;
-      --cover-names-size: 17.5px;
+      --cover-names-size: 15.5px;
       --date-num-size: 20px;
       --quote-font-size: 9.5px;
       --qr-render-size: 13.5mm;
@@ -94,7 +94,7 @@
       --arch-inset-x: 9mm;
       --arch-radius: 46mm;
       --names-main-size: 25px;
-      --cover-names-size: 26px;
+      --cover-names-size: 23px;
       --date-num-size: 28px;
       --quote-font-size: 12.5px;
       --qr-render-size: 18mm;
@@ -114,7 +114,7 @@
       --arch-inset-x: 8mm;
       --arch-radius: 40mm;
       --names-main-size: 22px;
-      --cover-names-size: 22px;
+      --cover-names-size: 19.5px;
       --date-num-size: 25px;
       --quote-font-size: 11.5px;
       --qr-render-size: 16mm;
@@ -451,7 +451,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 9mm 5mm 6mm;
+      padding: 7mm 5mm 5mm;
       background: radial-gradient(circle at 50% 30%, #FFFCF7 0%, var(--bg-card) 85%);
       box-shadow: inset 0 0 18px rgba(158, 119, 54, 0.08);
       z-index: 5;
@@ -464,46 +464,132 @@
       pointer-events: none;
     }
 
+    .cover-top-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: -3.5mm;
+      width: 100%;
+    }
     .arch-lantern {
-      width: 10mm;
-      height: 14mm;
-      margin-top: -4mm;
+      width: 9mm;
+      height: 12mm;
       color: var(--gold-primary);
     }
 
     .cover-the-wedding {
       font-family: var(--font-display);
-      font-size: 8px;
-      letter-spacing: 3.5px;
+      font-size: 7.5px;
+      letter-spacing: 3px;
       color: var(--gold-primary);
-      margin-top: 2px;
+      margin-top: 1px;
     }
     .cover-couple-name {
       font-family: var(--font-serif);
       font-size: var(--cover-names-size);
       font-weight: 500;
       color: var(--ink-charcoal);
-      line-height: 1.15;
+      line-height: 1.12;
       text-align: center;
-      margin: 5px 0 3px;
+      margin: 2px 0 1px;
+    }
+
+    /* Dedicated Middle Label Slot (Stiker Fisik / Cetak Langsung) */
+    .cover-label-slot {
+      margin: 2px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .cover-guest-card {
+      padding: 4px 8px;
+      border: 0.5px solid var(--gold-line);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.78);
+      text-align: center;
+      width: 86%;
+      max-width: 64mm;
+      box-shadow: 0 1px 4px rgba(158, 119, 54, 0.08);
+    }
+    .cover-guest-to {
+      font-family: var(--font-display);
+      font-size: 7px;
+      letter-spacing: 1.5px;
+      color: var(--gold-deep);
+      text-transform: uppercase;
+    }
+    .cover-guest-name {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-charcoal);
+      margin: 1.5px 0 0.5px;
+      line-height: 1.2;
+    }
+    .cover-guest-sub {
+      font-size: 6.5px;
+      color: var(--ink-subtle);
+      font-style: italic;
+    }
+
+    .cover-sticker-guide {
+      width: 58mm;
+      height: 28mm;
+      border: 0.5px dashed rgba(158, 119, 54, 0.45);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: var(--ink-subtle);
+      font-size: 7.5px;
+      letter-spacing: 0.8px;
+      text-align: center;
+      padding: 2px 6px;
+    }
+    .cover-sticker-guide span {
+      font-family: var(--font-display);
+      font-size: 7px;
+      color: var(--gold-deep);
+      font-weight: 600;
+      letter-spacing: 1.2px;
+    }
+
+    /* Label Mode Switching */
+    body.label-manual .cover-guest-card { display: none !important; }
+    body.label-manual .cover-sticker-guide { display: flex !important; }
+
+    body.label-direct .cover-guest-card { display: block !important; }
+    body.label-direct .cover-sticker-guide { display: none !important; }
+
+    body.label-none .cover-label-slot { display: none !important; }
+    body.label-none .cover-couple-name { margin: 6px 0 4px; }
+
+    .cover-bottom-group {
+      width: 100%;
+      text-align: center;
     }
     .cover-date-box {
-      margin-top: 3px;
+      margin-top: 1px;
       text-align: center;
     }
     .cover-date {
       font-family: var(--font-display);
-      font-size: 9px;
-      letter-spacing: 2.5px;
+      font-size: 8.5px;
+      letter-spacing: 2px;
       color: var(--ink-charcoal);
       font-weight: 600;
     }
     .cover-event {
       font-family: var(--font-display);
-      font-size: 7.5px;
-      letter-spacing: 2.5px;
+      font-size: 7px;
+      letter-spacing: 2px;
       color: var(--gold-deep);
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     /* ========================================================
@@ -925,10 +1011,17 @@
       .sheet-wrapper.is-hidden-print {
         display: none !important;
       }
+      body.label-manual .cover-sticker-guide {
+        border-color: transparent !important;
+        background: transparent !important;
+      }
+      body.label-manual .cover-sticker-guide * {
+        display: none !important;
+      }
     }
   </style>
 </head>
-<body class="size-b5">
+<body class="size-b5 label-manual">
 
   <!-- ============================================================
        TOP CONTROL BAR (VISIBLE ON SCREEN, HIDDEN WHEN PRINTING)
@@ -941,12 +1034,22 @@
     </div>
 
     <div class="bar-actions">
-      <!-- Mode Layout: 2 Lembar (Padat Duplex) vs 4 Lembar (Lengkap) -->
+      <!-- Label Mode Selector (Manual Stiker vs Cetak Langsung vs Polos) -->
       <label class="control-label" style="font-weight:600; color:#E6C782;">
-        📑 Format Lembar:
-        <select class="select-picker" id="mode-selector" onchange="changeSheetMode(this.value)" style="border-color:#C5A059; font-weight:600; background:#221C16;">
-          <option value="2-sheets" selected>✨ Opsi 2 Lembar (Padat — 1 Kertas Bolak-Balik)</option>
-          <option value="4-sheets">📋 Opsi 4 Lembar (Lengkap + Flap + Sisipan)</option>
+        🏷️ Label Cover:
+        <select class="select-picker" id="label-mode-selector" onchange="changeLabelMode(this.value)" style="border-color:#C5A059; font-weight:600; background:#221C16;">
+          <option value="manual" selected>🏷️ Manual (Space Stiker Tempel)</option>
+          <option value="direct">🖨️ Cetak Langsung Nama Tamu</option>
+          <option value="none">✨ Polos / Tanpa Label</option>
+        </select>
+      </label>
+
+      <!-- Mode Layout: 2 Lembar (Padat Duplex) vs 4 Lembar (Lengkap) -->
+      <label class="control-label">
+        📑 Format:
+        <select class="select-picker" id="mode-selector" onchange="changeSheetMode(this.value)">
+          <option value="2-sheets" selected>✨ 2 Lembar (Duplex)</option>
+          <option value="4-sheets">📋 4 Lembar (Lengkap)</option>
         </select>
       </label>
 
@@ -1029,34 +1132,21 @@
         <!-- Mandala Gold Ornament -->
         <svg class="mandala-emblem"><use href="#icon-mandala"/></svg>
 
-        <div style="margin: 8px 0 4px;">
-          <p class="tx-serif" style="font-size: 14.5px; font-style: italic; color: var(--ink-charcoal); line-height: 1.4;">
+        <div style="margin: 10px 0 6px;">
+          <p class="tx-serif" style="font-size: 15px; font-style: italic; color: var(--ink-charcoal); line-height: 1.45;">
             “Bersama dalam cinta,<br>menuju ridha-Nya.”
           </p>
         </div>
 
         <div class="diamond-divider">✦</div>
 
-        <!-- Label Kepada Tamu Yth -->
-        <div style="margin-top: 12px; padding: 6px 10px; border: 0.5px solid var(--gold-line); border-radius: 6px; background: rgba(255,255,255,0.7); display: inline-block; min-width: 64mm;">
-          <div style="font-family: var(--font-display); font-size: 7.5px; letter-spacing: 2px; color: var(--gold-deep); text-transform: uppercase;">
-            Kepada Yth. Bapak/Ibu/Saudara/i:
-          </div>
-          <div id="display-guest-name" style="font-family: var(--font-serif); font-size: 14px; font-weight: 600; color: var(--ink-charcoal); margin: 2px 0 1px;">
-            Tamu Undangan
-          </div>
-          <div style="font-size: 7px; color: var(--ink-subtle); font-style: italic;">
-            Mohon maaf bila ada kesalahan penulisan nama/gelar
-          </div>
-        </div>
-
         <!-- Mini Website Info with High-Contrast Scannable QR -->
-        <div style="margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" class="qr-box-wrapper" title="Buka Website Undangan" style="width: 14mm; height: 14mm;">
+        <div style="margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" class="qr-box-wrapper" title="Buka Website Undangan" style="width: 15mm; height: 15mm;">
             <img src="qr-wedding-web.png" alt="QR Website" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fdevrytitin-story.github.io%2Fwedding&color=000000&bgcolor=ffffff'">
           </a>
-          <div style="text-align: left; font-size: 7px; color: var(--ink-muted); line-height: 1.25;">
-            <b style="color: var(--gold-deep); font-size: 7.5px; letter-spacing: 1px; display: block;">UNDANGAN DIGITAL</b>
+          <div style="text-align: left; font-size: 7.5px; color: var(--ink-muted); line-height: 1.3;">
+            <b style="color: var(--gold-deep); font-size: 8px; letter-spacing: 1px; display: block;">UNDANGAN DIGITAL</b>
             <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">devrytitin-story.github.io/wedding</a><br>
             Pindai QR / klik tautan untuk cerita lengkap
           </div>
@@ -1074,40 +1164,59 @@
       <div class="arch-card-wrapper">
         <div class="arch-inner-border"></div>
 
-        <!-- Hanging Lantern Icon -->
-        <svg class="arch-lantern" viewBox="0 0 40 60" fill="none" stroke="currentColor">
-          <line x1="20" y1="0" x2="20" y2="24" stroke-width="1.2"/>
-          <circle cx="20" cy="24" r="2.5" fill="currentColor"/>
-          <path d="M12,28 C12,28 15,26 20,26 C25,26 28,28 28,28 L26,46 L14,46 Z" stroke-width="1.2" fill="#FAF6EE"/>
-          <line x1="20" y1="28" x2="20" y2="44" stroke-width="0.8"/>
-          <circle cx="20" cy="50" r="1.5" fill="currentColor"/>
-        </svg>
+        <!-- TOP GROUP: Lantern + THE WEDDING + Couple Names -->
+        <div class="cover-top-group">
+          <!-- Hanging Lantern Icon -->
+          <svg class="arch-lantern" viewBox="0 0 40 60" fill="none" stroke="currentColor">
+            <line x1="20" y1="0" x2="20" y2="24" stroke-width="1.2"/>
+            <circle cx="20" cy="24" r="2.5" fill="currentColor"/>
+            <path d="M12,28 C12,28 15,26 20,26 C25,26 28,28 28,28 L26,46 L14,46 Z" stroke-width="1.2" fill="#FAF6EE"/>
+            <line x1="20" y1="28" x2="20" y2="44" stroke-width="0.8"/>
+            <circle cx="20" cy="50" r="1.5" fill="currentColor"/>
+          </svg>
 
-        <!-- Top Header -->
-        <div class="tx-center">
-          <div class="cover-the-wedding">THE WEDDING</div>
-          <div class="diamond-divider" style="margin: 3px auto;">✦</div>
-        </div>
+          <!-- Header -->
+          <div class="tx-center">
+            <div class="cover-the-wedding">THE WEDDING</div>
+            <div class="diamond-divider" style="margin: 2px auto;">✦</div>
+          </div>
 
-        <!-- Couple Name -->
-        <div class="tx-center">
-          <div class="cover-couple-name">
-            Titin Rahma Lestari
-            <span class="names-amp">&amp;</span>
-            Devry Rizkie H
+          <!-- Couple Name (Naik ke atas & ukuran disesuaikan untuk space label) -->
+          <div class="tx-center">
+            <div class="cover-couple-name">
+              Titin Rahma Lestari
+              <span class="names-amp">&amp;</span>
+              Devry Rizkie H
+            </div>
           </div>
         </div>
 
-        <!-- Bottom Date & Walimatul 'Ursy -->
-        <div class="tx-center">
+        <!-- MIDDLE GROUP: Dedicated Label Space (Stiker Tempel Manual atau Cetak Langsung) -->
+        <div class="cover-label-slot">
+          <!-- Opsi 1: Cetak Langsung Nama Tamu -->
+          <div class="cover-guest-card">
+            <div class="cover-guest-to">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+            <div class="cover-guest-name" id="display-cover-guest-name">Tamu Undangan</div>
+            <div class="cover-guest-sub">Mohon maaf bila ada kesalahan penulisan nama/gelar</div>
+          </div>
+
+          <!-- Opsi 2: Manual Label Sticker Guide (Fisik) -->
+          <div class="cover-sticker-guide">
+            <span>✦ TEMPAT LABEL STIKER TAMU ✦</span>
+            <div>Ukuran standar stiker: 32 × 64 mm (No. 103)</div>
+          </div>
+        </div>
+
+        <!-- BOTTOM GROUP: Date & Walimatul 'Ursy -->
+        <div class="cover-bottom-group tx-center">
           <div class="cover-date-box">
             <div class="cover-date">27 SEPTEMBER 2026</div>
-            <div class="diamond-divider" style="margin: 3px auto;">✦</div>
+            <div class="diamond-divider" style="margin: 2px auto;">✦</div>
             <div class="cover-event">WALIMATUL 'URSY</div>
           </div>
 
           <!-- Bottom Arch Ornament Flourish -->
-          <svg width="32mm" height="6mm" viewBox="0 0 160 30" style="margin-top: 4px; color: var(--gold-primary);">
+          <svg width="30mm" height="5.5mm" viewBox="0 0 160 30" style="margin-top: 2px; color: var(--gold-primary);">
             <path d="M10,15 Q40,5 80,15 Q120,25 150,15" fill="none" stroke="currentColor" stroke-width="1"/>
             <circle cx="80" cy="15" r="3" fill="currentColor"/>
             <circle cx="65" cy="13" r="1.5" fill="currentColor"/>
@@ -1423,8 +1532,24 @@
   <script>
     // Live update guest name
     function updateGuestName(name) {
-      const display = document.getElementById('display-guest-name');
-      display.textContent = name.trim() ? name.trim() : 'Tamu Undangan';
+      const clean = name.trim() ? name.trim() : 'Tamu Undangan';
+      const displays = document.querySelectorAll('.cover-guest-name, #display-cover-guest-name, #display-guest-name');
+      displays.forEach(d => {
+        d.textContent = clean;
+      });
+    }
+
+    // Switch label mode: manual (sticker guide), direct (printed name card), or none (blank)
+    function changeLabelMode(mode) {
+      const body = document.body;
+      const validMode = (mode === 'direct' || mode === 'none') ? mode : 'manual';
+      body.classList.remove('label-manual', 'label-direct', 'label-none');
+      body.classList.add('label-' + validMode);
+
+      const sel = document.getElementById('label-mode-selector');
+      if (sel && sel.value !== validMode) {
+        sel.value = validMode;
+      }
     }
 
     // Switch between 2-sheets (compact duplex) and 4-sheets (full modular)
@@ -1489,7 +1614,7 @@
       }
     }
 
-    // Set initial state on load: 2-sheets mode
+    // Set initial state on load: 2-sheets mode & manual label
     window.addEventListener('DOMContentLoaded', () => {
       changeSheetMode('2-sheets');
     });
@@ -1504,6 +1629,10 @@
         const inp = document.getElementById('input-guest');
         if (inp) inp.value = guestParam;
         updateGuestName(guestParam);
+      }
+      const labelParam = urlParams.get('label') || urlParams.get('labelMode');
+      if (labelParam && typeof changeLabelMode === 'function') {
+        changeLabelMode(labelParam);
       }
       const sizeParam = urlParams.get('size');
       if (sizeParam && typeof changePaperSize === 'function') {
@@ -1526,6 +1655,8 @@
         const inp = document.getElementById('input-guest');
         if (inp) inp.value = event.data.name;
         updateGuestName(event.data.name);
+      } else if (event.data.type === 'SET_LABEL_MODE') {
+        changeLabelMode(event.data.mode);
       } else if (event.data.type === 'SET_PAPER_SIZE') {
         const sel = document.getElementById('size-selector');
         if (sel) sel.value = event.data.size;

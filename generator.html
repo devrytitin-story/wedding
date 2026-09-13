@@ -620,7 +620,17 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
       </div>
 
       <!-- Settings Bar -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; background: rgba(10, 8, 7, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; background: rgba(10, 8, 7, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+        <!-- Label Mode (Manual Stiker vs Cetak Langsung vs Polos) -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-label-mode">🏷️ Mode Label Cover:</label>
+          <select id="gen-print-label-mode" onchange="syncPrintLabelMode(this.value)">
+            <option value="manual" selected>🏷️ Manual (Space Stiker Tempel)</option>
+            <option value="direct">🖨️ Cetak Langsung Nama Tamu</option>
+            <option value="none">✨ Polos / Tanpa Label</option>
+          </select>
+        </div>
+
         <!-- Paper Size -->
         <div class="form-group" style="margin: 0;">
           <label for="gen-print-size">📏 Ukuran Kertas:</label>
@@ -1245,6 +1255,144 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, function(m) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
   });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PRINT & LIVE PREVIEW CONTROLLER (TAB 5)
+// ═══════════════════════════════════════════════════════════════
+function syncPrintLabelMode(mode) {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'SET_LABEL_MODE', mode: mode }, '*');
+  }
+  updateStandaloneTabUrl();
+}
+
+function syncPrintSize(size) {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'SET_PAPER_SIZE', size: size }, '*');
+  }
+  updateStandaloneTabUrl();
+}
+
+function syncPrintMode(mode) {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'SET_SHEET_MODE', mode: mode }, '*');
+  }
+  updateStandaloneTabUrl();
+}
+
+function syncPrintGuest(name) {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'SET_GUEST_NAME', name: name }, '*');
+  }
+  updateStandaloneTabUrl();
+}
+
+function selectGuestFromList(guestName) {
+  const inp = document.getElementById('gen-print-guest');
+  if (inp) {
+    inp.value = guestName;
+    syncPrintGuest(guestName);
+  }
+}
+
+function populateGuestDropdown() {
+  const sel = document.getElementById('gen-print-guest-select');
+  if (!sel) return;
+  const currentVal = sel.value;
+  sel.innerHTML = '<option value="">-- Pilih Tamu Tersimpan --</option>';
+
+  const guestSet = new Set();
+  
+  if (Array.isArray(bulkGuests)) {
+    bulkGuests.forEach(g => {
+      if (g.name && !guestSet.has(g.name)) {
+        guestSet.add(g.name);
+        const opt = document.createElement('option');
+        opt.value = g.name;
+        opt.textContent = g.name + (g.category ? ' (' + g.category + ')' : '');
+        sel.appendChild(opt);
+      }
+    });
+  }
+
+  const wishes = getStoredWishes();
+  wishes.forEach(w => {
+    if (w.name && !guestSet.has(w.name)) {
+      guestSet.add(w.name);
+      const opt = document.createElement('option');
+      opt.value = w.name;
+      opt.textContent = w.name + ' (RSVP/Ucapan)';
+      sel.appendChild(opt);
+    }
+  });
+
+  const singleName = document.getElementById('guest-name')?.value.trim();
+  if (singleName && !guestSet.has(singleName)) {
+    const opt = document.createElement('option');
+    opt.value = singleName;
+    opt.textContent = singleName + ' (Input Satuan)';
+    sel.appendChild(opt);
+  }
+
+  if (currentVal && guestSet.has(currentVal)) {
+    sel.value = currentVal;
+  }
+}
+
+function updateStandaloneTabUrl() {
+  const btn = document.getElementById('btn-standalone-tab');
+  if (!btn) return;
+  const labelMode = document.getElementById('gen-print-label-mode')?.value || 'manual';
+  const size = document.getElementById('gen-print-size')?.value || 'b5';
+  const mode = document.getElementById('gen-print-mode')?.value || '2-sheets';
+  const guest = document.getElementById('gen-print-guest')?.value || '';
+  let url = 'undangan.html?label=' + encodeURIComponent(labelMode) + '&size=' + encodeURIComponent(size) + '&mode=' + encodeURIComponent(mode);
+  if (guest) url += '&to=' + encodeURIComponent(guest);
+  btn.href = url;
+}
+
+function reloadPreviewFrame() {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (!iframe) return;
+  updateStandaloneTabUrl();
+  const btn = document.getElementById('btn-standalone-tab');
+  if (btn) iframe.src = btn.href;
+  showToast('Pratinjau undangan berhasil diperbarui!', 'success');
+}
+
+function printEmbeddedInvitation() {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    try {
+      iframe.contentWindow.postMessage({ type: 'TRIGGER_PRINT' }, '*');
+    } catch(e) {
+      iframe.contentWindow.print();
+    }
+  }
+}
+
+function openPrintForSingleGuest() {
+  const name = document.getElementById('guest-name')?.value.trim() || '';
+  switchTab('print-design');
+  const inp = document.getElementById('gen-print-guest');
+  if (inp) {
+    inp.value = name;
+    syncPrintGuest(name);
+  }
+}
+
+function openPrintTabForGuest(guestName) {
+  switchTab('print-design');
+  const inp = document.getElementById('gen-print-guest');
+  if (inp) {
+    inp.value = guestName;
+    syncPrintGuest(guestName);
+  }
 }
 </script>
 
