@@ -16,7 +16,7 @@
   <!-- Dynamic @page size style injected and controlled by JS -->
   <style id="dynamic-page-size">
     @page {
-      size: 250mm 176mm; /* Default: ISO B5 Landscape */
+      size: 210mm 148mm; /* Default: ISO A5 Landscape */
       margin: 0;
     }
   </style>
@@ -1121,7 +1121,7 @@
     }
   </style>
 </head>
-<body class="size-b5 label-manual">
+<body class="size-a5 label-manual">
 
   <!-- ============================================================
        TOP CONTROL BAR (VISIBLE ON SCREEN, HIDDEN WHEN PRINTING)
@@ -1130,7 +1130,7 @@
     <div class="bar-title">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C5A059" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       <span>TITIN &amp; DEVRY</span> — Undangan Cetak
-      <div class="size-indicator" id="current-size-badge">B5 (250 × 176 mm)</div>
+      <div class="size-indicator" id="current-size-badge">A5 (210 × 148 mm)</div>
     </div>
 
     <div class="bar-actions">
@@ -1163,12 +1163,12 @@
         </select>
       </label>
 
-      <!-- Paper Size Selector (B5, A5, A4, JIS B5) -->
+      <!-- Paper Size Selector (A5, B5, A4, JIS B5) -->
       <label class="control-label">
         📏 Kertas:
         <select class="select-picker" id="size-selector" onchange="changePaperSize(this.value)">
-          <option value="b5" selected>B5 Landscape (250 × 176 mm) — Standar</option>
-          <option value="a5">A5 Landscape (210 × 148 mm) — Compact</option>
+          <option value="a5" selected>A5 Landscape (210 × 148 mm) — Standar</option>
+          <option value="b5">B5 Landscape (250 × 176 mm)</option>
           <option value="a4">A4 Landscape (297 × 210 mm) — Besar</option>
           <option value="jis-b5">JIS B5 Landscape (257 × 182 mm)</option>
         </select>
@@ -1233,7 +1233,7 @@
        ============================================================ -->
   <div class="sheet-wrapper" id="sheet-outside">
     <div class="sheet-tag-bar">
-      <div class="sheet-tag" id="tag-sheet-outside">LEMBAR 1: TAMPAK LUAR (COVER DEPAN &amp; BELAKANG) — B5 LANDSCAPE (250 × 176 mm)</div>
+      <div class="sheet-tag" id="tag-sheet-outside">LEMBAR 1: TAMPAK LUAR (COVER DEPAN &amp; BELAKANG) — A5 LANDSCAPE (210 × 148 mm)</div>
       <button type="button" class="btn-sheet-dl" onclick="downloadPNG('sheet-outside', 'Lembar-1-Cover')">📥 Unduh PNG Lembar 1 (HD)</button>
     </div>
 
@@ -1344,7 +1344,7 @@
        ============================================================ -->
   <div class="sheet-wrapper" id="sheet-inside">
     <div class="sheet-tag-bar">
-      <div class="sheet-tag" id="tag-sheet-inside">LEMBAR 2: TAMPAK DALAM (INNER SPREAD) — B5 LANDSCAPE (250 × 176 mm)</div>
+      <div class="sheet-tag" id="tag-sheet-inside">LEMBAR 2: TAMPAK DALAM (INNER SPREAD) — A5 LANDSCAPE (210 × 148 mm)</div>
       <button type="button" class="btn-sheet-dl" onclick="downloadPNG('sheet-inside', 'Lembar-2-Isi')">📥 Unduh PNG Lembar 2 (HD)</button>
     </div>
     
@@ -1828,9 +1828,9 @@
           await document.fonts.ready;
         }
 
-        // Use scale: 3 for high-density 300+ DPI print quality
+        // Use scale: 3.125 for exact 300 DPI print quality (2480x1748 px for A5 Landscape)
         const canvas = await html2canvas(el, {
-          scale: 3,
+          scale: 3.125,
           useCORS: true,
           allowTaint: true,
           logging: false,
@@ -1839,7 +1839,7 @@
 
         const guestInput = document.getElementById('input-guest')?.value || '';
         const guestClean = guestInput.trim() ? '_' + guestInput.trim().replace(/[^a-zA-Z0-9_-]/g, '_') : '';
-        const sizeName = (document.getElementById('size-selector')?.value || 'b5').toUpperCase();
+        const sizeName = (document.getElementById('size-selector')?.value || 'a5').toUpperCase();
         const filename = `Undangan_${sheetLabel}${guestClean}_${sizeName}_HD.png`;
 
         const link = document.createElement('a');
@@ -1870,7 +1870,7 @@
         );
       }
 
-      showDownloadProgress(`Mempersiapkan ${sheets.length} lembar Ultra HD...`);
+      showDownloadProgress(`Mempersiapkan ${sheets.length} lembar Ultra HD (A5 300 DPI)...`);
 
       try {
         if (document.fonts) {
@@ -1885,7 +1885,7 @@
           updateDownloadProgress(`Membuat gambar ${i + 1} dari ${sheets.length}: ${sheet.label}...`);
 
           const canvas = await html2canvas(el, {
-            scale: 3,
+            scale: 3.125,
             useCORS: true,
             allowTaint: true,
             logging: false,
@@ -1894,7 +1894,7 @@
 
           const guestInput = document.getElementById('input-guest')?.value || '';
           const guestClean = guestInput.trim() ? '_' + guestInput.trim().replace(/[^a-zA-Z0-9_-]/g, '_') : '';
-          const sizeName = (document.getElementById('size-selector')?.value || 'b5').toUpperCase();
+          const sizeName = (document.getElementById('size-selector')?.value || 'a5').toUpperCase();
           const filename = `Undangan_${sheet.label}${guestClean}_${sizeName}_HD.png`;
 
           const link = document.createElement('a');
