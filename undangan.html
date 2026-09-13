@@ -45,19 +45,20 @@
       --sheet-h: 176mm;
       --half-w: 125mm;
       
-      /* Sizing tokens for B5 */
-      --panel-pad-y: 8mm;
-      --panel-pad-x: 9mm;
-      --border-inset: 5.5mm;
-      --corner-size: 30mm;
-      --arch-inset-y: 7.5mm;
-      --arch-inset-x: 7.5mm;
+      /* Sizing tokens for B5 with Hardware Safe Print Margin */
+      --panel-pad-y: 9mm;
+      --panel-pad-x: 10.5mm;
+      --border-inset: 8mm;
+      --corner-inset: 7mm;
+      --corner-size: 28mm;
+      --arch-inset-y: 8mm;
+      --arch-inset-x: 8mm;
       --arch-radius: 38mm;
-      --names-main-size: 21px;
-      --cover-names-size: 19px;
-      --date-num-size: 24px;
-      --quote-font-size: 11px;
-      --qr-render-size: 15.5mm;
+      --names-main-size: 20px;
+      --cover-names-size: 18.5px;
+      --date-num-size: 23px;
+      --quote-font-size: 10.5px;
+      --qr-render-size: 15mm;
     }
 
     /* A5 OVERRIDE (210mm x 148mm) */
@@ -66,18 +67,19 @@
       --sheet-h: 148mm;
       --half-w: 105mm;
       
-      --panel-pad-y: 6mm;
-      --panel-pad-x: 7mm;
-      --border-inset: 4.5mm;
-      --corner-size: 24mm;
-      --arch-inset-y: 6mm;
-      --arch-inset-x: 6mm;
+      --panel-pad-y: 7mm;
+      --panel-pad-x: 8.5mm;
+      --border-inset: 6.5mm;
+      --corner-inset: 5.5mm;
+      --corner-size: 22mm;
+      --arch-inset-y: 6.5mm;
+      --arch-inset-x: 6.5mm;
       --arch-radius: 32mm;
-      --names-main-size: 17.5px;
-      --cover-names-size: 15.5px;
-      --date-num-size: 20px;
-      --quote-font-size: 9.5px;
-      --qr-render-size: 13.5mm;
+      --names-main-size: 17px;
+      --cover-names-size: 15px;
+      --date-num-size: 19px;
+      --quote-font-size: 9px;
+      --qr-render-size: 13mm;
     }
 
     /* A4 OVERRIDE (297mm x 210mm) */
@@ -86,18 +88,19 @@
       --sheet-h: 210mm;
       --half-w: 148.5mm;
       
-      --panel-pad-y: 11mm;
-      --panel-pad-x: 11mm;
-      --border-inset: 7mm;
-      --corner-size: 36mm;
-      --arch-inset-y: 9.5mm;
-      --arch-inset-x: 9mm;
+      --panel-pad-y: 12mm;
+      --panel-pad-x: 13mm;
+      --border-inset: 10mm;
+      --corner-inset: 8.5mm;
+      --corner-size: 34mm;
+      --arch-inset-y: 10mm;
+      --arch-inset-x: 10mm;
       --arch-radius: 46mm;
-      --names-main-size: 25px;
-      --cover-names-size: 23px;
-      --date-num-size: 28px;
-      --quote-font-size: 12.5px;
-      --qr-render-size: 18mm;
+      --names-main-size: 24px;
+      --cover-names-size: 22px;
+      --date-num-size: 27px;
+      --quote-font-size: 12px;
+      --qr-render-size: 17.5mm;
     }
 
     /* JIS B5 OVERRIDE (257mm x 182mm) */
@@ -106,18 +109,37 @@
       --sheet-h: 182mm;
       --half-w: 128.5mm;
       
-      --panel-pad-y: 9mm;
-      --panel-pad-x: 9.5mm;
-      --border-inset: 6mm;
-      --corner-size: 32mm;
-      --arch-inset-y: 8mm;
-      --arch-inset-x: 8mm;
+      --panel-pad-y: 9.5mm;
+      --panel-pad-x: 11mm;
+      --border-inset: 8.5mm;
+      --corner-inset: 7.5mm;
+      --corner-size: 29mm;
+      --arch-inset-y: 8.5mm;
+      --arch-inset-x: 8.5mm;
       --arch-radius: 40mm;
-      --names-main-size: 22px;
-      --cover-names-size: 19.5px;
-      --date-num-size: 25px;
-      --quote-font-size: 11.5px;
-      --qr-render-size: 16mm;
+      --names-main-size: 21px;
+      --cover-names-size: 19px;
+      --date-num-size: 24px;
+      --quote-font-size: 11px;
+      --qr-render-size: 15.5mm;
+    }
+
+    /* Margin Inset Presets */
+    body.margin-extra-safe {
+      --border-inset: 11.5mm !important;
+      --corner-inset: 10mm !important;
+      --panel-pad-x: 14mm !important;
+      --panel-pad-y: 12mm !important;
+      --arch-inset-x: 11mm !important;
+      --arch-inset-y: 11mm !important;
+    }
+    body.margin-borderless {
+      --border-inset: 4.5mm !important;
+      --corner-inset: 4mm !important;
+      --panel-pad-x: 7.5mm !important;
+      --panel-pad-y: 7mm !important;
+      --arch-inset-x: 6.5mm !important;
+      --arch-inset-y: 6.5mm !important;
     }
 
     * {
@@ -355,10 +377,10 @@
       z-index: 4;
       opacity: 0.88;
     }
-    .floral-corner.top-left { top: 4.5mm; left: 4.5mm; }
-    .floral-corner.top-right { top: 4.5mm; right: 4.5mm; transform: scaleX(-1); }
-    .floral-corner.bottom-left { bottom: 4.5mm; left: 4.5mm; transform: scaleY(-1); }
-    .floral-corner.bottom-right { bottom: 4.5mm; right: 4.5mm; transform: scale(-1); }
+    .floral-corner.top-left { top: var(--corner-inset); left: var(--corner-inset); }
+    .floral-corner.top-right { top: var(--corner-inset); right: var(--corner-inset); transform: scaleX(-1); }
+    .floral-corner.bottom-left { bottom: var(--corner-inset); left: var(--corner-inset); transform: scaleY(-1); }
+    .floral-corner.bottom-right { bottom: var(--corner-inset); right: var(--corner-inset); transform: scale(-1); }
 
     .mandala-emblem {
       width: 18mm;
@@ -1005,7 +1027,7 @@
         height: var(--sheet-h) !important;
         overflow: hidden !important;
       }
-      .sheet-tag {
+      .sheet-tag, .fold-badge {
         display: none !important;
       }
       .sheet-wrapper.is-hidden-print {
@@ -1041,6 +1063,16 @@
           <option value="manual" selected>🏷️ Manual (Space Stiker Tempel)</option>
           <option value="direct">🖨️ Cetak Langsung Nama Tamu</option>
           <option value="none">✨ Polos / Tanpa Label</option>
+        </select>
+      </label>
+
+      <!-- Margin Printer Selector (Anti-Potong Pinggir) -->
+      <label class="control-label" style="font-weight:600; color:#8bf0b2;">
+        🛡️ Margin Cetak:
+        <select class="select-picker" id="margin-selector" onchange="changeMarginMode(this.value)" style="border-color:#25D366; font-weight:600; background:#162419;">
+          <option value="safe" selected>🛡️ Standar Aman (Anti-Potong)</option>
+          <option value="extra-safe">🛡️ Ekstra Aman (Printer Biasa)</option>
+          <option value="borderless">📐 Mepet / Borderless</option>
         </select>
       </label>
 
@@ -1552,6 +1584,21 @@
       }
     }
 
+    // Switch margin safe preset: safe (standard), extra-safe (wide), or borderless
+    function changeMarginMode(mode) {
+      const body = document.body;
+      body.classList.remove('margin-safe', 'margin-extra-safe', 'margin-borderless');
+      if (mode === 'extra-safe') {
+        body.classList.add('margin-extra-safe');
+      } else if (mode === 'borderless') {
+        body.classList.add('margin-borderless');
+      } else {
+        body.classList.add('margin-safe');
+      }
+      const sel = document.getElementById('margin-selector');
+      if (sel && sel.value !== mode) sel.value = mode;
+    }
+
     // Switch between 2-sheets (compact duplex) and 4-sheets (full modular)
     function changeSheetMode(mode) {
       const extraSheets = document.querySelectorAll('.extra-sheet');
@@ -1614,7 +1661,7 @@
       }
     }
 
-    // Set initial state on load: 2-sheets mode & manual label
+    // Set initial state on load: 2-sheets mode & manual label & safe margin
     window.addEventListener('DOMContentLoaded', () => {
       changeSheetMode('2-sheets');
     });
@@ -1633,6 +1680,10 @@
       const labelParam = urlParams.get('label') || urlParams.get('labelMode');
       if (labelParam && typeof changeLabelMode === 'function') {
         changeLabelMode(labelParam);
+      }
+      const marginParam = urlParams.get('margin') || urlParams.get('marginMode');
+      if (marginParam && typeof changeMarginMode === 'function') {
+        changeMarginMode(marginParam);
       }
       const sizeParam = urlParams.get('size');
       if (sizeParam && typeof changePaperSize === 'function') {
@@ -1657,6 +1708,8 @@
         updateGuestName(event.data.name);
       } else if (event.data.type === 'SET_LABEL_MODE') {
         changeLabelMode(event.data.mode);
+      } else if (event.data.type === 'SET_MARGIN_MODE') {
+        changeMarginMode(event.data.mode);
       } else if (event.data.type === 'SET_PAPER_SIZE') {
         const sel = document.getElementById('size-selector');
         if (sel) sel.value = event.data.size;

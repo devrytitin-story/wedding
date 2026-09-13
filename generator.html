@@ -620,14 +620,24 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
       </div>
 
       <!-- Settings Bar -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; background: rgba(10, 8, 7, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; background: rgba(10, 8, 7, 0.7); border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
         <!-- Label Mode (Manual Stiker vs Cetak Langsung vs Polos) -->
         <div class="form-group" style="margin: 0;">
-          <label for="gen-print-label-mode">🏷️ Mode Label Cover:</label>
+          <label for="gen-print-label-mode">🏷️ Mode Label:</label>
           <select id="gen-print-label-mode" onchange="syncPrintLabelMode(this.value)">
-            <option value="manual" selected>🏷️ Manual (Space Stiker Tempel)</option>
-            <option value="direct">🖨️ Cetak Langsung Nama Tamu</option>
+            <option value="manual" selected>🏷️ Manual (Stiker Tempel)</option>
+            <option value="direct">🖨️ Cetak Nama Tamu</option>
             <option value="none">✨ Polos / Tanpa Label</option>
+          </select>
+        </div>
+
+        <!-- Margin Safety Selector (Anti-Potong Pinggir) -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-margin">🛡️ Margin Cetak:</label>
+          <select id="gen-print-margin" onchange="syncPrintMargin(this.value)" style="border-color:#25D366; color:#8bf0b2;">
+            <option value="safe" selected>🛡️ Standar Aman (Anti-Potong)</option>
+            <option value="extra-safe">🛡️ Ekstra Aman (Lebar)</option>
+            <option value="borderless">📐 Mepet / Borderless</option>
           </select>
         </div>
 
@@ -635,33 +645,33 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
         <div class="form-group" style="margin: 0;">
           <label for="gen-print-size">📏 Ukuran Kertas:</label>
           <select id="gen-print-size" onchange="syncPrintSize(this.value)">
-            <option value="b5" selected>B5 Landscape (250 × 176 mm) — Standar</option>
-            <option value="a5">A5 Landscape (210 × 148 mm) — Compact</option>
-            <option value="a4">A4 Landscape (297 × 210 mm) — Besar</option>
-            <option value="jis-b5">JIS B5 Landscape (257 × 182 mm)</option>
+            <option value="b5" selected>B5 (250 × 176 mm)</option>
+            <option value="a5">A5 (210 × 148 mm)</option>
+            <option value="a4">A4 (297 × 210 mm)</option>
+            <option value="jis-b5">JIS B5 (257 × 182 mm)</option>
           </select>
         </div>
 
         <!-- Format Mode -->
         <div class="form-group" style="margin: 0;">
-          <label for="gen-print-mode">📑 Format Lembar:</label>
+          <label for="gen-print-mode">📑 Format:</label>
           <select id="gen-print-mode" onchange="syncPrintMode(this.value)">
-            <option value="2-sheets" selected>✨ Opsi 2 Lembar (Padat Duplex — 1 Kertas)</option>
-            <option value="4-sheets">📋 Opsi 4 Lembar (Lengkap + Flap + Sisipan)</option>
+            <option value="2-sheets" selected>✨ 2 Lembar (Duplex)</option>
+            <option value="4-sheets">📋 4 Lembar (Lengkap)</option>
           </select>
         </div>
 
         <!-- Guest Name Input -->
         <div class="form-group" style="margin: 0;">
-          <label for="gen-print-guest">👤 Nama Tamu di Cover:</label>
+          <label for="gen-print-guest">👤 Tamu di Cover:</label>
           <input type="text" id="gen-print-guest" placeholder="Ketik nama tamu..." oninput="syncPrintGuest(this.value)">
         </div>
 
         <!-- Guest Quick Select -->
         <div class="form-group" style="margin: 0;">
-          <label for="gen-print-guest-select">🎯 Pilih dari Tamu Diinput:</label>
+          <label for="gen-print-guest-select">🎯 Pilih Tamu:</label>
           <select id="gen-print-guest-select" onchange="selectGuestFromList(this.value)">
-            <option value="">-- Pilih Tamu Tersimpan --</option>
+            <option value="">-- Tamu Tersimpan --</option>
           </select>
         </div>
       </div>
@@ -1268,6 +1278,14 @@ function syncPrintLabelMode(mode) {
   updateStandaloneTabUrl();
 }
 
+function syncPrintMargin(mode) {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'SET_MARGIN_MODE', mode: mode }, '*');
+  }
+  updateStandaloneTabUrl();
+}
+
 function syncPrintSize(size) {
   const iframe = document.getElementById('invitation-preview-frame');
   if (iframe && iframe.contentWindow) {
@@ -1348,10 +1366,11 @@ function updateStandaloneTabUrl() {
   const btn = document.getElementById('btn-standalone-tab');
   if (!btn) return;
   const labelMode = document.getElementById('gen-print-label-mode')?.value || 'manual';
+  const marginMode = document.getElementById('gen-print-margin')?.value || 'safe';
   const size = document.getElementById('gen-print-size')?.value || 'b5';
   const mode = document.getElementById('gen-print-mode')?.value || '2-sheets';
   const guest = document.getElementById('gen-print-guest')?.value || '';
-  let url = 'undangan.html?label=' + encodeURIComponent(labelMode) + '&size=' + encodeURIComponent(size) + '&mode=' + encodeURIComponent(mode);
+  let url = 'undangan.html?label=' + encodeURIComponent(labelMode) + '&margin=' + encodeURIComponent(marginMode) + '&size=' + encodeURIComponent(size) + '&mode=' + encodeURIComponent(mode);
   if (guest) url += '&to=' + encodeURIComponent(guest);
   btn.href = url;
 }
