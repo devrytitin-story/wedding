@@ -141,8 +141,134 @@
       --corner-inset: 4mm !important;
       --panel-pad-x: 7.5mm !important;
       --panel-pad-y: 7mm !important;
-      --arch-inset-x: 6.5mm !important;
-      --arch-inset-y: 6.5mm !important;
+    /* ========================================================
+       THEME 2: MINIMALIST BLACK & WHITE (LINE ART & SAFE MARGIN)
+       ======================================================== */
+    body.theme-bw {
+      --bg-cream: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --gold-deep: #111111;
+      --gold-primary: #1F1F1F;
+      --gold-light: #555555;
+      --gold-pale: #F0F0F0;
+      --gold-line: rgba(0, 0, 0, 0.45);
+      --gold-line-light: rgba(0, 0, 0, 0.18);
+      --ink-charcoal: #111111;
+      --ink-muted: #333333;
+      --ink-subtle: #666666;
+
+      /* Strict Printable Safe Inset for any non-borderless printer */
+      --border-inset: 9mm;
+      --corner-inset: 8mm;
+      --panel-pad-x: 10.5mm;
+      --panel-pad-y: 10mm;
+      --arch-inset-x: 9mm;
+      --arch-inset-y: 9mm;
+      --arch-radius: 0px;
+    }
+
+    body.theme-bw.size-a5 {
+      --border-inset: 8mm;
+      --corner-inset: 7mm;
+      --panel-pad-x: 9mm;
+      --panel-pad-y: 8.5mm;
+      --arch-inset-x: 8mm;
+      --arch-inset-y: 8mm;
+      --arch-radius: 0px;
+    }
+
+    body.theme-bw .sheet-wrapper {
+      background: #FFFFFF !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+    }
+    body.theme-bw .sheet-wrapper::before {
+      display: none !important;
+    }
+
+    /* Minimalist Frame */
+    body.theme-bw .panel-border {
+      border: 1.2px solid #111111 !important;
+    }
+    body.theme-bw .panel-border::after {
+      border: 0.5px solid #888888 !important;
+      inset: 1.5mm;
+    }
+
+    /* Minimalist Cover Frame */
+    body.theme-bw .arch-card-wrapper {
+      border-radius: 0 !important;
+      border: 1.2px solid #111111 !important;
+      background: #FFFFFF !important;
+      box-shadow: none !important;
+      inset: var(--border-inset) !important;
+      padding: 4mm 4mm 3mm !important;
+    }
+    body.theme-bw .arch-inner-border {
+      border-radius: 0 !important;
+      border: 0.5px solid #888888 !important;
+      inset: 1.5mm !important;
+    }
+
+    /* Conditional Elements Visibility */
+    .bw-only {
+      display: none !important;
+    }
+    body.theme-bw .bw-only {
+      display: block !important;
+    }
+    body.theme-bw .gold-only {
+      display: none !important;
+    }
+
+    /* Line Art Couple Illustration */
+    .bw-couple-illustration {
+      width: 28mm;
+      height: 28mm;
+      margin: 1px auto 2px;
+      display: block;
+      color: #111111;
+    }
+
+    /* Minimalist Botanical Leaf Icon */
+    .bw-botanical-icon {
+      width: 13mm;
+      height: 13mm;
+      margin: 0 auto 3px;
+      display: block;
+      color: #111111;
+    }
+
+    /* Minimalist Dividers */
+    body.theme-bw .diamond-divider {
+      color: #111111;
+    }
+    body.theme-bw .diamond-divider::before,
+    body.theme-bw .diamond-divider::after {
+      background: #222222;
+      height: 0.6px;
+    }
+
+    /* Minimalist Schedule Box */
+    body.theme-bw .event-schedule-container {
+      background: #FFFFFF !important;
+      border: 1px solid #111111 !important;
+      box-shadow: none !important;
+    }
+    body.theme-bw .venue-box {
+      background: #FAFAFA !important;
+      border: 1px dashed #222222 !important;
+    }
+    body.theme-bw .compact-gift-box {
+      background: #FAFAFA !important;
+      border: 1px dashed #222222 !important;
+    }
+    body.theme-bw .cover-guest-card {
+      border: 1px solid #333333 !important;
+      background: #FFFFFF !important;
+      box-shadow: none !important;
+    }
+    body.theme-bw .bismillah-tx {
+      color: #111111 !important;
     }
 
     * {
@@ -1134,6 +1260,15 @@
     </div>
 
     <div class="bar-actions">
+      <!-- Design Theme Selector (Royal Gold vs Minimalist B&W Safe Margin) -->
+      <label class="control-label" style="font-weight:600; color:#93c5fd;">
+        🎨 Desain:
+        <select class="select-picker" id="theme-selector" onchange="changeTheme(this.value)" style="border-color:#60a5fa; font-weight:600; background:#111827;">
+          <option value="gold" selected>✨ Royal Gold (Klasik Kubah)</option>
+          <option value="bw">🖤 Minimalist B&amp;W (Line Art Aman Cetak)</option>
+        </select>
+      </label>
+
       <!-- Label Mode Selector (Manual Stiker vs Cetak Langsung vs Polos) -->
       <label class="control-label" style="font-weight:600; color:#E6C782;">
         🏷️ Label Cover:
@@ -1247,8 +1382,17 @@
       <svg class="floral-corner bottom-left"><use href="#icon-floral-corner"/></svg>
 
       <div style="max-width: 92%; margin: 0 auto;">
-        <!-- Mandala Gold Ornament -->
-        <svg class="mandala-emblem"><use href="#icon-mandala"/></svg>
+        <!-- Mandala Gold Ornament (Theme Gold) -->
+        <svg class="mandala-emblem gold-only"><use href="#icon-mandala"/></svg>
+
+        <!-- Minimalist Botanical Icon (Theme BW) -->
+        <svg class="bw-botanical-icon bw-only" viewBox="0 0 100 100" fill="none" stroke="#111111" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M50 85 C50 65 50 45 50 15" />
+          <path d="M50 70 C40 65 35 55 38 45 C46 45 49 55 50 70 Z" />
+          <path d="M50 55 C60 50 65 40 62 30 C54 30 51 40 50 55 Z" />
+          <path d="M50 40 C42 35 38 27 41 19 C48 19 49 27 50 40 Z" />
+          <circle cx="50" cy="15" r="3" fill="#111111" />
+        </svg>
 
         <div style="margin: 10px 0 6px;">
           <p class="tx-serif" style="font-size: 15px; font-style: italic; color: var(--ink-charcoal); line-height: 1.45;">
@@ -1264,20 +1408,20 @@
       </div>
     </div>
 
-    <!-- PANEL KANAN LUAR: COVER DEPAN DENGAN KUBAH DOME MEWAH -->
+    <!-- PANEL KANAN LUAR: COVER DEPAN DENGAN KUBAH DOME MEWAH / B&W LINE ART -->
     <div class="panel-half">
       <div class="panel-border"></div>
       <svg class="floral-corner top-right"><use href="#icon-floral-corner"/></svg>
       <svg class="floral-corner bottom-right"><use href="#icon-floral-corner"/></svg>
 
-      <!-- ARCH KUBAH FRAME -->
+      <!-- ARCH KUBAH FRAME / B&W MINIMALIST FRAME -->
       <div class="arch-card-wrapper">
         <div class="arch-inner-border"></div>
 
         <!-- TOP GROUP: Lantern + THE WEDDING + Couple Names -->
         <div class="cover-top-group">
-          <!-- Hanging Lantern Icon -->
-          <svg class="arch-lantern" viewBox="0 0 40 60" fill="none" stroke="currentColor">
+          <!-- Hanging Lantern Icon (Theme Gold) -->
+          <svg class="arch-lantern gold-only" viewBox="0 0 40 60" fill="none" stroke="currentColor">
             <line x1="20" y1="0" x2="20" y2="24" stroke-width="1.2"/>
             <circle cx="20" cy="24" r="2.5" fill="currentColor"/>
             <path d="M12,28 C12,28 15,26 20,26 C25,26 28,28 28,28 L26,46 L14,46 Z" stroke-width="1.2" fill="#FAF6EE"/>
@@ -1287,7 +1431,7 @@
 
           <!-- Header -->
           <div class="tx-center">
-            <div class="cover-the-wedding">THE WEDDING</div>
+            <div class="cover-the-wedding">THE WEDDING OF</div>
             <div class="diamond-divider" style="margin: 2px auto;">✦</div>
           </div>
 
@@ -1299,6 +1443,35 @@
               Devry Rizkie H
             </div>
           </div>
+
+          <!-- One-Line Art Illustration of Hijab Bride & Groom (Theme BW) -->
+          <svg class="bw-couple-illustration bw-only" viewBox="0 0 160 160" fill="none" stroke="#111111" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Groom Head / Hair / Profile -->
+            <path d="M62 38 C62 26 74 22 84 25 C92 27 96 35 95 44 C94 48 91 52 86 54" />
+            <path d="M66 32 C68 26 77 24 84 26" />
+            <!-- Groom Neck & Suit -->
+            <path d="M86 54 C82 58 78 59 74 57 C71 55 70 52 70 48" />
+            <path d="M70 58 L56 70 L42 88 L38 122" />
+            <path d="M75 58 L80 72 L82 122" />
+            <path d="M64 68 L70 82 L68 122" />
+            <!-- Bride Hijab Silhouette & Head -->
+            <path d="M96 42 C96 30 108 28 116 32 C124 35 128 44 126 55 C124 66 118 78 114 88 C111 96 109 110 107 122" />
+            <path d="M96 42 C100 38 108 36 114 38 C120 40 122 45 120 52 C118 58 113 65 108 70 C103 75 100 78 97 84" />
+            <!-- Bride Facial Profile & Inner Hijab Wrap -->
+            <path d="M106 45 C106 50 104 54 100 56 C98 57 96 57 95 55" />
+            <!-- Flowing Veil / Selendang -->
+            <path d="M118 34 C128 40 134 50 134 64 C134 80 129 100 126 122" />
+            <path d="M123 48 C127 60 127 75 124 96 C122 106 120 115 119 122" />
+            <!-- Bride Dress & Bouquet -->
+            <path d="M97 84 L92 95 L88 122" />
+            <path d="M102 78 C99 87 96 97 97 104" />
+            <!-- Bouquet Flowers & Leaves -->
+            <path d="M89 92 C86 88 81 90 81 94 C81 97 84 100 89 100 C94 100 96 95 94 92 Z" />
+            <path d="M84 90 C82 86 87 83 90 87" />
+            <path d="M86 100 L84 112 M89 100 L89 113 M92 98 L94 111" />
+            <!-- Base Ground Accent -->
+            <path d="M30 130 Q80 125 130 130" stroke-dasharray="2 3" opacity="0.4" />
+          </svg>
         </div>
 
         <!-- MIDDLE GROUP: Dedicated Label Space (Stiker Tempel Manual atau Cetak Langsung) -->
@@ -1325,8 +1498,8 @@
             <div class="cover-event">WALIMATUL 'URSY</div>
           </div>
 
-          <!-- Bottom Arch Ornament Flourish -->
-          <svg width="30mm" height="5.5mm" viewBox="0 0 160 30" style="margin-top: 2px; color: var(--gold-primary);">
+          <!-- Bottom Arch Ornament Flourish (Theme Gold) -->
+          <svg class="gold-only" width="30mm" height="5.5mm" viewBox="0 0 160 30" style="margin-top: 2px; color: var(--gold-primary);">
             <path d="M10,15 Q40,5 80,15 Q120,25 150,15" fill="none" stroke="currentColor" stroke-width="1"/>
             <circle cx="80" cy="15" r="3" fill="currentColor"/>
             <circle cx="65" cy="13" r="1.5" fill="currentColor"/>
@@ -1730,6 +1903,28 @@
       }
     }
 
+    // Switch Design Theme: gold (Royal Gold Kubah) vs bw (Minimalist B&W Safe Margin)
+    function changeTheme(theme) {
+      const body = document.body;
+      const validTheme = (theme === 'bw') ? 'bw' : 'gold';
+      body.classList.remove('theme-gold', 'theme-bw');
+      body.classList.add('theme-' + validTheme);
+
+      const sel = document.getElementById('theme-selector');
+      if (sel && sel.value !== validTheme) {
+        sel.value = validTheme;
+      }
+
+      const banner = document.getElementById('mode-banner-info');
+      if (banner) {
+        if (validTheme === 'bw') {
+          banner.innerHTML = '<span>🖤 <strong>Desain Minimalist B&amp;W Aktif:</strong> Latar putih bersih, ilustrasi line art, dan safe-margin ekstra aman — bebas risiko terpotong pada semua tipe printer (termasuk non-borderless HP DeskJet).</span>';
+        } else {
+          banner.innerHTML = '<span>✨ <strong>Desain Royal Gold Aktif:</strong> Nuansa emas &amp; kubah islami klasik dengan aksen mewah.</span>';
+        }
+      }
+    }
+
     // Set initial state on load: 2-sheets mode & manual label & safe margin
     window.addEventListener('DOMContentLoaded', () => {
       changeSheetMode('2-sheets');
@@ -1740,6 +1935,10 @@
     // URL Query Parameter Listener & Cross-Window Messenger
     window.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
+      const themeParam = urlParams.get('theme') || urlParams.get('desain');
+      if (themeParam && typeof changeTheme === 'function') {
+        changeTheme(themeParam);
+      }
       const guestParam = urlParams.get('to') || urlParams.get('u') || urlParams.get('nama');
       if (guestParam) {
         const inp = document.getElementById('input-guest');
@@ -1771,7 +1970,9 @@
     // Listen to postMessage from generator parent page
     window.addEventListener('message', (event) => {
       if (!event.data || typeof event.data !== 'object') return;
-      if (event.data.type === 'SET_GUEST_NAME') {
+      if (event.data.type === 'SET_THEME') {
+        changeTheme(event.data.theme);
+      } else if (event.data.type === 'SET_GUEST_NAME') {
         const inp = document.getElementById('input-guest');
         if (inp) inp.value = event.data.name;
         updateGuestName(event.data.name);
