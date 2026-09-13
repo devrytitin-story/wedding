@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <!-- html2canvas for Ultra HD PNG Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <!-- Dynamic @page size style injected and controlled by JS -->
   <style id="dynamic-page-size">
     @page {
@@ -300,15 +303,81 @@
       z-index: 1;
     }
 
-    /* Screen tag */
-    .sheet-tag {
+    .btn-action.btn-download-png {
+      background: linear-gradient(135deg, #1f6f43, #154c2e);
+      border-color: #4ade80;
+    }
+    .btn-action.btn-download-png:hover {
+      background: linear-gradient(135deg, #278853, #1b633c);
+      box-shadow: 0 4px 14px rgba(74, 222, 128, 0.4);
+    }
+
+    /* Screen tag bar & Per-sheet download */
+    .sheet-tag-bar {
       position: absolute;
-      top: -22px;
+      top: -26px;
       left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 20;
+    }
+    .sheet-tag {
       color: #D6CAB8;
       font-size: 10px;
       letter-spacing: 1.5px;
       font-family: var(--font-display);
+    }
+    .btn-sheet-dl {
+      background: rgba(30, 25, 20, 0.85);
+      border: 1px solid var(--gold-line);
+      color: #E6C782;
+      font-family: var(--font-sans);
+      font-size: 9.5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-sheet-dl:hover {
+      background: var(--gold-primary);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    /* PNG Render Toast Modal */
+    #png-progress-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #191512;
+      border: 1px solid var(--gold-light);
+      border-radius: 8px;
+      padding: 12px 18px;
+      color: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      gap: 12px;
+      z-index: 99999;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+    .toast-spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(197, 160, 89, 0.3);
+      border-top-color: #C5A059;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     /* ========================================================
@@ -1105,6 +1174,11 @@
         <input type="text" id="input-guest" placeholder="Nama Tamu" style="background:#191512; border:1px solid var(--gold-line); color:#fff; padding:5px 8px; border-radius:4px; font-size:11px; width:120px;" oninput="updateGuestName(this.value)">
       </label>
 
+      <button class="btn-action btn-download-png" onclick="downloadAllPNG()" title="Download seluruh lembar dalam format gambar PNG Ultra HD (300 DPI siap cetak)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Download PNG (HD)
+      </button>
+
       <button class="btn-action" onclick="window.print()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
         Cetak / Simpan PDF
@@ -1152,7 +1226,10 @@
        Cetak Sisi Luar Kertas
        ============================================================ -->
   <div class="sheet-wrapper" id="sheet-outside">
-    <div class="sheet-tag" id="tag-sheet-outside">LEMBAR 1: TAMPAK LUAR (COVER DEPAN &amp; BELAKANG) — B5 LANDSCAPE (250 × 176 mm)</div>
+    <div class="sheet-tag-bar">
+      <div class="sheet-tag" id="tag-sheet-outside">LEMBAR 1: TAMPAK LUAR (COVER DEPAN &amp; BELAKANG) — B5 LANDSCAPE (250 × 176 mm)</div>
+      <button type="button" class="btn-sheet-dl" onclick="downloadPNG('sheet-outside', 'Lembar-1-Cover')">📥 Unduh PNG Lembar 1 (HD)</button>
+    </div>
 
     <div class="center-fold-line"></div>
     <div class="fold-badge">GARIS LIPAT</div>
@@ -1260,7 +1337,10 @@
        Cetak Sisi Dalam Kertas (Duplex / Bolak-Balik)
        ============================================================ -->
   <div class="sheet-wrapper" id="sheet-inside">
-    <div class="sheet-tag" id="tag-sheet-inside">LEMBAR 2: TAMPAK DALAM (INNER SPREAD) — B5 LANDSCAPE (250 × 176 mm)</div>
+    <div class="sheet-tag-bar">
+      <div class="sheet-tag" id="tag-sheet-inside">LEMBAR 2: TAMPAK DALAM (INNER SPREAD) — B5 LANDSCAPE (250 × 176 mm)</div>
+      <button type="button" class="btn-sheet-dl" onclick="downloadPNG('sheet-inside', 'Lembar-2-Isi')">📥 Unduh PNG Lembar 2 (HD)</button>
+    </div>
     
     <!-- Central Fold Guides -->
     <div class="center-fold-line"></div>
@@ -1404,7 +1484,10 @@
        LEMBAR 3: POLA AMPLOP LIPAT (HANYA MUNCUL DI MODE 4 LEMBAR)
        ============================================================ -->
   <div class="sheet-wrapper extra-sheet" id="sheet-diecut" style="display: none;">
-    <div class="sheet-tag" id="tag-sheet-diecut">LEMBAR 3: POLA AMPLOP DENGAN FLAP (MODEL DIE-CUT LIPAT) — B5</div>
+    <div class="sheet-tag-bar">
+      <div class="sheet-tag" id="tag-sheet-diecut">LEMBAR 3: POLA AMPLOP DENGAN FLAP (MODEL DIE-CUT LIPAT) — B5</div>
+      <button type="button" class="btn-sheet-dl" onclick="downloadPNG('sheet-diecut', 'Lembar-3-Amplop')">📥 Unduh PNG Lembar 3 (HD)</button>
+    </div>
 
     <div class="die-cut-wrapper">
       <!-- Top Flap -->
@@ -1480,7 +1563,10 @@
        LEMBAR 4: KARTU SISIPAN TERPISAH (HANYA MUNCUL DI MODE 4 LEMBAR)
        ============================================================ -->
   <div class="sheet-wrapper extra-sheet" id="sheet-insert" style="display: none;">
-    <div class="sheet-tag" id="tag-sheet-insert">LEMBAR 4: KARTU SISIPAN (INSERT CARD) — TANDA KASIH &amp; REKENING DIGITAL</div>
+    <div class="sheet-tag-bar">
+      <div class="sheet-tag" id="tag-sheet-insert">LEMBAR 4: KARTU SISIPAN (INSERT CARD) — REKENING DIGITAL</div>
+      <button type="button" class="btn-sheet-dl" onclick="downloadPNG('sheet-insert', 'Lembar-4-Sisipan')">📥 Unduh PNG Lembar 4 (HD)</button>
+    </div>
 
     <div class="insert-cards-grid">
       <!-- Kartu 1: Rekening Transfer & Alamat -->
@@ -1701,6 +1787,129 @@
         window.print();
       }
     });
+  </script>
+
+  <!-- Toast Notification Overlay -->
+  <div id="png-progress-toast">
+    <div class="toast-spinner"></div>
+    <span id="png-progress-text">Sedang membuat gambar PNG Ultra HD...</span>
+  </div>
+
+  <script>
+    function showDownloadProgress(msg) {
+      const toast = document.getElementById('png-progress-toast');
+      const text = document.getElementById('png-progress-text');
+      if (text) text.textContent = msg || 'Sedang memproses gambar HD...';
+      if (toast) toast.style.display = 'flex';
+    }
+
+    function updateDownloadProgress(msg) {
+      const text = document.getElementById('png-progress-text');
+      if (text) text.textContent = msg;
+    }
+
+    function hideDownloadProgress() {
+      const toast = document.getElementById('png-progress-toast');
+      if (toast) toast.style.display = 'none';
+    }
+
+    async function downloadPNG(sheetId, sheetLabel) {
+      const el = document.getElementById(sheetId);
+      if (!el) return;
+
+      showDownloadProgress(`Sedang membuat gambar ${sheetLabel} (Ultra HD)...`);
+
+      try {
+        if (document.fonts) {
+          await document.fonts.ready;
+        }
+
+        // Use scale: 3 for high-density 300+ DPI print quality
+        const canvas = await html2canvas(el, {
+          scale: 3,
+          useCORS: true,
+          allowTaint: true,
+          logging: false,
+          backgroundColor: '#FDFBF7'
+        });
+
+        const guestInput = document.getElementById('input-guest')?.value || '';
+        const guestClean = guestInput.trim() ? '_' + guestInput.trim().replace(/[^a-zA-Z0-9_-]/g, '_') : '';
+        const sizeName = (document.getElementById('size-selector')?.value || 'b5').toUpperCase();
+        const filename = `Undangan_${sheetLabel}${guestClean}_${sizeName}_HD.png`;
+
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (err) {
+        console.error('Error export PNG:', err);
+        alert('Gagal membuat gambar PNG: ' + err.message);
+      } finally {
+        hideDownloadProgress();
+      }
+    }
+
+    async function downloadAllPNG() {
+      const mode = document.getElementById('mode-selector')?.value || '2-sheets';
+      const sheets = [
+        { id: 'sheet-outside', label: 'Lembar-1-Cover' },
+        { id: 'sheet-inside', label: 'Lembar-2-Isi' }
+      ];
+
+      if (mode === '4-sheets') {
+        sheets.push(
+          { id: 'sheet-diecut', label: 'Lembar-3-Amplop' },
+          { id: 'sheet-insert', label: 'Lembar-4-Sisipan' }
+        );
+      }
+
+      showDownloadProgress(`Mempersiapkan ${sheets.length} lembar Ultra HD...`);
+
+      try {
+        if (document.fonts) {
+          await document.fonts.ready;
+        }
+
+        for (let i = 0; i < sheets.length; i++) {
+          const sheet = sheets[i];
+          const el = document.getElementById(sheet.id);
+          if (!el || el.style.display === 'none') continue;
+
+          updateDownloadProgress(`Membuat gambar ${i + 1} dari ${sheets.length}: ${sheet.label}...`);
+
+          const canvas = await html2canvas(el, {
+            scale: 3,
+            useCORS: true,
+            allowTaint: true,
+            logging: false,
+            backgroundColor: '#FDFBF7'
+          });
+
+          const guestInput = document.getElementById('input-guest')?.value || '';
+          const guestClean = guestInput.trim() ? '_' + guestInput.trim().replace(/[^a-zA-Z0-9_-]/g, '_') : '';
+          const sizeName = (document.getElementById('size-selector')?.value || 'b5').toUpperCase();
+          const filename = `Undangan_${sheet.label}${guestClean}_${sizeName}_HD.png`;
+
+          const link = document.createElement('a');
+          link.download = filename;
+          link.href = canvas.toDataURL('image/png', 1.0);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          // Delay to prevent browser from suppressing sequential downloads
+          await new Promise(r => setTimeout(r, 600));
+        }
+      } catch (err) {
+        console.error('Error export all PNG:', err);
+        alert('Gagal mendownload gambar: ' + err.message);
+      } finally {
+        hideDownloadProgress();
+      }
+    }
   </script>
 </body>
 
