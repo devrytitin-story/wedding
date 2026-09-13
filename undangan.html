@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Undangan Pernikahan — Titin Rahma Lestari & Devry Rizkie H</title>
   
-  <!-- Google Fonts: Cormorant Garamond, Cinzel, Montserrat, Great Vibes -->
+  <!-- Google Fonts: Amiri (Arabic), Cormorant Garamond, Cinzel, Montserrat, Great Vibes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- html2canvas for Ultra HD PNG Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -686,12 +686,18 @@
     /* ========================================================
        INNER SPREAD: LEFT PANEL (INTEGRATED & COMPACT)
        ======================================================== */
-    .bismillah-img {
-      width: 40mm;
-      height: auto;
-      margin: 0 auto 2px;
+    .bismillah-tx {
+      font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--gold-deep);
+      text-align: center;
+      margin: 0 auto 1px;
+      direction: rtl;
+      letter-spacing: 0 !important;
+      word-spacing: 1px;
       display: block;
-      filter: drop-shadow(0 0.5px 0.5px rgba(125,91,35,0.2));
+      width: 100%;
     }
     .intro-text {
       font-size: 8.5px;
@@ -1354,9 +1360,7 @@
 
       <!-- Header: Bismillah & Ayat -->
       <div class="tx-center" style="margin-top: 1mm;">
-        <svg class="bismillah-img" viewBox="0 0 280 60">
-          <text x="50%" y="42" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="32" font-weight="600" fill="#7D5B23" letter-spacing="2">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</text>
-        </svg>
+        <div class="bismillah-tx" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
 
         <div class="quote-box">
           “Dan di antara tanda-tanda kekuasaan-Nya adalah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya, dan dijadikan-Nya di antara kamu rasa kasih dan sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.”
