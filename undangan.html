@@ -807,27 +807,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 7px;
       margin-top: 3px;
     }
     .qr-box-wrapper {
       width: var(--qr-render-size);
       height: var(--qr-render-size);
-      border: 1px solid #1c150c;
+      border: 1px solid #000000;
       border-radius: 3px;
-      padding: 1px;
-      background: #ffffff;
+      padding: 1.5mm;
+      background: #ffffff !important;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
       flex-shrink: 0;
     }
-    .qr-box-wrapper img {
+    .qr-box-wrapper img, .qr-box-wrapper svg {
       width: 100%;
       height: 100%;
       display: block;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
       image-rendering: pixelated;
+      shape-rendering: crispEdges;
     }
     .qr-desc {
       text-align: left;
@@ -1034,7 +1037,7 @@
         display: none !important;
       }
       body.label-manual .cover-sticker-guide {
-        border-color: transparent !important;
+        border: 0.8px dashed rgba(158, 119, 54, 0.65) !important;
         background: transparent !important;
       }
       body.label-manual .cover-sticker-guide * {
@@ -1175,7 +1178,7 @@
         <!-- Mini Website Info with High-Contrast Scannable QR -->
         <div style="margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;">
           <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" class="qr-box-wrapper" title="Buka Website Undangan" style="width: 15mm; height: 15mm;">
-            <img src="qr-wedding-web.png" alt="QR Website" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fdevrytitin-story.github.io%2Fwedding&color=000000&bgcolor=ffffff'">
+            <img src="qr-web.svg" alt="QR Website" onerror="this.src='qr-wedding-web.png'">
           </a>
           <div style="text-align: left; font-size: 7.5px; color: var(--ink-muted); line-height: 1.3;">
             <b style="color: var(--gold-deep); font-size: 8px; letter-spacing: 1px; display: block;">UNDANGAN DIGITAL</b>
@@ -1393,7 +1396,7 @@
         <!-- QR Code Google Maps (High contrast & 100% Scannable) -->
         <div class="qr-mini-row">
           <a href="https://maps.app.goo.gl/THmR9UrzEBHPHEq5A" target="_blank" rel="noopener" class="qr-box-wrapper" title="Buka Google Maps">
-            <img src="qr-maps-lokasi.png" alt="QR Code Google Maps" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmaps.app.goo.gl%2FTHmR9UrzEBHPHEq5A&color=000000&bgcolor=ffffff'">
+            <img src="qr-maps.svg" alt="QR Code Google Maps" onerror="this.src='qr-maps-lokasi.png'">
           </a>
           <div class="qr-desc">
             <b>PANDUAN LOKASI (GOOGLE MAPS)</b>
@@ -1540,14 +1543,14 @@
         <div style="display: flex; justify-content: center; gap: 14px; margin: 6px 0;">
           <div>
             <div class="qr-box-wrapper" style="width: 20mm; height: 20mm; margin: 0 auto;">
-              <img src="qr-maps-lokasi.png" alt="QR Maps" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmaps.app.goo.gl%2FTHmR9UrzEBHPHEq5A&color=000000&bgcolor=ffffff'">
+              <img src="qr-maps.svg" alt="QR Maps" onerror="this.src='qr-maps-lokasi.png'">
             </div>
             <div style="font-size: 7.5px; font-weight: 600; color: var(--gold-deep); margin-top: 3px;">GOOGLE MAPS</div>
           </div>
 
           <div>
             <div class="qr-box-wrapper" style="width: 20mm; height: 20mm; margin: 0 auto;">
-              <img src="qr-wedding-web.png" alt="QR Web" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fdevrytitin-story.github.io%2Fwedding&color=000000&bgcolor=ffffff'">
+              <img src="qr-web.svg" alt="QR Web" onerror="this.src='qr-wedding-web.png'">
             </div>
             <div style="font-size: 7.5px; font-weight: 600; color: var(--gold-deep); margin-top: 3px;">WEBSITE &amp; RSVP</div>
           </div>
