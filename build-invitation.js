@@ -981,6 +981,7 @@ const weddingBody = `
       <div><b>27</b><span>September</span></div>
       <div><b>2026</b><span>Tahun Masehi</span></div>
       <div><b>13.00</b><span>Waktu Mulai</span></div>
+      <div><b>16.00</b><span>Waktu Selesai</span></div>
       <div><b>∞</b><span>Doa &amp; Berkah</span></div>
     </div>
   </div>
@@ -1092,7 +1093,7 @@ const weddingBody = `
 
     <!-- Save the Date button -->
     <div style="text-align: center; margin-bottom: 32px;" data-rv="fade">
-      <a class="arrowlink" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+Titin+%26+Devry&dates=20260927T060000Z/20260927T100000Z&details=Syukuran+Pernikahan+Titin+Rahma+Lestari+%26+Devry+Rizkie+H&location=Jl.+Abah+Rimun+No+133+Rt+008,+RW+006,+Jatiwarna,+Pondok+Melati,+Bekasi" target="_blank" rel="noopener" data-cursor style="display:inline-flex;">
+      <a class="arrowlink" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+Titin+%26+Devry&dates=20260927T060000Z/20260927T090000Z&details=Syukuran+Pernikahan+Titin+Rahma+Lestari+%26+Devry+Rizkie+H&location=Jl.+Abah+Rimun+No+133+Rt+008,+RW+006,+Jatiwarna,+Pondok+Melati,+Bekasi" target="_blank" rel="noopener" data-cursor style="display:inline-flex;">
         <span>Simpan ke Google Calendar</span>
         <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
       </a>
@@ -1120,7 +1121,7 @@ const weddingBody = `
           MINGGU, 27 SEPTEMBER 2026
         </p>
         <p class="body" style="color: rgba(255,255,255,0.85); line-height: 1.6;">
-          <b>Pukul:</b> 13.00 s/d 17.00 WIB<br>
+          <b>Pukul:</b> 13.00 s/d 16.00 WIB<br>
           <b>Acara:</b> Ramah Tamah &amp; Doa Restu<br>
           <b>Tempat:</b> Rumah Mempelai Wanita
         </p>
@@ -1138,10 +1139,16 @@ const weddingBody = `
       Jl. Abah Rimun No 133 Rt 008, RW 006, Jatiwarna, Pondok Melati, Bekasi.
     </p>
 
-    <a class="cta" href="https://maps.app.goo.gl/THmR9UrzEBHPHEq5A" target="_blank" rel="noopener" data-rv="fade" data-cursor style="margin: 0 auto; display: inline-flex;">
-      <i></i><span>Buka Petunjuk di Google Maps</span>
-      <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
-    </a>
+    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 0 auto;" data-rv="fade">
+      <a class="cta" href="https://www.google.com/maps/search/?api=1&query=-6.303235,106.929613" target="_blank" rel="noopener" data-cursor style="display: inline-flex;">
+        <i></i><span>Buka di Google Maps</span>
+        <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
+      </a>
+      <a class="cta" href="https://maps.apple.com/?q=Rumah+Mempelai+Wanita+(Titin+%26+Devry)&ll=-6.303235,106.929613" target="_blank" rel="noopener" data-cursor style="display: inline-flex; border-color: rgba(201, 168, 76, 0.4); background: rgba(255,255,255,0.05);">
+        <i></i><span>Buka di Apple Maps (iOS)</span>
+        <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
+      </a>
+    </div>
 
     <!-- Gallery Section -->
     <div style="margin-top: 60px;">
@@ -1163,10 +1170,13 @@ const weddingBody = `
 <!-- ============================================================ chapter V (Tanda Kasih / Wedding Gift) -->
 <section class="sec" id="gift" data-cam="4">
   <div class="sec-glass-card" style="text-align: center;">
-    <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Ungkapan Kasih &amp; Hadiah</div>
+    <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Rekening Titin &amp; Devry</div>
     <h2 class="display font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Tanda Kasih</h2>
-    <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 28px; font-style: italic;">
-      "Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan kasih Anda, kami menyediakan amplop digital di bawah ini untuk memudahkan Anda:"
+    <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 28px; color: rgba(255,255,255,0.85); line-height: 1.7;">
+      Doa restu serta kehadiran Bapak/Ibu/Saudara/i sekalian merupakan karunia terindah dan hal yang paling berarti bagi kami.<br>
+      <span style="display:inline-block; margin-top:8px; font-size: 14px; color: var(--gold-pale);">
+        Tanpa mengurangi rasa hormat, bagi keluarga atau kerabat yang berkenan memberikan tanda kasih secara transfer, kami sediakan informasi rekening di bawah ini:
+      </span>
     </p>
 
     <div class="gift-grid" data-rv="up">
@@ -1201,22 +1211,6 @@ const weddingBody = `
           </button>
         </div>
       </div>
-    </div>
-
-    <!-- Kirim Kado Fisik -->
-    <div class="gift-address-box" data-rv="up">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--gold-light)" stroke-width="2"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-        <h4 class="font-cinzel" style="font-size: 14px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase;">Kirim Kado Fisik</h4>
-      </div>
-      <p style="font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; max-width: 600px; margin: 0 auto 12px;" id="gift-address-text">
-        <b>Penerima: Titin Rahma Lestari / Devry Rizkie H</b><br>
-        Jl. Melati Raya GG Mawar 1 no 3c, RT 008/ RW 006 , Jatiwarna, Pondok Melati, Bekasi.
-      </p>
-      <button class="gift-copy-btn" style="margin: 0 auto; display: inline-flex;" onclick="copyGiftText('gift-address-text', 'Alamat pengiriman kado')">
-        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span>Salin Alamat Lengkap</span>
-      </button>
     </div>
   </div>
 </section>
