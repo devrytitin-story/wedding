@@ -397,12 +397,48 @@ body.is-locked .hero-spacer {
 /* ═══════════════════════════════════════════════════════════════
    TANDA KASIH (WEDDING GIFT & AMPLOP DIGITAL) STYLES
    ═══════════════════════════════════════════════════════════════ */
+.gift-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 28px;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.45);
+  border-radius: 999px;
+  color: var(--gold-pale);
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.gift-toggle-btn:hover {
+  background: rgba(201, 168, 76, 0.25);
+  border-color: var(--gold-light);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(201, 168, 76, 0.2);
+}
+.gift-box-wrapper {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, margin 0.4s ease;
+  margin-top: 0;
+}
+.gift-box-wrapper.is-open {
+  max-height: 800px;
+  opacity: 1;
+  margin-top: 24px;
+}
 .gift-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   max-width: 740px;
-  margin: 28px auto 0;
+  margin: 0 auto;
 }
 @media (max-width: 720px) {
   .gift-grid { grid-template-columns: 1fr; }
@@ -1170,45 +1206,55 @@ const weddingBody = `
 <!-- ============================================================ chapter V (Tanda Kasih / Wedding Gift) -->
 <section class="sec" id="gift" data-cam="4">
   <div class="sec-glass-card" style="text-align: center;">
-    <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Rekening Titin &amp; Devry</div>
-    <h2 class="display font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Tanda Kasih</h2>
-    <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 28px; color: rgba(255,255,255,0.85); line-height: 1.7;">
-      Doa restu serta kehadiran Bapak/Ibu/Saudara/i sekalian merupakan karunia terindah dan hal yang paling berarti bagi kami.<br>
+    <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Silaturahmi &amp; Doa Restu</div>
+    <h2 class="display font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Titipan Doa &amp; Tanda Kasih</h2>
+    <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 20px; color: rgba(255,255,255,0.85); line-height: 1.7;">
+      Kehadiran serta doa restu Bapak/Ibu/Saudara/i sekalian merupakan anugerah terindah yang sangat berarti bagi kami.<br>
       <span style="display:inline-block; margin-top:8px; font-size: 14px; color: var(--gold-pale);">
-        Tanpa mengurangi rasa hormat, bagi keluarga atau kerabat yang berkenan memberikan tanda kasih secara transfer, kami sediakan informasi rekening di bawah ini:
+        Bagi keluarga atau sahabat yang berhalangan hadir dan berkenan menyampaikan tanda kasih, silakan klik tombol di bawah ini:
       </span>
     </p>
 
-    <div class="gift-grid" data-rv="up">
-      <!-- Rekening Bank BCA -->
-      <div class="gift-card">
-        <div>
-          <span class="gift-bank-badge">BANK TRANSFER</span>
-          <div class="gift-bank-name font-cinzel">BCA</div>
-          <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
-        </div>
-        <div class="gift-number-box">
-          <span class="gift-number" id="acc-bca">6871807903</span>
-          <button class="gift-copy-btn" onclick="copyGiftText('acc-bca', 'Nomor rekening BCA')" title="Salin No. Rekening">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span>Salin</span>
-          </button>
-        </div>
-      </div>
+    <div style="text-align: center; margin-top: 14px;" data-rv="fade">
+      <button id="btn-toggle-gift" class="gift-toggle-btn" onclick="toggleGiftBox()" data-cursor>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        <span id="btn-toggle-gift-text">Kirim Tanda Kasih (Transfer)</span>
+        <svg id="btn-toggle-gift-icon" viewBox="0 0 14 14" fill="none" width="12" height="12" style="margin-left: 8px; transition: transform 0.3s ease;"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
 
-      <!-- Rekening Bank Mandiri -->
-      <div class="gift-card">
-        <div>
-          <span class="gift-bank-badge">BANK TRANSFER</span>
-          <div class="gift-bank-name font-cinzel">MANDIRI</div>
-          <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
+    <div id="gift-box-wrapper" class="gift-box-wrapper">
+      <div class="gift-grid">
+        <!-- Rekening Bank BCA -->
+        <div class="gift-card">
+          <div>
+            <span class="gift-bank-badge">BANK TRANSFER</span>
+            <div class="gift-bank-name font-cinzel">BCA</div>
+            <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
+          </div>
+          <div class="gift-number-box">
+            <span class="gift-number" id="acc-bca">6871807903</span>
+            <button class="gift-copy-btn" onclick="copyGiftText('acc-bca', 'Nomor rekening BCA')" title="Salin No. Rekening">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Salin</span>
+            </button>
+          </div>
         </div>
-        <div class="gift-number-box">
-          <span class="gift-number" id="acc-mandiri">1670010630977</span>
-          <button class="gift-copy-btn" onclick="copyGiftText('acc-mandiri', 'Nomor rekening Mandiri')" title="Salin No. Rekening">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            <span>Salin</span>
-          </button>
+
+        <!-- Rekening Bank Mandiri -->
+        <div class="gift-card">
+          <div>
+            <span class="gift-bank-badge">BANK TRANSFER</span>
+            <div class="gift-bank-name font-cinzel">MANDIRI</div>
+            <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
+          </div>
+          <div class="gift-number-box">
+            <span class="gift-number" id="acc-mandiri">1670010630977</span>
+            <button class="gift-copy-btn" onclick="copyGiftText('acc-mandiri', 'Nomor rekening Mandiri')" title="Salin No. Rekening">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Salin</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1547,6 +1593,25 @@ window.closeLightbox = function(e) {
   if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
     const lb = document.getElementById('lightbox');
     if (lb) lb.classList.remove('active');
+  }
+};
+
+// Toggle Gift Box (Accordion)
+window.toggleGiftBox = function() {
+  const box = document.getElementById('gift-box-wrapper');
+  const btnText = document.getElementById('btn-toggle-gift-text');
+  const btnIcon = document.getElementById('btn-toggle-gift-icon');
+  if (!box) return;
+
+  const isOpen = box.classList.contains('is-open');
+  if (!isOpen) {
+    box.classList.add('is-open');
+    if (btnText) btnText.textContent = 'Tutup Nomor Rekening';
+    if (btnIcon) btnIcon.style.transform = 'rotate(180deg)';
+  } else {
+    box.classList.remove('is-open');
+    if (btnText) btnText.textContent = 'Kirim Tanda Kasih (Transfer)';
+    if (btnIcon) btnIcon.style.transform = 'rotate(0deg)';
   }
 };
 
