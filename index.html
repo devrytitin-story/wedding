@@ -2096,7 +2096,7 @@ body.is-locked .hero-spacer {
     <div style="text-align: center; margin-top: 14px;" data-rv="fade">
       <button id="btn-toggle-gift" class="gift-toggle-btn" onclick="toggleGiftBox()" data-cursor>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        <span id="btn-toggle-gift-text">Kirim Tanda Kasih (Transfer)</span>
+        <span id="btn-toggle-gift-text">Kirim Tanda Kasih</span>
         <svg id="btn-toggle-gift-icon" viewBox="0 0 14 14" fill="none" width="12" height="12" style="margin-left: 8px; transition: transform 0.3s ease;"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
@@ -2106,7 +2106,7 @@ body.is-locked .hero-spacer {
         <!-- Rekening Bank BCA -->
         <div class="gift-card">
           <div>
-            <span class="gift-bank-badge">BANK TRANSFER</span>
+            <span class="gift-bank-badge">REKENING BANK</span>
             <div class="gift-bank-name font-cinzel">BCA</div>
             <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
           </div>
@@ -2122,7 +2122,7 @@ body.is-locked .hero-spacer {
         <!-- Rekening Bank Mandiri -->
         <div class="gift-card">
           <div>
-            <span class="gift-bank-badge">BANK TRANSFER</span>
+            <span class="gift-bank-badge">REKENING BANK</span>
             <div class="gift-bank-name font-cinzel">MANDIRI</div>
             <p class="gift-holder">a.n. <b>Titin Rahma Lestari</b></p>
           </div>
@@ -5974,7 +5974,7 @@ window.toggleGiftBox = function() {
     if (btnIcon) btnIcon.style.transform = 'rotate(180deg)';
   } else {
     box.classList.remove('is-open');
-    if (btnText) btnText.textContent = 'Kirim Tanda Kasih (Transfer)';
+    if (btnText) btnText.textContent = 'Kirim Tanda Kasih';
     if (btnIcon) btnIcon.style.transform = 'rotate(0deg)';
   }
 };
