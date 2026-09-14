@@ -1103,7 +1103,7 @@ const weddingBody = `
     <div style="text-align: center; margin-bottom: 24px;">
       <h2 class="display h-sec font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Ijab, Qabul &amp; Walimatul 'Ursy</h2>
       <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 0;">
-        Rangkaian prosesi akad nikah dan syukuran pernikahan akan diselenggarakan pada:
+        Rangkaian prosesi akad nikah dan syukuran pernikahan kami:
       </p>
     </div>
 
@@ -1138,7 +1138,7 @@ const weddingBody = `
     <!-- Event Cards -->
     <div class="event-grid" data-rv="up">
       <div class="event-box">
-        <span class="event-badge">Prosesi Sakral</span>
+        <span class="event-badge" style="background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.35); color: #86efac;">✓ Telah Terlaksana</span>
         <h3 class="font-cormorant" style="font-size: 28px; font-style: italic; color: #fff; margin-bottom: 8px;">Akad Nikah</h3>
         <p style="color: var(--gold-light); font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; margin-bottom: 12px;">
           SENIN, 20 APRIL 2026
@@ -1148,6 +1148,9 @@ const weddingBody = `
           <b>Acara:</b> Ijab &amp; Qabul<br>
           <b>Tempat:</b> HCU Rumah Sakit Bhayangkara TK.I Pusdokkes Polri
         </p>
+        <div style="margin-top: 10px; padding: 6px 12px; background: rgba(201, 168, 76, 0.12); border: 1px solid rgba(201, 168, 76, 0.3); border-radius: 8px; font-size: 12px; color: var(--gold-pale); font-style: italic;">
+          ✨ Alhamdulillah, prosesi akad nikah telah terlaksana dengan khidmat &amp; sakral.
+        </div>
       </div>
 
       <div class="event-box">
@@ -1209,10 +1212,7 @@ const weddingBody = `
     <div class="eyebrow" data-rv="fade" style="justify-content: center;"><span class="dot" style="background:var(--gold);"></span> Silaturahmi &amp; Doa Restu</div>
     <h2 class="display font-cormorant" data-rv="up" style="font-size: clamp(34px, 4.5vw, 52px);">Titipan Doa &amp; Tanda Kasih</h2>
     <p class="body-lg" data-rv="up" style="max-width: 640px; margin: 12px auto 20px; color: rgba(255,255,255,0.85); line-height: 1.7;">
-      Kehadiran serta doa restu Bapak/Ibu/Saudara/i sekalian merupakan anugerah terindah yang sangat berarti bagi kami.<br>
-      <span style="display:inline-block; margin-top:8px; font-size: 14px; color: var(--gold-pale);">
-        Bagi keluarga atau sahabat yang berhalangan hadir dan berkenan menyampaikan tanda kasih, silakan klik tombol di bawah ini:
-      </span>
+      Kehadiran serta doa restu Bapak/Ibu/Saudara/i sekalian merupakan anugerah terindah yang sangat berarti bagi kami.
     </p>
 
     <div style="text-align: center; margin-top: 14px;" data-rv="fade">
