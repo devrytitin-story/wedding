@@ -91,19 +91,251 @@
       --sheet-h: 210mm;
       --half-w: 148.5mm;
       
-      --panel-pad-y: 12mm;
+      --panel-pad-y: 11mm;
       --panel-pad-x: 13mm;
-      --border-inset: 10mm;
-      --corner-inset: 8.5mm;
-      --corner-size: 34mm;
-      --arch-inset-y: 10mm;
-      --arch-inset-x: 10mm;
+      --border-inset: 9.5mm;
+      --corner-inset: 8mm;
+      --corner-size: 38mm;
+      --arch-inset-y: 9.5mm;
+      --arch-inset-x: 10.5mm;
       --arch-radius: 46mm;
-      --names-main-size: 24px;
-      --cover-names-size: 22px;
-      --date-num-size: 27px;
-      --quote-font-size: 12px;
-      --qr-render-size: 22mm;
+      --names-main-size: 26px;
+      --cover-names-size: 25px;
+      --date-num-size: 32px;
+      --quote-font-size: 12.5px;
+      --qr-render-size: 25mm;
+    }
+
+    /* A4 Proportional Typography & Spacing Scaling */
+    body.size-a4 .bismillah-tx {
+      font-size: 21px;
+      margin-bottom: 2px;
+    }
+    body.size-a4 .intro-text {
+      font-size: 11px;
+      line-height: 1.4;
+      margin: 3px auto;
+    }
+    body.size-a4 .parents-grid {
+      gap: 8px;
+      margin-top: 4px;
+      padding-top: 4px;
+    }
+    body.size-a4 .parents-card .title {
+      font-size: 14.5px;
+      margin-bottom: 2px;
+    }
+    body.size-a4 .parents-card .desc {
+      font-size: 9.5px;
+      letter-spacing: 1.5px;
+      margin-bottom: 2px;
+    }
+    body.size-a4 .parents-card .names {
+      font-size: 11.5px;
+      line-height: 1.35;
+    }
+    body.size-a4 .compact-gift-box {
+      margin-top: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    body.size-a4 .compact-gift-title {
+      font-size: 9.5px;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+    }
+    body.size-a4 .compact-gift-accounts {
+      font-size: 10.5px;
+      gap: 10px;
+    }
+    body.size-a4 .compact-gift-note {
+      font-size: 9px;
+      margin-top: 2px;
+    }
+
+    /* Right Panel in A4 */
+    body.size-a4 .event-invitation-lead {
+      font-size: 11px;
+      margin: 2px 0 4px;
+      line-height: 1.35;
+    }
+    body.size-a4 .event-schedule-container {
+      padding: 5px 6px;
+      margin-bottom: 4px;
+      border-radius: 6px;
+    }
+    body.size-a4 .schedule-tag {
+      font-size: 9.5px;
+      letter-spacing: 1.5px;
+    }
+    body.size-a4 .schedule-time {
+      font-size: 11px;
+      margin-top: 2px;
+    }
+    body.size-a4 .schedule-sub {
+      font-size: 9px;
+    }
+    body.size-a4 .schedule-date-month {
+      font-size: 8.5px;
+      letter-spacing: 1.5px;
+    }
+    body.size-a4 .venue-box {
+      margin-top: 3px;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+    body.size-a4 .venue-title {
+      font-size: 9.5px;
+      letter-spacing: 2px;
+      margin-bottom: 2px;
+    }
+    body.size-a4 .venue-name {
+      font-size: 14px;
+    }
+    body.size-a4 .venue-address {
+      font-size: 10px;
+      line-height: 1.3;
+      margin-top: 2px;
+    }
+    body.size-a4 .qr-mini-row {
+      gap: 10px;
+      margin-top: 4px;
+    }
+    body.size-a4 .qr-box-wrapper {
+      border-radius: 4px;
+      padding: 2mm;
+    }
+    body.size-a4 .qr-desc {
+      font-size: 8.5px;
+      line-height: 1.3;
+    }
+    body.size-a4 .qr-desc b {
+      font-size: 9.5px;
+      letter-spacing: 1.5px;
+    }
+    body.size-a4 .closing-honor {
+      font-size: 10px;
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    /* Cover in A4 */
+    body.size-a4 .arch-card-wrapper {
+      padding: 9mm 6mm 6mm;
+    }
+    body.size-a4 .arch-lantern {
+      width: 12mm;
+      height: 16mm;
+    }
+    body.size-a4 .cover-the-wedding {
+      font-size: 10px;
+      letter-spacing: 4px;
+      margin-top: 2px;
+    }
+    body.size-a4 .cover-label-slot {
+      margin: 3px 0;
+    }
+    body.size-a4 .cover-guest-card {
+      padding: 5px 12px;
+      max-width: 80mm;
+      border-radius: 6px;
+    }
+    body.size-a4 .cover-guest-to {
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+    body.size-a4 .cover-guest-name {
+      font-size: 16.5px;
+      margin: 2px 0 1px;
+    }
+    body.size-a4 .cover-guest-sub {
+      font-size: 8.5px;
+    }
+    body.size-a4 .cover-sticker-guide {
+      width: 72mm;
+      height: 34mm;
+      font-size: 9.5px;
+      border-radius: 5px;
+    }
+    body.size-a4 .cover-sticker-guide span {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+    }
+    body.size-a4 .cover-date {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+    }
+    body.size-a4 .cover-event {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      margin-top: 3px;
+    }
+
+    /* Quote & General Ornaments in A4 */
+    body.size-a4 .quote-box b {
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+    body.size-a4 .mandala-emblem {
+      width: 24mm;
+      height: 24mm;
+    }
+    body.size-a4 .diamond-divider {
+      gap: 14px;
+      margin: 4px auto;
+    }
+    body.size-a4 .diamond-divider::before,
+    body.size-a4 .diamond-divider::after {
+      width: 28mm;
+    }
+
+    /* Theme BW elements in A4 */
+    body.size-a4 .bw-couple-illustration {
+      width: 36mm;
+      height: 36mm;
+      margin: 2px auto 3px;
+    }
+    body.size-a4 .bw-botanical-icon {
+      width: 17mm;
+      height: 17mm;
+      margin: 0 auto 4px;
+    }
+
+    /* Envelope & Insert Cards in A4 */
+    body.size-a4 .flap-top {
+      height: 26mm;
+    }
+    body.size-a4 .flap-top .monogram-tx {
+      font-size: 11px;
+      letter-spacing: 4px;
+    }
+    body.size-a4 .flap-side-left,
+    body.size-a4 .flap-side-right {
+      width: 30mm;
+      top: 26mm;
+    }
+    body.size-a4 .flap-side-left span,
+    body.size-a4 .flap-side-right span {
+      font-size: 9px;
+      letter-spacing: 2.5px;
+    }
+    body.size-a4 .die-cut-body {
+      left: 30mm;
+      right: 30mm;
+      top: 26mm;
+    }
+    body.size-a4 .insert-card {
+      padding: 10mm 9mm;
+    }
+    body.size-a4 .bank-name {
+      font-size: 13px;
+    }
+    body.size-a4 .bank-num {
+      font-size: 16px;
+    }
+    body.size-a4 .bank-holder {
+      font-size: 10px;
     }
 
     /* JIS B5 OVERRIDE (257mm x 182mm) */
