@@ -1022,6 +1022,12 @@
     body.label-none .cover-label-slot { display: none !important; }
     body.label-none .cover-couple-name { margin: 6px 0 4px; }
 
+    /* QR Code Display Mode Switching */
+    body.qr-none .qr-element { display: none !important; }
+    body.qr-none .no-qr-element { display: block !important; }
+    body.qr-with .qr-element { display: flex !important; }
+    body.qr-with .no-qr-element { display: none !important; }
+
     .cover-bottom-group {
       width: 100%;
       text-align: center;
@@ -1483,7 +1489,7 @@
     }
   </style>
 </head>
-<body class="size-a5 label-manual">
+<body class="size-a5 label-manual qr-with">
 
   <!-- ============================================================
        TOP CONTROL BAR (VISIBLE ON SCREEN, HIDDEN WHEN PRINTING)
@@ -1502,6 +1508,15 @@
         <select class="select-picker" id="theme-selector" onchange="changeTheme(this.value)" style="border-color:#60a5fa; font-weight:600; background:#111827;">
           <option value="gold" selected>✨ Royal Gold (Klasik Kubah)</option>
           <option value="bw">🖤 Minimalist B&amp;W (Line Art Aman Cetak)</option>
+        </select>
+      </label>
+
+      <!-- QR Code Mode Selector (Dengan QR vs Tanpa QR) -->
+      <label class="control-label" style="font-weight:600; color:#facc15;">
+        📱 QR Code:
+        <select class="select-picker" id="qr-selector" onchange="changeQrMode(this.value)" style="border-color:#eab308; font-weight:600; background:#241e12; color:#fef08a;">
+          <option value="with-qr" selected>✅ Dengan QR Code</option>
+          <option value="no-qr">❌ Tanpa QR Code</option>
         </select>
       </label>
 
@@ -1636,8 +1651,20 @@
           </p>
         </div>
 
-        <!-- Website Info (No QR) -->
-        <div style="margin-top: 14px; text-align: center;">
+        <!-- Website Info (With QR Mode) -->
+        <div class="qr-element" style="margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" class="qr-box-wrapper" title="Buka Website Undangan" style="width: 15mm; height: 15mm;">
+            <img src="qr-web.svg" alt="QR Website" onerror="this.src='qr-wedding-web.png'">
+          </a>
+          <div style="text-align: left; font-size: 7px; color: var(--ink-muted); line-height: 1.3;">
+            <b style="color: var(--gold-deep); font-size: 7.5px; letter-spacing: 1px; display: block;">UNDANGAN DIGITAL</b>
+            <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">devrytitin-story.github.io/wedding</a><br>
+            Pindai QR untuk cerita lengkap
+          </div>
+        </div>
+
+        <!-- Website Info (No QR Mode) -->
+        <div class="no-qr-element" style="margin-top: 14px; text-align: center;">
           <div class="tx-display" style="font-size: 7.5px; letter-spacing: 2px; color: var(--gold-deep); margin-bottom: 2px;">UNDANGAN DIGITAL</div>
           <a href="https://devrytitin-story.github.io/wedding" target="_blank" rel="noopener" style="font-family: var(--font-sans); font-size: 8px; color: var(--ink-muted); text-decoration: none; letter-spacing: 0.5px;">devrytitin-story.github.io/wedding</a>
         </div>
@@ -1877,7 +1904,20 @@
           Kec. Pondok Melati, Kota Bekasi, Jawa Barat
         </div>
 
-        <div style="margin-top: 2.5px; font-size: 7px; color: var(--gold-deep); text-align: center; font-weight: 500;">
+        <!-- Opsi 1: Dengan QR Code Google Maps (High contrast & 100% Scannable) -->
+        <div class="qr-mini-row qr-element">
+          <a href="https://maps.app.goo.gl/THmR9UrzEBHPHEq5A" target="_blank" rel="noopener" class="qr-box-wrapper" title="Buka Google Maps">
+            <img src="qr-maps.svg" alt="QR Code Google Maps" onerror="this.src='qr-maps-lokasi.png'">
+          </a>
+          <div class="qr-desc">
+            <b>PANDUAN LOKASI (GOOGLE MAPS)</b>
+            Pindai QR / klik untuk rute navigasi presisi<br>
+            menuju kediaman mempelai wanita.
+          </div>
+        </div>
+
+        <!-- Opsi 2: Tanpa QR Code (Teks Saja) -->
+        <div class="no-qr-element" style="margin-top: 2.5px; font-size: 7px; color: var(--gold-deep); text-align: center; font-weight: 500;">
           <a href="https://maps.app.goo.gl/THmR9UrzEBHPHEq5A" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">
             ✦ Panduan Lokasi: maps.app.goo.gl/THmR9UrzEBHPHEq5A ✦
           </a>
@@ -2024,7 +2064,25 @@
           </p>
         </div>
 
-        <div style="margin: 8px 0; font-size: 9px; color: var(--gold-deep); line-height: 1.6;">
+        <!-- Opsi 1: Dengan QR Code Maps & Web -->
+        <div class="qr-element" style="display: flex; justify-content: center; gap: 14px; margin: 6px 0;">
+          <div>
+            <div class="qr-box-wrapper" style="width: 20mm; height: 20mm; margin: 0 auto;">
+              <img src="qr-maps.svg" alt="QR Maps" onerror="this.src='qr-maps-lokasi.png'">
+            </div>
+            <div style="font-size: 7.5px; font-weight: 600; color: var(--gold-deep); margin-top: 3px;">GOOGLE MAPS</div>
+          </div>
+
+          <div>
+            <div class="qr-box-wrapper" style="width: 20mm; height: 20mm; margin: 0 auto;">
+              <img src="qr-web.svg" alt="QR Web" onerror="this.src='qr-wedding-web.png'">
+            </div>
+            <div style="font-size: 7.5px; font-weight: 600; color: var(--gold-deep); margin-top: 3px;">WEBSITE &amp; RSVP</div>
+          </div>
+        </div>
+
+        <!-- Opsi 2: Tanpa QR Code (Teks Saja) -->
+        <div class="no-qr-element" style="margin: 8px 0; font-size: 9px; color: var(--gold-deep); line-height: 1.6;">
           <div style="font-family: var(--font-display); font-size: 8px; letter-spacing: 1px;">WEBSITE RESMI</div>
           <div style="font-family: var(--font-sans); color: var(--ink-muted); font-size: 8px;">devrytitin-story.github.io/wedding</div>
           <div style="font-family: var(--font-display); font-size: 8px; letter-spacing: 1px; margin-top: 4px;">PETA LOKASI</div>
@@ -2094,6 +2152,19 @@
           sheet.classList.remove('is-hidden-print');
         });
         banner.innerHTML = '<span>📋 <strong>Mode 4 Lembar Aktif:</strong> Format lengkap termasuk pola potong amplop flap (die-cut) dan kartu sisipan terpisah.</span>';
+      }
+    }
+
+    // Switch QR Code Mode: with-qr (show QR codes) vs no-qr (hide QR codes, text only)
+    function changeQrMode(mode) {
+      const body = document.body;
+      const validMode = (mode === 'no-qr' || mode === 'none' || mode === 'no') ? 'none' : 'with';
+      body.classList.remove('qr-with', 'qr-none');
+      body.classList.add('qr-' + validMode);
+
+      const sel = document.getElementById('qr-selector');
+      if (sel) {
+        sel.value = (validMode === 'none') ? 'no-qr' : 'with-qr';
       }
     }
 
@@ -2189,6 +2260,10 @@
       if (marginParam && typeof changeMarginMode === 'function') {
         changeMarginMode(marginParam);
       }
+      const qrParam = urlParams.get('qr') || urlParams.get('qrMode');
+      if (qrParam && typeof changeQrMode === 'function') {
+        changeQrMode(qrParam);
+      }
       const sizeParam = urlParams.get('size');
       if (sizeParam && typeof changePaperSize === 'function') {
         const sel = document.getElementById('size-selector');
@@ -2212,6 +2287,8 @@
         const inp = document.getElementById('input-guest');
         if (inp) inp.value = event.data.name;
         updateGuestName(event.data.name);
+      } else if (event.data.type === 'SET_QR_MODE') {
+        changeQrMode(event.data.mode);
       } else if (event.data.type === 'SET_LABEL_MODE') {
         changeLabelMode(event.data.mode);
       } else if (event.data.type === 'SET_MARGIN_MODE') {

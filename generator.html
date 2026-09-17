@@ -631,6 +631,15 @@ Keluarga Besar Alm. H. Abdullah, , Keluarga"></textarea>
           </select>
         </div>
 
+        <!-- QR Code Display Selector (Dengan QR vs Tanpa QR) -->
+        <div class="form-group" style="margin: 0;">
+          <label for="gen-print-qr">📱 Tampilkan QR:</label>
+          <select id="gen-print-qr" onchange="syncPrintQr(this.value)" style="border-color:#facc15; color:#fef08a;">
+            <option value="with-qr" selected>✅ Dengan QR Code</option>
+            <option value="no-qr">❌ Tanpa QR Code</option>
+          </select>
+        </div>
+
         <!-- Margin Safety Selector (Anti-Potong Pinggir) -->
         <div class="form-group" style="margin: 0;">
           <label for="gen-print-margin">🛡️ Margin Cetak:</label>
@@ -1278,6 +1287,14 @@ function syncPrintLabelMode(mode) {
   updateStandaloneTabUrl();
 }
 
+function syncPrintQr(mode) {
+  const iframe = document.getElementById('invitation-preview-frame');
+  if (iframe && iframe.contentWindow) {
+    iframe.contentWindow.postMessage({ type: 'SET_QR_MODE', mode: mode }, '*');
+  }
+  updateStandaloneTabUrl();
+}
+
 function syncPrintMargin(mode) {
   const iframe = document.getElementById('invitation-preview-frame');
   if (iframe && iframe.contentWindow) {
@@ -1366,11 +1383,12 @@ function updateStandaloneTabUrl() {
   const btn = document.getElementById('btn-standalone-tab');
   if (!btn) return;
   const labelMode = document.getElementById('gen-print-label-mode')?.value || 'manual';
+  const qrMode = document.getElementById('gen-print-qr')?.value || 'with-qr';
   const marginMode = document.getElementById('gen-print-margin')?.value || 'safe';
   const size = document.getElementById('gen-print-size')?.value || 'b5';
   const mode = document.getElementById('gen-print-mode')?.value || '2-sheets';
   const guest = document.getElementById('gen-print-guest')?.value || '';
-  let url = 'undangan.html?label=' + encodeURIComponent(labelMode) + '&margin=' + encodeURIComponent(marginMode) + '&size=' + encodeURIComponent(size) + '&mode=' + encodeURIComponent(mode);
+  let url = 'undangan.html?label=' + encodeURIComponent(labelMode) + '&qr=' + encodeURIComponent(qrMode) + '&margin=' + encodeURIComponent(marginMode) + '&size=' + encodeURIComponent(size) + '&mode=' + encodeURIComponent(mode);
   if (guest) url += '&to=' + encodeURIComponent(guest);
   btn.href = url;
 }
