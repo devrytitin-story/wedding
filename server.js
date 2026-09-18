@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
   let reqPath = req.url.split('?')[0];
   if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
   if (reqPath === '/generator' || reqPath === '/admin') reqPath = '/generator.html';
+  if (reqPath === '/pengajian' || reqPath === '/selametan') reqPath = '/pengajian.html';
 
   const filePath = path.join(BASE_DIR, decodeURIComponent(reqPath));
 

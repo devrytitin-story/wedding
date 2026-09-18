@@ -376,18 +376,41 @@
     <p>Titin Rahma Lestari &amp; Devry Rizkie H</p>
     <div style="margin-top: 14px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
       <a href="index.html" target="_blank" class="btn btn-outline btn-mini">👁️ Buka Web Undangan Utama</a>
+      <a href="pengajian.html" target="_blank" class="btn btn-outline btn-mini" style="border-color:#E8C97A; color:#F5E9C8;">🌸 Buka Web Pengajian</a>
       <a href="index.html#gift" target="_blank" class="btn btn-outline btn-mini">🎁 Cek Tanda Kasih</a>
     </div>
   </header>
 
   <!-- URL Setting Bar -->
-  <div class="card" style="margin-bottom: 24px; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;">
+  <div class="card" style="margin-bottom: 18px; padding: 18px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px;">
     <div style="flex: 1; min-width: 280px;">
       <label for="base-url">Domain / URL Dasar Undangan:</label>
       <input type="text" id="base-url" value="https://devrytitin-story.github.io/wedding">
     </div>
     <div style="align-self: flex-end;">
       <button class="btn btn-outline" onclick="setGithubUrl()">Reset ke GitHub Pages URL</button>
+    </div>
+  </div>
+
+  <!-- Event Target Selector (Wedding vs Pengajian) -->
+  <div class="card" style="margin-bottom: 24px; padding: 16px 22px; background: rgba(26, 20, 16, 0.95); border: 1px solid var(--gold); border-radius: 16px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+      <div>
+        <div style="font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; color: var(--gold-light); text-transform: uppercase;">
+          🎯 TUJUAN ACARA UNDANGAN:
+        </div>
+        <div style="font-size: 13px; color: var(--text-dim); margin-top: 2px;">
+          Pilih acara yang ingin dibuatkan link &amp; pesan WhatsApp otomatis:
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button type="button" id="btn-event-wedding" onclick="switchEventTarget('wedding')" class="btn btn-gold btn-mini" style="padding: 9px 18px;">
+          💍 Walimatul 'Ursy (27 Sept)
+        </button>
+        <button type="button" id="btn-event-pengajian" onclick="switchEventTarget('pengajian')" class="btn btn-outline btn-mini" style="padding: 9px 18px;">
+          🌸 Pengajian &amp; Doa Bersama (26 Sept)
+        </button>
+      </div>
     </div>
   </div>
 
@@ -777,8 +800,8 @@ function showToast(msg, type = 'gold') {
   }, 3200);
 }
 
-// Default Template
-const DEFAULT_TEMPLATE = `Kepada Yth.
+// Default Templates (Wedding vs Pengajian)
+const DEFAULT_TEMPLATE_WEDDING = `Kepada Yth.
 Bapak/Ibu/Saudara/i: *{NAMA_TAMU}*
 
 _Assalamu’alaikum Warahmatullahi Wabarakatuh_
@@ -805,14 +828,74 @@ _Wassalamu’alaikum Warahmatullahi Wabarakatuh_
 Kami yang berbahagia,
 *Titin & Devry*`;
 
-const DEFAULT_WISHES = [
-  { id: '1', name: 'Keluarga Besar Alm. Bapak Jajang', status: 'Hadir', count: '2 Orang', msg: 'Selamat menempuh hidup baru untuk Titin & Devry. Semoga menjadi keluarga yang sakinah, mawaddah, dan warahmah. Aamiin ya Rabbal Alamin!', time: '2026-09-01' },
-  { id: '2', name: 'Keluarga Besar Bapak Maman Darmana', status: 'Hadir', count: '2 Orang', msg: "Barakallahu lakuma wa baraka 'alaika wa jama'a bainakuma fii khair. Bahagia selalu dan dilancarkan seluruh acaranya.", time: '2026-09-02' },
-  { id: '3', name: 'Sahabat & Rekan', status: 'Hadir', count: '1 Orang', msg: 'Happy wedding Devry & Titin! Semoga cinta kalian selalu bersemi dan penuh keberkahan hingga akhir hayat.', time: '2026-09-03' }
-];
+const DEFAULT_TEMPLATE_PENGAJIAN = `Kepada Yth.
+Ibu/Saudari: *{NAMA_TAMU}*
 
-let currentTemplate = localStorage.getItem('wedding_template') || DEFAULT_TEMPLATE;
+_Assalamu’alaikum Warahmatullahi Wabarakatuh_
+
+Dengan memohon rahmat dan ridha Allah SWT, seraya memanjatkan rasa syukur yang mendalam, kami sekeluarga bermaksud mengundang Ibu/Saudari sekalian untuk hadir dalam acara:
+
+🌸 *Pengajian Ibu-Ibu & Doa Bersama* 🌸
+Menjelang Pernikahan Putri Tercinta Kami:
+*Titin Rahma Lestari* & *Devry Rizkie H*
+
+📅 *Hari/Tanggal:* Sabtu, 26 September 2026
+⏰ *Waktu:* Ba'da Dzuhur (Pukul 13.00 WIB) s/d Selesai
+📍 *Tempat:* Kediaman Mempelai Wanita (Ibu Kurniati)
+Jl. Abah Rimun No 133 Rt 008, RW 006, Jatiwarna, Pondok Melati, Bekasi
+
+Informasi lengkap mengenai susunan acara, lokasi, dan konfirmasi kehadiran dapat diakses melalui link undangan berikut:
+👉 {LINK_UNDANGAN}
+
+Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Ibu/Saudari berkenan hadir dan bersama-sama melafalkan doa bagi calon mempelai.
+
+Atas perhatian dan kehadirannya, kami ucapkan terima kasih yang sebesar-besarnya.
+
+_Wassalamu’alaikum Warahmatullahi Wabarakatuh_
+
+Hormat kami sekeluarga,
+*Keluarga Alm. Bapak Jajang & Ibu Kurniati*
+*Titin & Devry*`;
+
+let currentEventTarget = 'wedding';
+let currentTemplate = localStorage.getItem('wedding_template') || DEFAULT_TEMPLATE_WEDDING;
 document.getElementById('template-text').value = currentTemplate;
+
+function switchEventTarget(target) {
+  currentEventTarget = target;
+  const btnWedding = document.getElementById('btn-event-wedding');
+  const btnPengajian = document.getElementById('btn-event-pengajian');
+
+  if (target === 'pengajian') {
+    btnPengajian.className = 'btn btn-gold btn-mini';
+    btnWedding.className = 'btn btn-outline btn-mini';
+    currentTemplate = localStorage.getItem('pengajian_template') || DEFAULT_TEMPLATE_PENGAJIAN;
+    document.getElementById('template-text').value = currentTemplate;
+    showToast('Mode Undangan Pengajian (26 Sept) Aktif!', 'success');
+  } else {
+    btnWedding.className = 'btn btn-gold btn-mini';
+    btnPengajian.className = 'btn btn-outline btn-mini';
+    currentTemplate = localStorage.getItem('wedding_template') || DEFAULT_TEMPLATE_WEDDING;
+    document.getElementById('template-text').value = currentTemplate;
+    showToast('Mode Undangan Walimatul Ursy (27 Sept) Aktif!', 'success');
+  }
+
+  // Refresh single link preview if already filled
+  const singleName = document.getElementById('guest-name').value.trim();
+  if (singleName && document.getElementById('single-result-content').style.display !== 'none') {
+    const fakeEvt = { preventDefault: () => {} };
+    generateSingleLink(fakeEvt);
+  }
+
+  // Refresh bulk table if guests loaded
+  if (bulkGuests && bulkGuests.length > 0) {
+    bulkGuests.forEach(g => {
+      g.url = buildGuestUrl(g.name);
+      g.msg = buildMessage(g.name, g.url);
+    });
+    renderBulkTable();
+  }
+}
 
 let bulkGuests = [];
 
@@ -847,6 +930,9 @@ function getBaseUrl() {
 
 function buildGuestUrl(name) {
   const base = getBaseUrl();
+  if (currentEventTarget === 'pengajian') {
+    return `${base}/pengajian.html?to=${encodeURIComponent(name)}`;
+  }
   return `${base}/?to=${encodeURIComponent(name)}`;
 }
 
@@ -975,15 +1061,25 @@ function exportBulkToCSV() {
 
 function saveTemplate() {
   currentTemplate = document.getElementById('template-text').value;
-  localStorage.setItem('wedding_template', currentTemplate);
+  if (currentEventTarget === 'pengajian') {
+    localStorage.setItem('pengajian_template', currentTemplate);
+  } else {
+    localStorage.setItem('wedding_template', currentTemplate);
+  }
   showToast('Template pesan WhatsApp berhasil disimpan!', 'success');
 }
 
 function resetTemplate() {
   if (confirm('Kembalikan template pesan ke teks bawaan?')) {
-    currentTemplate = DEFAULT_TEMPLATE;
-    document.getElementById('template-text').value = DEFAULT_TEMPLATE;
-    localStorage.removeItem('wedding_template');
+    if (currentEventTarget === 'pengajian') {
+      currentTemplate = DEFAULT_TEMPLATE_PENGAJIAN;
+      localStorage.removeItem('pengajian_template');
+    } else {
+      currentTemplate = DEFAULT_TEMPLATE_WEDDING;
+      localStorage.removeItem('wedding_template');
+    }
+    document.getElementById('template-text').value = currentTemplate;
+    showToast('Template pesan berhasil di-reset!', 'success');
   }
 }
 
