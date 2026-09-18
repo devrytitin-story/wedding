@@ -70,55 +70,7 @@
       z-index: 1;
     }
 
-    /* ========================================================
-       MUSIC FLOATING PLAYER
-       ======================================================== */
-    .music-player-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 999;
-      background: rgba(20, 16, 14, 0.85);
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      transition: all 0.3s;
-    }
-    .music-player-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
-    }
-    .music-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 2.5px;
-      height: 16px;
-    }
-    .music-bar {
-      width: 2.5px;
-      background: var(--gold-light);
-      border-radius: 2px;
-      animation: barJump 1.2s ease-in-out infinite alternate;
-    }
-    .music-bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
-    .music-bar:nth-child(2) { height: 16px; animation-delay: 0.3s; }
-    .music-bar:nth-child(3) { height: 11px; animation-delay: 0.2s; }
-    .music-bar:nth-child(4) { height: 14px; animation-delay: 0.4s; }
-    .music-bars.paused .music-bar {
-      animation: none !important;
-      height: 3px !important;
-    }
-    @keyframes barJump {
-      0% { height: 4px; }
-      100% { height: 16px; }
-    }
+
 
     /* ========================================================
        FULLSCREEN COVER OVERLAY (UNTIL UNLOCKED)
@@ -395,34 +347,7 @@
       margin-bottom: 14px;
     }
 
-    /* Agenda Timeline */
-    .timeline-list {
-      list-style: none;
-      text-align: left;
-      max-width: 440px;
-      margin: 16px auto 0;
-      padding: 0;
-    }
-    .timeline-item {
-      display: flex;
-      gap: 14px;
-      padding: 10px 0;
-      border-bottom: 0.5px solid var(--gold-line-light);
-    }
-    .timeline-item:last-child { border-bottom: none; }
-    .timeline-time {
-      font-family: var(--font-display);
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--gold-light);
-      min-width: 80px;
-      flex-shrink: 0;
-    }
-    .timeline-desc {
-      font-size: 12.5px;
-      color: var(--text-dim);
-      line-height: 1.4;
-    }
+
 
     /* Venue Card */
     .venue-card {
@@ -643,21 +568,6 @@
 </head>
 <body class="scroll-locked">
 
-  <!-- Background Music Audio Tag -->
-  <audio id="bg-audio" loop preload="none">
-    <source src="lagu.mpeg" type="audio/mpeg">
-  </audio>
-
-  <!-- Music Floating Controller Button -->
-  <button type="button" class="music-player-btn" id="music-btn" title="Nyalakan / Matikan Musik" onclick="toggleMusic()">
-    <div class="music-bars" id="music-bars">
-      <div class="music-bar"></div>
-      <div class="music-bar"></div>
-      <div class="music-bar"></div>
-      <div class="music-bar"></div>
-    </div>
-  </button>
-
   <!-- ============================================================
        COVER POPUP MODAL (TERKUNCI HINGGA DIBUKA)
        ============================================================ -->
@@ -719,7 +629,7 @@
       </div>
     </div>
 
-    <!-- KARTU 2: DETAIL JADWAL & SUSUNAN ACARA -->
+    <!-- KARTU 2: DETAIL JADWAL & LOKASI ACARA -->
     <div class="section-card">
       <div class="cover-eyebrow">WAKTU &amp; TEMPAT PELAKSANAAN</div>
       <div class="divider-gold">✦</div>
@@ -727,30 +637,10 @@
       <div class="schedule-box">
         <div class="schedule-day">HARI SABTU</div>
         <div class="schedule-date">26 SEPTEMBER 2026</div>
-        <div class="schedule-time-badge">
+        <div class="schedule-time-badge" style="margin-bottom: 0;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Ba'da Dzuhur (Pukul 13.00 WIB) s/d Selesai
         </div>
-
-        <!-- Susunan Acara Ringkas -->
-        <ul class="timeline-list">
-          <li class="timeline-item">
-            <span class="timeline-time">13.00 WIB</span>
-            <span class="timeline-desc">Pembukaan &amp; Pembacaan Ayat-Ayat Suci Al-Qur'an</span>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-time">13.30 WIB</span>
-            <span class="timeline-desc">Lantunan Shalawat, Tahlil &amp; Dzikir Bersama</span>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-time">14.15 WIB</span>
-            <span class="timeline-desc">Tausiyah Singkat &amp; Doa Keselamatan Calon Pengantin</span>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-time">14.45 WIB</span>
-            <span class="timeline-desc">Ramah Tamah &amp; Santap Jamuan Syukuran</span>
-          </li>
-        </ul>
       </div>
 
       <!-- Hitung Mundur Acara -->
@@ -769,8 +659,7 @@
         <div class="venue-title">LOKASI KEDIAMAN</div>
         <div class="venue-name">Kediaman Mempelai Wanita (Ibu Kurniati)</div>
         <p class="venue-address">
-          Jl. Abah Rimun No. 133, RT 008 / RW 006, Jatiwarna,<br>
-          Kec. Pondok Melati, Kota Bekasi, Jawa Barat
+          Jl. Melati Raya GG Mawar 1 no 3c, RT 008/ RW 006, Jatiwarna, Pondok Melati, Bekasi
         </p>
 
         <div class="btn-maps-row">
@@ -895,47 +784,17 @@
     }
 
     // ═══════════════════════════════════════════════════════════════
-    // OPEN INVITATION (UNLOCK SCROLL & PLAY MUSIC)
+    // OPEN INVITATION (UNLOCK SCROLL)
     // ═══════════════════════════════════════════════════════════════
-    let isMusicPlaying = false;
-    const audio = document.getElementById('bg-audio');
-    const musicBars = document.getElementById('music-bars');
-
     function openInvitation() {
       const overlay = document.getElementById('cover-overlay');
       overlay.classList.add('is-opened');
       document.body.classList.remove('scroll-locked');
 
-      // Auto-play music on user interaction
-      if (audio) {
-        audio.play().then(() => {
-          isMusicPlaying = true;
-          musicBars.classList.remove('paused');
-        }).catch(err => {
-          console.log('Autoplay audio blocked by browser policy:', err);
-          isMusicPlaying = false;
-          musicBars.classList.add('paused');
-        });
-      }
-
       // Smooth scroll to top of main content
       setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 100);
-    }
-
-    function toggleMusic() {
-      if (!audio) return;
-      if (isMusicPlaying) {
-        audio.pause();
-        isMusicPlaying = false;
-        musicBars.classList.add('paused');
-      } else {
-        audio.play().then(() => {
-          isMusicPlaying = true;
-          musicBars.classList.remove('paused');
-        });
-      }
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -970,20 +829,50 @@
     updateCountdown();
 
     // ═══════════════════════════════════════════════════════════════
-    // RSVP SUBMISSION & LOCALSTORAGE WISHES
+    // RSVP SUBMISSION & GOOGLE SHEETS + LOCALSTORAGE SYNC
     // ═══════════════════════════════════════════════════════════════
     const STORAGE_KEY = 'pengajian_titin_devry_wishes';
+    const GSHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxtGVFOY2ug_OyWfzfnA_vNjVrjoM6cb0l1gJxkIz8fatn7LSKQNc04fHUu277caHPfbw/exec';
 
     function loadWishes() {
+      let localList = [];
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (!saved) return;
-        const list = JSON.parse(saved);
-        const board = document.getElementById('wishes-board');
-        list.forEach(w => {
-          prependWishElement(w.name, w.status, w.msg);
-        });
+        if (saved) localList = JSON.parse(saved);
       } catch(e) {}
+
+      // Tampilkan data lokal
+      localList.forEach(w => {
+        prependWishElement(w.name, w.status, w.msg);
+      });
+
+      // Ambil data realtime dari Google Spreadsheet
+      if (GSHEET_WEBAPP_URL) {
+        fetch(GSHEET_WEBAPP_URL)
+          .then(res => res.json())
+          .then(res => {
+            if (res && res.status === 'success' && Array.isArray(res.data)) {
+              // Filter khusus data pengajian atau doa restu terkait
+              const pengajianWishes = res.data.filter(item => 
+                (item.name && item.name.includes('[Pengajian]')) ||
+                (item.msg && item.msg.toLowerCase().includes('pengajian'))
+              );
+
+              if (pengajianWishes.length > 0) {
+                const seen = new Set(localList.map(l => (l.name + '|' + l.msg).trim().toLowerCase()));
+                pengajianWishes.forEach(w => {
+                  const cleanName = w.name.replace(/\s*\[Pengajian\]/gi, '').trim();
+                  const key = (cleanName + '|' + (w.msg || '')).trim().toLowerCase();
+                  if (!seen.has(key)) {
+                    seen.add(key);
+                    prependWishElement(cleanName, w.status || 'Insya Allah Hadir', w.msg);
+                  }
+                });
+              }
+            }
+          })
+          .catch(err => console.warn('Sync GSheet pengajian wishes error:', err));
+      }
     }
 
     function prependWishElement(name, status, msg) {
@@ -1006,37 +895,75 @@
 
     function handleRSVPSubmit(e) {
       e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
       const name = document.getElementById('rsvp-name').value.trim();
       const status = document.getElementById('rsvp-status').value;
       const msg = document.getElementById('rsvp-message').value.trim();
 
       if (!name) return;
 
-      // Add to UI
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>⏳ Menyimpan...</span>';
+      }
+
+      // 1. Tampilkan langsung di antarmuka (DOM)
       prependWishElement(name, status, msg);
 
-      // Save to local storage
+      // 2. Simpan ke LocalStorage browser
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         const list = saved ? JSON.parse(saved) : [];
         list.push({ name, status, msg, date: new Date().toISOString() });
         localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-      } catch(e) {}
-
-      // Open WhatsApp to send confirmation
-      const waMsg = `*Konfirmasi Kehadiran Pengajian & Doa Bersama*\n\n` +
-        `Nama: *${name}*\n` +
-        `Kehadiran: *${status}*\n` +
-        (msg ? `Doa/Ucapan: _"${msg}"_\n\n` : '\n') +
-        `Terima kasih atas undangannya, semoga acara pengajian dan pernikahan ananda Titin & Devry senantiasa dilancarkan dan penuh berkah. Aamiin.`;
-
-      // Confirm to send to WhatsApp
-      const confirmWa = confirm('Alhamdulillah, doa dan konfirmasi kehadiran Anda berhasil disimpan!\n\nApakah Anda ingin mengirimkan pesan konfirmasi ini langsung ke WhatsApp keluarga mempelai?');
-      if (confirmWa) {
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMsg)}`, '_blank');
+      } catch(err) {
+        console.warn('LocalStorage error:', err);
       }
 
+      // 3. Simpan ke Google Spreadsheet secara realtime (Cloud DB)
+      if (GSHEET_WEBAPP_URL) {
+        try {
+          fetch(GSHEET_WEBAPP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: Date.now().toString(),
+              name: `${name} [Pengajian]`,
+              status: status,
+              count: '1 Orang',
+              msg: msg || 'Hadir dalam pengajian & doa bersama',
+              time: new Date().toISOString()
+            })
+          }).catch(err => console.warn('GSheet submit error:', err));
+        } catch(err) {}
+      }
+
+      // Reset form
       document.getElementById('rsvp-message').value = '';
+
+      // Kembalikan tombol ke kondisi semula
+      setTimeout(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            Kirim Doa Restu &amp; Konfirmasi
+          `;
+        }
+
+        // 4. Buka konfirmasi WhatsApp (opsional bagi tamu)
+        const waMsg = `*Konfirmasi Kehadiran Pengajian & Doa Bersama*\n\n` +
+          `Nama: *${name}*\n` +
+          `Kehadiran: *${status}*\n` +
+          (msg ? `Doa/Ucapan: _"${msg}"_\n\n` : '\n') +
+          `Terima kasih atas undangannya, semoga acara pengajian dan pernikahan ananda Titin & Devry senantiasa dilancarkan dan penuh berkah. Aamiin.`;
+
+        const confirmWa = confirm('Alhamdulillah, doa dan konfirmasi kehadiran Anda berhasil disimpan ke sistem online!\n\nApakah Anda ingin meneruskan konfirmasi ini juga ke WhatsApp keluarga mempelai?');
+        if (confirmWa) {
+          window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(waMsg)}`, '_blank');
+        }
+      }, 500);
     }
 
     loadWishes();
